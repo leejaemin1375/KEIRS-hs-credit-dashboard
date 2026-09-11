@@ -214,34 +214,49 @@ button { font-family:inherit; }
 
         <div style="background:#ffffff; border:1px solid #cdd1d5; padding:14px 16px">
           <div style="font-size:22px; font-weight:700; color:#1e2124; padding-bottom:7px; border-bottom:2px solid #063a74; display:inline-block">지역 · 학교 특성별 격차 진단</div>
-          <div style="margin-top:10px; color:#41474d; font-size:15px; max-width:960px; text-wrap:pretty">1번 탭에서 확인한 부담 증가가 <b>어느 지역, 어떤 조건의 학교에 집중되어 있는지</b> 찾는 화면입니다. 왼쪽 지도는 행정 단위(교육지원청 25개)로, 오른쪽 히트맵은 학교 조건(규모 × 도시 유형)으로 같은 지표를 갈라 봅니다. 둘 다 <b>다교과 교사 비율</b>을 색으로 표시하며 빨강이 높음(취약), 초록이 낮음(양호)입니다.</div>
-          <div style="margin-top:10px; font-size:14.5px; color:#41474d">지도의 교육지원청이나 히트맵의 칸을 누르면 아래에 그 대상의 선택과목·교사 부담 지표가 경기도 평균과 비교되어 나타납니다. 지도와 히트맵이 필터 역할을 하므로 별도 필터는 없습니다.</div>
+          <div style="margin-top:10px; color:#41474d; font-size:15px; max-width:960px; text-wrap:pretty">1번 탭에서 확인한 부담 증가가 <b>어느 지역, 어떤 조건의 학교에 집중되어 있는지</b> 찾는 화면입니다. 왼쪽 지도는 행정 단위(교육지원청 25개)로, 오른쪽 히트맵은 학교 조건(규모 × 도시 유형)으로 같은 지표를 갈라 봅니다. 아래 지표 필터로 <b>다교과 비율 · 주당 수업시수 · 담당과목 수</b> 등 다양한 관점을 바꿔가며 볼 수 있으며, 빨강이 취약, 초록이 양호를 의미합니다.</div>
+          <div style="margin-top:10px; font-size:14.5px; color:#41474d">지도의 교육지원청이나 히트맵의 칸, 아래 학교 랭킹을 누르면 그 대상의 선택과목·교사 부담 지표가 경기도 평균과 비교되어 나타납니다.</div>
+        </div>
+
+        <div style="background:#ffffff; border:1px solid #cdd1d5; padding:12px 16px; display:flex; flex-wrap:wrap; gap:10px 14px; align-items:center; position:sticky; top:0; z-index:5">
+          <span style="font-size:15px; font-weight:700; color:#063a74; white-space:nowrap">지표 선택</span>
+          <sc-for list="{{ kpiOpts }}" as="k" hint-placeholder-count="5">
+            <button onClick="{{ k.onClick }}" style="padding:6px 14px; border:1px solid {{ k.bd }}; background:{{ k.bg }}; color:{{ k.fg }}; font-weight:{{ k.weight }}; border-radius:2px; font-size:14.5px; cursor:pointer; white-space:nowrap">{{ k.label }}</button>
+          </sc-for>
+          <span style="font-size:14px; color:#5b6167">선택한 지표에 따라 지도 · 히트맵 · 학교 랭킹이 함께 바뀝니다.</span>
         </div>
 
         <div style="display:flex; flex-wrap:wrap; gap:18px; align-items:flex-start">
 
           <div style="flex:0 1 430px; min-width:330px; position:sticky; top:18px; background:#ffffff; border:1px solid #cdd1d5; padding:14px 16px">
-            <div style="font-size:18px; font-weight:700; color:#063a74">교육지원청별 다교과 교사 비율</div>
+            <div style="font-size:18px; font-weight:700; color:#063a74">교육지원청별 {{ kpiLabel }}</div>
             <div style="font-size:14px; color:#41474d; margin-top:3px">25개 교육지원청 · {{ lastLabel }} 기준</div>
             <div style="margin-top:8px; display:flex; align-items:center; flex-wrap:wrap; gap:8px">
-              <span style="flex:0 0 auto; white-space:nowrap; font-size:14px; color:#228738; font-weight:700">낮음</span>
+              <span style="flex:0 0 auto; white-space:nowrap; font-size:14px; color:#228738; font-weight:700">양호</span>
               <sc-for list="{{ legend }}" as="l" hint-placeholder-count="7">
                 <div style="flex:0 0 auto; width:24px; height:14px; background:{{ l.color }}"></div>
               </sc-for>
-              <span style="flex:0 0 auto; white-space:nowrap; font-size:14px; color:#de3412; font-weight:700">높음</span>
-              <span style="flex:0 0 auto; white-space:nowrap; font-size:14px; color:#41474d; font-family:'JetBrains Mono',monospace">· 도 평균 {{ provRatio }}</span>
+              <span style="flex:0 0 auto; white-space:nowrap; font-size:14px; color:#de3412; font-weight:700">취약</span>
+              <span style="flex:0 0 auto; white-space:nowrap; font-size:14px; color:#41474d; font-family:'JetBrains Mono',monospace">· 도 평균 {{ provKpiValue }}</span>
             </div>
             <div style="margin-top:10px; border:1px solid #cdd1d5">
               <x-import component-from-global-scope="gg-map" from="./gg-map.js" data-values="{{ mapJson }}" data-groups="{{ groupJson }}" data-selected="{{ selOffice }}" hint-size="100%,540px"></x-import>
             </div>
             <div style="margin-top:8px; font-size:13.5px; color:#5b6167">경계 데이터: 통계청 시군구 경계(2013)를 교육지원청 관할로 묶어 표시.</div>
-            <div style="margin-top:12px; display:grid; grid-template-columns:repeat(auto-fit, minmax(190px, 1fr)); gap:6px; max-height:240px; overflow-y:auto">
-              <sc-for list="{{ officeRows }}" as="o" hint-placeholder-count="25">
-                <div onClick="{{ o.onClick }}" style="display:flex; justify-content:space-between; gap:8px; padding:5px 8px; border:1px solid {{ o.bd }}; background:{{ o.bg }}; cursor:pointer">
-                  <span style="font-size:14.5px; font-weight:{{ o.weight }}">{{ o.name }}</span>
-                  <span style="font-size:14px; font-family:'JetBrains Mono',monospace; color:#41474d">{{ o.value }}</span>
-                </div>
-              </sc-for>
+            <div style="margin-top:14px; padding-top:12px; border-top:1px solid #e3e6e8">
+              <div style="font-size:15px; font-weight:700; color:#063a74; margin-bottom:6px">학교 랭킹 · {{ schoolRankTitle }}</div>
+              <div style="display:flex; flex-direction:column; gap:6px; max-height:280px; overflow-y:auto">
+                <sc-for list="{{ schoolRankRows }}" as="o" hint-placeholder-count="20">
+                  <div onClick="{{ o.onClick }}" style="display:flex; justify-content:space-between; align-items:baseline; gap:8px; padding:5px 8px; border:1px solid {{ o.bd }}; background:{{ o.bg }}; cursor:pointer">
+                    <span style="display:flex; align-items:baseline; gap:8px; min-width:0; overflow:hidden">
+                      <span style="font-size:13px; color:#5b6167; font-family:'JetBrains Mono',monospace; flex:0 0 auto">{{ o.rank }}</span>
+                      <span style="font-size:14.5px; font-weight:{{ o.weight }}; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">{{ o.name }}</span>
+                      <span style="font-size:12.5px; color:#5b6167; flex:0 0 auto; white-space:nowrap">{{ o.office }}</span>
+                    </span>
+                    <span style="font-size:14px; font-family:'JetBrains Mono',monospace; color:#41474d; flex:0 0 auto">{{ o.value }}</span>
+                  </div>
+                </sc-for>
+              </div>
             </div>
           </div>
 
@@ -257,21 +272,21 @@ button { font-family:inherit; }
                       <div style="position:absolute; top:28px; left:-8px; z-index:30; width:352px; padding:12px 14px; background:#052b57; color:#ffffff; border:1px solid #3fa654; box-shadow:0 6px 18px rgba(5,43,87,0.28); font-size:14px; line-height:1.6; pointer-events:none; display:{{ tipDisplay }}">
                         <div style="font-weight:700; color:#9fd2ad; margin-bottom:6px">히트맵 읽는 법</div>
                         <div>· <b>가로</b>는 학교 규모(소·중·대), <b>세로</b>는 지역 유형(대도시·중소도시·읍면)입니다.</div>
-                        <div>· 칸의 <b>색</b>은 다교과 교사 비율입니다. <span style="color:#f0b8a8; font-weight:700">빨강 = 높음(취약)</span>, <span style="color:#9fd2ad; font-weight:700">초록 = 낮음(양호)</span>.</div>
-                        <div>· 큰 숫자는 그 조합의 다교과 교사 비율(%), 작은 숫자는 대상 학교 수입니다.</div>
+                        <div>· 칸의 <b>색</b>은 위에서 선택한 지표({{ kpiLabel }})입니다. <span style="color:#f0b8a8; font-weight:700">빨강 = 취약</span>, <span style="color:#9fd2ad; font-weight:700">초록 = 양호</span>.</div>
+                        <div>· 큰 숫자는 그 조합의 {{ kpiShort }}, 작은 숫자는 대상 학교 수입니다.</div>
                         <div>· 칸을 <b>클릭</b>하면 아래에 해당 조합의 선택과목·교사 부담 상세가 경기도 평균과 비교되어 표시됩니다.</div>
                         <div style="margin-top:6px; color:#c9d7e6">해석 예: 읍면 × 소규모가 가장 붉다면, 학생이 적은 농촌 소규모 학교의 교사가 전공 외 과목을 가장 많이 맡고 있다는 뜻입니다.</div>
                       </div>
                     </div>
                   </div>
-                  <div style="font-size:14px; color:#41474d; margin-top:3px">다교과 교사 비율(%) · 칸 아래 숫자는 대상 학교 수 · {{ lastLabel }} 기준</div>
+                  <div style="font-size:14px; color:#41474d; margin-top:3px">{{ kpiShort }} · 칸 아래 숫자는 대상 학교 수 · {{ lastLabel }} 기준</div>
                 </div>
                 <div style="margin-left:auto; display:flex; align-items:center; flex-wrap:wrap; gap:8px">
-                  <span style="flex:0 0 auto; white-space:nowrap; font-size:14px; color:#228738; font-weight:700">낮음</span>
+                  <span style="flex:0 0 auto; white-space:nowrap; font-size:14px; color:#228738; font-weight:700">양호</span>
                   <sc-for list="{{ legend }}" as="l" hint-placeholder-count="7">
                     <div style="flex:0 0 auto; width:26px; height:14px; background:{{ l.color }}"></div>
                   </sc-for>
-                  <span style="flex:0 0 auto; white-space:nowrap; font-size:14px; color:#de3412; font-weight:700">높음</span>
+                  <span style="flex:0 0 auto; white-space:nowrap; font-size:14px; color:#de3412; font-weight:700">취약</span>
                 </div>
               </div>
               <div style="overflow-x:auto; margin-top:14px">
@@ -366,11 +381,14 @@ button { font-family:inherit; }
   &quot;creditYear&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 2025, &quot;min&quot;: 2023, &quot;max&quot;: 2026, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;표시&quot;}
 }">
 class Component extends DCLogic {
-  state = { tab: 1, sel: null, tip: false, scope1: null };
+  state = { tab: 1, sel: null, scope: null, tip: false, scope1: null, kpi: 'ratio' };
 
   componentDidMount() {
     this._onSel = e => {
-      if (e.detail && e.detail.name) this.setState({ sel: { kind: 'office', office: e.detail.name } });
+      if (e.detail && e.detail.name) {
+        const office = { kind: 'office', office: e.detail.name };
+        this.setState({ sel: office, scope: office });
+      }
     };
     document.addEventListener('sigungu-select', this._onSel);
   }
@@ -380,6 +398,13 @@ class Component extends DCLogic {
   TYPES = ['일반고','자율고','특목고','특성화고'];
   SIZES = ['소규모','중규모','대규모'];
   URBANS = ['대도시', '중소도시', '읍면'];
+  KPIS = [
+    { key: 'ratio', label: '다교과 교사 비율', short: '다교과 비율', unit: '%', d: 1, good: 'low', pick: a => a.ratio * 100 },
+    { key: 'totalH', label: '교사 1인당 주당 수업시수', short: '주당 수업시수', unit: '시간', d: 1, good: 'low', pick: a => a.majorH + a.nonMajorH },
+    { key: 'perSubj', label: '교사 1인당 담당과목 수', short: '담당과목 수', unit: '개', d: 2, good: 'low', pick: a => a.perSubj },
+    { key: 'makeupH', label: '보충 지도 시수', short: '보충지도 시수', unit: '시간', d: 2, good: 'low', pick: a => a.makeupH },
+    { key: 'subjects', label: '학교당 개설 선택과목 수', short: '개설 선택과목 수', unit: '개', d: 1, good: 'high', pick: a => a.subjects }
+  ];
   SUBJECTS = ['미적분','확률과 통계','기하','물리학Ⅰ','화학Ⅰ','생명과학Ⅰ','지구과학Ⅰ','정치와 법','경제','사회·문화','생활과 윤리','한국지리','세계사','언어와 매체','화법과 작문','정보','인공지능 기초','심화 국어','영어권 문화','제2외국어(중국어Ⅰ)','고급 수학','생활과 과학','사회문제 탐구','논술','심리학','보건','환경','음악 감상과 비평','미술 감상과 비평','스포츠 생활','체육 탐구','일본어Ⅰ','프랑스어Ⅰ'];
   NAMEBITS = ['제일','중앙','동','서','남','북','신','한빛','미래','예성','학현','솔빛','청람','다산'];
 
@@ -838,31 +863,60 @@ class Component extends DCLogic {
     const provA = this.agg(all, last.year, last.sem);
     const provStats = this.subjectStats(all, last.year, last.sem).filter(r => r.schools > 0);
     const provClassesPerSchool = provStats.reduce((t, r) => t + r.classes, 0) / all.length;
-    v.provRatio = this.fmt(provA.ratio * 100) + '%';
     v.groupJson = JSON.stringify(this.OFFICE_OF);
 
+    const kpiDef = this.KPIS.find(k => k.key === S.kpi) || this.KPIS[0];
+    const kpiNorm = (val, mn, mx) => {
+      const t = mx === mn ? 0.5 : (val - mn) / (mx - mn);
+      return kpiDef.good === 'high' ? 1 - t : t;
+    };
+    v.kpiOpts = this.KPIS.map(k => ({
+      key: k.key, label: k.short,
+      bg: k.key === kpiDef.key ? '#063a74' : '#ffffff',
+      fg: k.key === kpiDef.key ? '#ffffff' : '#41474d',
+      bd: k.key === kpiDef.key ? '#063a74' : '#b1b8be',
+      weight: k.key === kpiDef.key ? 700 : 400,
+      onClick: () => this.setState({ kpi: k.key })
+    }));
+    v.kpiLabel = kpiDef.label;
+    v.kpiShort = kpiDef.short;
+    v.provKpiValue = this.fmt(kpiDef.pick(provA), kpiDef.d) + kpiDef.unit;
+
     const offices = this.offices();
-    const oList = {}, oRatio = {};
+    const oList = {}, oValue = {};
     offices.forEach(o => {
       oList[o] = all.filter(s => s.office === o);
-      oRatio[o] = this.agg(oList[o], last.year, last.sem).ratio * 100;
+      oValue[o] = kpiDef.pick(this.agg(oList[o], last.year, last.sem));
     });
-    const rmin = Math.min(...offices.map(o => oRatio[o])), rmax = Math.max(...offices.map(o => oRatio[o]));
-    const normO = x => (rmax === rmin ? 0.5 : (x - rmin) / (rmax - rmin));
+    const rmin = Math.min(...offices.map(o => oValue[o])), rmax = Math.max(...offices.map(o => oValue[o]));
     const mapVals = {};
-    offices.forEach(o => { mapVals[o] = { color: this.scale(normO(oRatio[o])), label: '다교과 ' + this.fmt(oRatio[o]) + '%' }; });
+    offices.forEach(o => { mapVals[o] = { color: this.scale(kpiNorm(oValue[o], rmin, rmax)), label: kpiDef.short + ' ' + this.fmt(oValue[o], kpiDef.d) + kpiDef.unit }; });
     v.mapJson = JSON.stringify(mapVals);
 
-    const sel = S.sel;
-    v.selOffice = sel && sel.kind === 'office' ? sel.office : '';
+    const sel = S.sel, scope = S.scope;
+    const cellList = (urban, size) => all.filter(s => s.urban === urban && s.size === size);
+    v.selOffice = scope && scope.kind === 'office' ? scope.office : '';
+    v.selSchoolCode = sel && sel.kind === 'school' ? sel.code : '';
     v.hasSel = !!sel; v.noSel = !sel;
-    v.onClearSel = () => this.setState({ sel: null });
-    v.officeRows = [...offices].sort((a, b) => oRatio[b] - oRatio[a]).map(o => ({
-      name: o, value: this.fmt(oRatio[o]) + '%',
-      bg: v.selOffice === o ? '#eef3f9' : '#ffffff', bd: v.selOffice === o ? '#063a74' : '#e3e6e8',
-      weight: v.selOffice === o ? 700 : 400,
-      onClick: () => this.setState({ sel: { kind: 'office', office: o } })
+    v.onClearSel = () => this.setState({ sel: null, scope: null });
+
+    const rankSchools = scope && scope.kind === 'office' ? (oList[scope.office] || [])
+      : scope && scope.kind === 'cell' ? cellList(scope.urban, scope.size)
+      : all;
+    const rankCap = scope ? rankSchools.length : 20;
+    const schoolVals = rankSchools.map(s => ({ s, val: kpiDef.pick(this.metrics(s, last.year, last.sem)) }));
+    const smn = Math.min(...schoolVals.map(x => x.val)), smx = Math.max(...schoolVals.map(x => x.val));
+    const ranked = [...schoolVals].sort((a, b) => kpiNorm(b.val, smn, smx) - kpiNorm(a.val, smn, smx)).slice(0, rankCap);
+    v.schoolRankRows = ranked.map((r, i) => ({
+      rank: i + 1, name: r.s.name, office: r.s.office.replace(/교육지원청$/, ''),
+      value: this.fmt(r.val, kpiDef.d) + kpiDef.unit,
+      bg: v.selSchoolCode === r.s.code ? '#eef3f9' : '#ffffff', bd: v.selSchoolCode === r.s.code ? '#063a74' : '#e3e6e8',
+      weight: v.selSchoolCode === r.s.code ? 700 : 400,
+      onClick: () => this.setState({ sel: { kind: 'school', code: r.s.code } })
     }));
+    v.schoolRankTitle = scope && scope.kind === 'office' ? (scope.office + ' · ' + kpiDef.short + ' 취약 순')
+      : scope && scope.kind === 'cell' ? (scope.urban + ' × ' + scope.size + ' · ' + kpiDef.short + ' 취약 순')
+      : (kpiDef.short + ' 취약 상위 20교 · 경기도 전체');
 
     v.tipDisplay = S.tip ? 'block' : 'none';
     v.onTipIn = () => this.setState({ tip: true });
@@ -870,14 +924,12 @@ class Component extends DCLogic {
     v.onTipToggle = () => this.setState({ tip: !S.tip });
 
     v.hmHeads = this.SIZES;
-    const cellList = (urban, size) => all.filter(s => s.urban === urban && s.size === size);
     const cellVals = [];
     this.URBANS.forEach(u => this.SIZES.forEach(sz => {
       const list = cellList(u, sz);
-      if (list.length) cellVals.push(this.agg(list, last.year, last.sem).ratio * 100);
+      if (list.length) cellVals.push(kpiDef.pick(this.agg(list, last.year, last.sem)));
     }));
     const cmn = Math.min(...cellVals), cmx = Math.max(...cellVals);
-    const normC = x => (cmx === cmn ? 0.5 : (x - cmn) / (cmx - cmn));
     v.hmCells = [];
     this.URBANS.forEach(u => {
       v.hmCells.push({
@@ -886,18 +938,18 @@ class Component extends DCLogic {
       });
       this.SIZES.forEach(sz => {
         const list = cellList(u, sz);
-        const isSel = sel && sel.kind === 'cell' && sel.urban === u && sel.size === sz;
+        const isSel = scope && scope.kind === 'cell' && scope.urban === u && scope.size === sz;
         if (!list.length) {
           v.hmCells.push({ value: '—', sub: '해당 없음', bg: '#ffffff', fs: 18, ff: "'JetBrains Mono',monospace", pad: '10px 11px', align: 'center', cursor: 'default', outline: 'none', onClick: () => {} });
           return;
         }
-        const val = this.agg(list, last.year, last.sem).ratio * 100;
+        const val = kpiDef.pick(this.agg(list, last.year, last.sem));
         v.hmCells.push({
-          value: this.fmt(val) + '%', sub: list.length + '교',
-          bg: this.scale(normC(val)), fs: 18, ff: "'JetBrains Mono',monospace",
+          value: this.fmt(val, kpiDef.d) + kpiDef.unit, sub: list.length + '교',
+          bg: this.scale(kpiNorm(val, cmn, cmx)), fs: 18, ff: "'JetBrains Mono',monospace",
           pad: '10px 11px', align: 'center', cursor: 'pointer',
           outline: isSel ? '2px solid #063a74' : 'none',
-          onClick: () => this.setState({ sel: { kind: 'cell', urban: u, size: sz } })
+          onClick: () => { const c = { kind: 'cell', urban: u, size: sz }; this.setState({ sel: c, scope: c }); }
         });
       });
     });
@@ -905,12 +957,16 @@ class Component extends DCLogic {
     let selList = [], selTitle = '', selKind = '';
     if (sel && sel.kind === 'office') { selList = oList[sel.office] || []; selTitle = sel.office; selKind = '교육지원청'; }
     else if (sel && sel.kind === 'cell') { selList = cellList(sel.urban, sel.size); selTitle = sel.urban + ' × ' + sel.size; selKind = '지역유형 × 학교규모'; }
+    else if (sel && sel.kind === 'school') {
+      const sc = all.find(x => x.code === sel.code);
+      selList = sc ? [sc] : []; selTitle = sc ? sc.name + ' (' + sc.office + ')' : ''; selKind = '학교';
+    }
     v.selTitle = selTitle;
     if (selList.length) {
       const a = this.agg(selList, last.year, last.sem);
       const st = this.subjectStats(selList, last.year, last.sem).filter(r => r.schools > 0);
       const clsPerSchool = st.reduce((t, r) => t + r.classes, 0) / selList.length;
-      v.selScope = selKind + ' · ' + selList.length + '교 · 학생 ' + this.num(a.students) + '명 · ' + last.label + ' 기준';
+      v.selScope = (selKind === '학교' ? selKind : selKind + ' · ' + selList.length + '교') + ' · 학생 ' + this.num(a.students) + '명 · ' + last.label + ' 기준';
       const mk = (label, mine, avg, d, unit, good, diffUnit) => {
         const diff = mine - avg;
         const better = good === 'high' ? diff >= 0 : diff <= 0;
