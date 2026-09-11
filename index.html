@@ -386,8 +386,13 @@ class Component extends DCLogic {
   componentDidMount() {
     this._onSel = e => {
       if (e.detail && e.detail.name) {
-        const office = { kind: 'office', office: e.detail.name };
-        this.setState({ sel: office, scope: office });
+        const cur = this.state.scope;
+        if (cur && cur.kind === 'office' && cur.office === e.detail.name) {
+          this.setState({ sel: null, scope: null });
+        } else {
+          const office = { kind: 'office', office: e.detail.name };
+          this.setState({ sel: office, scope: office });
+        }
       }
     };
     document.addEventListener('sigungu-select', this._onSel);
@@ -949,7 +954,11 @@ class Component extends DCLogic {
           bg: this.scale(kpiNorm(val, cmn, cmx)), fs: 18, ff: "'JetBrains Mono',monospace",
           pad: '10px 11px', align: 'center', cursor: 'pointer',
           outline: isSel ? '2px solid #063a74' : 'none',
-          onClick: () => { const c = { kind: 'cell', urban: u, size: sz }; this.setState({ sel: c, scope: c }); }
+          onClick: () => {
+            if (isSel) { this.setState({ sel: null, scope: null }); return; }
+            const c = { kind: 'cell', urban: u, size: sz };
+            this.setState({ sel: c, scope: c });
+          }
         });
       });
     });
