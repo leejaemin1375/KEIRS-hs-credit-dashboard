@@ -214,7 +214,7 @@ button { font-family:inherit; }
 
         <div style="background:#ffffff; border:1px solid #cdd1d5; padding:14px 16px">
           <div style="font-size:22px; font-weight:700; color:#1e2124; padding-bottom:7px; border-bottom:2px solid #063a74; display:inline-block">지역 · 학교 특성별 격차 진단</div>
-          <div style="margin-top:10px; color:#41474d; font-size:15px; max-width:960px; text-wrap:pretty">1번 탭에서 확인한 부담 증가가 <b>어느 지역, 어떤 조건의 학교에 집중되어 있는지</b> 찾는 화면입니다. 왼쪽 지도는 행정 단위(교육지원청 25개)로, 오른쪽 히트맵은 학교 조건(규모 × 도시 유형)으로 같은 지표를 갈라 봅니다. 아래 지표 필터로 <b>다교과 비율 · 주당 수업시수 · 담당과목 수</b> 등 다양한 관점을 바꿔가며 볼 수 있으며, 빨강이 취약, 초록이 양호를 의미합니다.</div>
+          <div style="margin-top:10px; color:#41474d; font-size:15px; max-width:960px; text-wrap:pretty">1번 탭에서 확인한 부담 증가가 <b>어느 지역, 어떤 조건의 학교에 집중되어 있는지</b> 찾는 화면입니다. 왼쪽 지도는 행정 단위(교육지원청 25개)로, 오른쪽 히트맵은 학교 조건(규모 × 도시 유형)으로 같은 지표를 갈라 봅니다. 아래 지표 필터로 <b>다교과 비율 · 주당 수업시수</b> 등 다양한 관점을 바꿔가며 볼 수 있으며, 빨강이 취약, 초록이 양호를 의미합니다.</div>
           <div style="margin-top:10px; font-size:14.5px; color:#41474d">지도의 교육지원청이나 히트맵의 칸, 아래 학교 랭킹을 누르면 그 대상의 선택과목·교사 부담 지표가 경기도 평균과 비교되어 나타납니다.</div>
         </div>
 
@@ -406,9 +406,7 @@ class Component extends DCLogic {
   KPIS = [
     { key: 'ratio', label: '다교과 교사 비율', short: '다교과 비율', unit: '%', d: 1, good: 'low', pick: a => a.ratio * 100 },
     { key: 'totalH', label: '교사 1인당 주당 수업시수', short: '주당 수업시수', unit: '시간', d: 1, good: 'low', pick: a => a.majorH + a.nonMajorH },
-    { key: 'perSubj', label: '교사 1인당 담당과목 수', short: '담당과목 수', unit: '개', d: 2, good: 'low', pick: a => a.perSubj },
-    { key: 'makeupH', label: '보충 지도 시수', short: '보충지도 시수', unit: '시간', d: 2, good: 'low', pick: a => a.makeupH },
-    { key: 'subjects', label: '학교당 개설 선택과목 수', short: '개설 선택과목 수', unit: '개', d: 1, good: 'high', pick: a => a.subjects }
+    { key: 'makeupH', label: '보충 지도 시수', short: '보충지도 시수', unit: '시간', d: 2, good: 'low', pick: a => a.makeupH }
   ];
   SUBJECTS = ['미적분','확률과 통계','기하','물리학Ⅰ','화학Ⅰ','생명과학Ⅰ','지구과학Ⅰ','정치와 법','경제','사회·문화','생활과 윤리','한국지리','세계사','언어와 매체','화법과 작문','정보','인공지능 기초','심화 국어','영어권 문화','제2외국어(중국어Ⅰ)','고급 수학','생활과 과학','사회문제 탐구','논술','심리학','보건','환경','음악 감상과 비평','미술 감상과 비평','스포츠 생활','체육 탐구','일본어Ⅰ','프랑스어Ⅰ'];
   NAMEBITS = ['제일','중앙','동','서','남','북','신','한빛','미래','예성','학현','솔빛','청람','다산'];
