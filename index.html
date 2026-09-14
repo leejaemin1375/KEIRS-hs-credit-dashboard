@@ -986,7 +986,7 @@ class Component extends DCLogic {
       };
       v.detailSubj = [
         mk('평균 개설 선택과목 수 (학교당)', a.subjects, provA.subjects, 1, '개', 'high'),
-        mk('학교당 개설 학급 수 (선택과목)', clsPerSchool, provClassesPerSchool, 1, '학급', 'high')
+        mk('학교당 개설 수업 학급 수', clsPerSchool, provClassesPerSchool, 1, '학급', 'high')
       ];
       v.detailTeacher = [
         mk('다교과 교사 비율', a.ratio * 100, provA.ratio * 100, 1, '%', 'low', '%p'),
