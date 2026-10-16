@@ -11,993 +11,857 @@
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.min.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_ds/industry-9ba123f0-cc88-4119-b74c-98233e5f054d/styles.css">
+<script src="_ds/industry-9ba123f0-cc88-4119-b74c-98233e5f054d/_ds_bundle.js"></script>
 <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
+<script src="v9-data.js"></script>
+<script src="v8-charts.js"></script>
 <style>
 html, body { margin:0; padding:0; background:#f4f5f6; }
-body { font-family:"Pretendard Variable", Pretendard, system-ui, sans-serif; font-size:16px; line-height:1.55; color:#1e2124; -webkit-font-smoothing:antialiased; }
+body { font-family:"Pretendard Variable", Pretendard, system-ui, sans-serif; font-size:14px; line-height:1.5; color:#1e2124; -webkit-font-smoothing:antialiased; }
 * { box-sizing:border-box; }
 a { color:#1c589c; text-decoration:none; }
 a:hover { color:#063a74; text-decoration:underline; }
-table { border-collapse:collapse; }
-button { font-family:inherit; }
+button, select, input { font-family:inherit; }
+select:focus-visible, input:focus-visible, button:focus-visible { outline:2px solid #1c589c; outline-offset:1px; }
 </style>
 </helmet>
 <div style="min-height:100vh; background:#f4f5f6; display:flex; flex-direction:column">
 
-  <div style="background:#052b57; color:#c9d7e6; font-size:14px; padding:6px 20px; display:flex; gap:10px; align-items:center; flex-wrap:wrap">
-    <span style="display:inline-block; width:9px; height:9px; background:#3fa654"></span>
-    <span>경기도교육청 · 고교학점제 운영 분석 시스템 (내부 행정용)</span>
-    <span style="margin-left:auto; font-family:'JetBrains Mono',monospace">데이터 기준일 {{ asOf }}</span>
+  <div style="background:#052b57; color:#c9d7e6; font-size:12.5px; padding:5px 18px; display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+    <span style="display:inline-block; width:8px; height:8px; background:#3fa654"></span>
+    <span style="white-space:nowrap">경기도교육청 · 고교학점제 운영 분석 (내부 행정용)</span>
+    <span style="margin-left:auto; flex:0 0 auto; white-space:nowrap; padding:1px 8px; border:1px solid #e8c58a; color:#f3d9a8; font-weight:700">가상 데이터 · 시연용</span>
   </div>
 
-  <div style="background:#063a74; border-bottom:3px solid #3fa654; padding:14px 20px; display:flex; align-items:center; gap:16px; flex-wrap:wrap">
-    <div style="display:flex; align-items:center; gap:11px">
-      <div style="width:30px; height:30px; border:2px solid #ffffff; display:flex; align-items:center; justify-content:center; color:#ffffff; font-weight:700; font-size:15px">GG</div>
-      <div style="color:#ffffff; font-size:21px; font-weight:700; letter-spacing:-0.3px">고등학교 선택과목 · 교원 수업부담 분석</div>
-    </div>
-    <div style="margin-left:auto; color:#a9c2dc; font-size:14px; font-family:'JetBrains Mono',monospace">EDU-ANL-2026 / v2.0</div>
+  <div style="background:#063a74; border-bottom:3px solid #3fa654; padding:11px 18px; display:flex; align-items:center; gap:12px; flex-wrap:wrap">
+    <div style="width:28px; height:28px; border:2px solid #ffffff; display:flex; align-items:center; justify-content:center; color:#ffffff; font-weight:700; font-size:13px; flex:0 0 auto">GG</div>
+    <div style="color:#ffffff; font-size:19px; font-weight:700; letter-spacing:-0.3px">경기도 고등학교 선택과목 변화 및 교원 수업시수 분석</div>
+    <div style="margin-left:auto; flex:0 0 auto; white-space:nowrap; color:#a9c2dc; font-size:12.5px; font-family:'JetBrains Mono',monospace">2022–2026 · v10</div>
   </div>
 
-  <div style="background:#ffffff; border-bottom:1px solid #cdd1d5; padding:0 20px; display:flex; gap:0; flex-wrap:wrap">
-    <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="2">
-      <button onClick="{{ t.onClick }}" style="padding:12px 20px; border:0; border-bottom:3px solid {{ t.bd }}; background:{{ t.bg }}; color:{{ t.fg }}; font-size:17px; font-weight:700; cursor:pointer; border-radius:0; white-space:nowrap">{{ t.label }}</button>
+  <div style="background:#ffffff; border-bottom:1px solid #cdd1d5; padding:0 18px; display:flex; flex-wrap:wrap; align-items:stretch">
+    <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+      <button onClick="{{ t.onClick }}" style="padding:10px 18px; border:0; border-bottom:3px solid {{ t.bd }}; background:{{ t.bg }}; color:{{ t.fg }}; font-size:15px; font-weight:700; cursor:pointer; white-space:nowrap">{{ t.label }}</button>
     </sc-for>
+    <div style="margin-left:auto; display:flex; align-items:center; gap:4px; flex-wrap:wrap; padding:6px 0; font-size:13px">
+      <sc-for list="{{ crumbs }}" as="c" hint-placeholder-count="1">
+        <span style="color:#9aa3ad">{{ c.sep }}</span>
+        <button onClick="{{ c.onClick }}" style="padding:2px 8px; border:1px solid #cdd1d5; background:#f4f5f6; color:#063a74; font-size:13px; font-weight:700; cursor:pointer; border-radius:2px; white-space:nowrap">{{ c.label }}</button>
+      </sc-for>
+    </div>
   </div>
 
-  <div style="padding:18px 20px 44px; max-width:1560px; width:100%; margin:0 auto; display:flex; flex-direction:column; gap:18px">
+  <div style="padding:14px 18px 28px; max-width:1680px; width:100%; margin:0 auto; display:flex; flex-direction:column; gap:14px">
+
+    <sc-if value="{{ notReady }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#ffffff; border:1px solid #cdd1d5; padding:40px; text-align:center; color:#41474d">데이터를 불러오는 중입니다…</div>
+    </sc-if>
 
     <sc-if value="{{ isTab1 }}" hint-placeholder-val="{{ true }}">
-      <div style="display:flex; flex-direction:column; gap:18px">
-
-        <div style="background:#ffffff; border:1px solid #cdd1d5; padding:14px 16px">
-          <div style="font-size:22px; font-weight:700; color:#1e2124; padding-bottom:7px; border-bottom:2px solid #063a74; display:inline-block">경기도 전체 변화 흐름</div>
-          <div style="margin-top:10px; color:#41474d; font-size:15px; max-width:960px; text-wrap:pretty">고교학점제 도입으로 학생의 과목 선택은 넓어졌지만, 그 과목을 누가 가르치느냐는 문제가 함께 커졌습니다. 이 대시보드는 <b>학생의 선택 변화</b>와 <b>교사의 수업 부담 변화</b>를 같은 시간축에 놓고, 어느 지역·어떤 학교에서 그 부담이 가장 무거운지까지 확인하도록 구성했습니다.</div>
-          <div style="margin-top:12px; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap:12px 20px">
-            <div style="padding-left:12px; border-left:3px solid #063a74">
-              <div style="font-size:15px; font-weight:700; color:#063a74">① 경기도 전체 변화 흐름</div>
-              <div style="font-size:14.5px; color:#41474d; margin-top:2px">선택과목이 얼마나 늘고 어떤 과목으로 쏠렸는지, 그 결과 교사의 담당 과목·다교과 비율·보충 지도 시수가 어떻게 움직였는지를 위에서 아래로 읽습니다.</div>
-            </div>
-            <div style="padding-left:12px; border-left:3px solid #3fa654">
-              <div style="font-size:15px; font-weight:700; color:#063a74">② 지역 · 학교 특성별 격차 진단</div>
-              <div style="font-size:14.5px; color:#41474d; margin-top:2px">늘어난 부담은 모든 학교에 똑같이 걸리지 않았습니다. 어디가 가장 무겁게 짊어지고 있는지를 지역(지도)과 학교 조건(규모 × 도시 유형)으로 좁혀 찾고, 경기도 평균과 견줘 교원 배치가 필요한 지점을 집어냅니다.</div>
-            </div>
+      <div style="display:flex; flex-direction:column; gap:14px">
+        <div style="background:#ffffff; border:1px solid #cdd1d5; padding:10px 14px; display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; position:sticky; top:0; z-index:6">
+          <div style="display:flex; align-items:center; gap:6px">
+            <span style="font-size:13px; font-weight:700; color:#063a74; white-space:nowrap">비교기간</span>
+            <select data-v="{{ from }}" value="{{ from }}" onChange="{{ onFrom }}" style="padding:5px 8px; border:1px solid #9aa3ad; border-radius:2px; font-size:13.5px; background:#ffffff">
+              <sc-for list="{{ fromOpts }}" as="o" hint-placeholder-count="4"><option value="{{ o.key }}">{{ o.label }}</option></sc-for>
+            </select>
+            <span style="color:#5b6167">→</span>
+            <select data-v="{{ to }}" value="{{ to }}" onChange="{{ onTo }}" style="padding:5px 8px; border:1px solid #9aa3ad; border-radius:2px; font-size:13.5px; background:#ffffff">
+              <sc-for list="{{ toOpts }}" as="o" hint-placeholder-count="4"><option value="{{ o.key }}">{{ o.label }}</option></sc-for>
+            </select>
           </div>
-          <div style="margin-top:12px; padding-top:10px; border-top:1px solid #e3e6e8; display:flex; flex-wrap:wrap; gap:8px 22px; font-size:14px; color:#41474d">
-            <span><b style="color:#063a74">분석 대상</b> 경기도 고등학교 {{ schools }}교 · 학생 {{ students }}명</span>
-            <span><b style="color:#063a74">기간</b> 2023 · 2024(연 단위, 두 학기 평균) → 25.1 · 25.2 · 26.1 · 26.2학기(학기 단위)</span>
-            <span><b style="color:#063a74">기준</b> 모든 시계열 X축 동일 · 학교 단위 집계값만 표시</span>
+          <div style="display:flex; align-items:center; gap:4px; flex-wrap:wrap">
+            <span style="font-size:13px; font-weight:700; color:#063a74; margin-right:2px">비교 구간</span>
+            <sc-for list="{{ rangeOpts }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.onClick }}" style="padding:4px 10px; border:1px solid {{ o.bd }}; background:{{ o.bg }}; color:{{ o.fg }}; font-weight:{{ o.fw }}; font-size:12.5px; cursor:pointer; border-radius:2px; white-space:nowrap">{{ o.label }}</button></sc-for>
           </div>
-        </div>
-
-        <div style="background:#ffffff; border:1px solid #cdd1d5; padding:12px 16px; display:flex; flex-wrap:wrap; gap:10px 14px; align-items:center; position:sticky; top:0; z-index:5">
-          <span style="font-size:15px; font-weight:700; color:#063a74; white-space:nowrap">교육지원청</span>
-          <select value="{{ scope1 }}" onChange="{{ onScope1 }}" style="padding:6px 10px; border:1px solid #b1b8be; border-radius:2px; font-size:15px; background:#ffffff; color:#1e2124; min-width:210px">
-            <sc-for list="{{ scopeOpts }}" as="o" hint-placeholder-count="26">
-              <option value="{{ o.key }}">{{ o.label }}</option>
-            </sc-for>
-          </select>
-          <span style="font-size:14px; color:#5b6167">선택하면 이 탭의 모든 지표가 해당 교육지원청 기준으로 다시 계산됩니다.</span>
-        </div>
-
-        <sc-if value="{{ showCompare }}" hint-placeholder-val="{{ false }}">
-          <div style="background:#eef3f9; border:1px solid #b7cbe0; padding:10px 16px; font-size:14.5px; color:#1e2124">
-            <b style="color:#063a74">{{ scopeLabel }}</b> · {{ scopeCompare }}
+          <div style="flex:1 1 100%; height:0"></div>
+          <div style="display:flex; align-items:center; gap:4px; flex-wrap:wrap">
+            <span style="font-size:13px; font-weight:700; color:#063a74; margin-right:2px">학년</span>
+            <sc-for list="{{ gradeOpts }}" as="o" hint-placeholder-count="4"><button onClick="{{ o.onClick }}" style="padding:4px 11px; border:1px solid {{ o.bd }}; background:{{ o.bg }}; color:{{ o.fg }}; font-weight:{{ o.fw }}; font-size:13px; cursor:pointer; border-radius:2px; white-space:nowrap">{{ o.label }}</button></sc-for>
           </div>
-        </sc-if>
-
-        <div style="background:#052b57; color:#ffffff; padding:14px 18px; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap">
-          <div style="font-size:15px; color:#9fd2ad; font-weight:700">① {{ scopeLabel }} · 선택과목이 이만큼 늘었다</div>
-          <div style="font-size:20px; font-weight:700">학교당 평균 개설 선택과목 도입 전 {{ subjFirst }}개 → 도입 후 {{ subjLast }}개</div>
-          <div style="margin-left:auto; font-size:16px; font-weight:700; color:#9fd2ad; font-family:'JetBrains Mono',monospace">{{ subjDelta }}</div>
-        </div>
-
-        <div style="background: #ffffff; border: 1px solid #cdd1d5; padding: 16px; display:flex; flex-wrap:wrap; gap:22px; align-items:stretch">
-          <div style="flex:1 1 560px; min-width:320px">
-          <div style="font-size:18px; font-weight:700; color:#063a74">고교학점제 도입 전후 선택과목 수 변화 추이</div>
-          <div style="font-size:14px; color:#41474d; margin-top:3px">학교당 평균 개설 선택과목 수(개) · 점선 = 고교학점제 전면 도입({{ creditYear }}) · 2학기는 학기 전용 편성 과목이 빠져 낮게 나타납니다</div>
+          <div style="display:flex; align-items:center; gap:6px">
+            <span style="font-size:13px; font-weight:700; color:#063a74; white-space:nowrap">교과(군)</span>
+            <select data-v="{{ area }}" value="{{ area }}" onChange="{{ onArea }}" style="padding:5px 8px; border:1px solid #9aa3ad; border-radius:2px; font-size:13.5px; background:#ffffff">
+              <sc-for list="{{ areaOpts }}" as="o" hint-placeholder-count="12"><option value="{{ o.key }}">{{ o.label }}</option></sc-for>
+            </select>
+          </div>
+          <button onClick="{{ onReset1 }}" style="flex:0 0 auto; white-space:nowrap; padding:4px 10px; border:1px solid #cdd1d5; background:#ffffff; color:#41474d; font-size:13px; cursor:pointer; border-radius:2px">초기화</button>
           
-          <div style="width: 829px; max-height: 330px; height: 305px">{{ subjChart }}</div><div style="font-size:14.5px; color:#41474d">{{ subjSummary }}</div>
-          </div>
-          <div style="flex:1 1 360px; min-width:300px; display:flex; flex-direction:column; border-left:1px solid #e3e6e8; padding-left:22px">
-            <div style="font-size:18px; font-weight:700; color:#063a74">어느 교과영역이 늘었나</div>
-            <div style="font-size:14px; color:#41474d; margin-top:3px">학교당 개설 과목 수(개) · 회색 = 도입 전(2023–2024), 네이비 = 도입 후(25·26)</div>
-            <div style="margin-top:14px; display:flex; flex-direction:column; gap:13px">
-              <sc-for list="{{ areaRows }}" as="a" hint-placeholder-count="6">
-                <div style="display:grid; grid-template-columns:minmax(66px, 86px) minmax(0,1fr) minmax(104px, 132px); gap:10px; align-items:center">
-                  <div style="font-size:15px; font-weight:700">{{ a.name }}</div>
-                  <div style="display:flex; flex-direction:column; gap:3px">
-                    <div style="height:11px; background:#f4f5f6; border:1px solid #e3e6e8"><div style="height:9px; background:#b1b8be; width:{{ a.pctBefore }}%"></div></div>
-                    <div style="height:11px; background:#f4f5f6; border:1px solid #e3e6e8"><div style="height:9px; background:#063a74; width:{{ a.pctAfter }}%"></div></div>
-                  </div>
-                  <div style="display:flex; align-items:baseline; justify-content:flex-end; gap:7px">
-                    <span style="font-size:13.5px; font-family:'JetBrains Mono',monospace; color:#41474d">{{ a.before }} → {{ a.after }}</span>
-                    <span style="font-size:14.5px; font-weight:700; font-family:'JetBrains Mono',monospace; color:{{ a.diffColor }}">{{ a.diff }}</span>
-                  </div>
-                </div>
-              </sc-for>
-            </div>
-            <div style="margin-top:auto; padding-top:12px; font-size:13.5px; color:#5b6167">과목 종수 기준입니다. 수강 인원 변화는 아래 증가·감소 Top 10에서 확인하십시오.</div>
-          </div>
         </div>
+        <sc-if value="{{ hasWarn }}" hint-placeholder-val="{{ false }}"></sc-if>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap:18px">
-          <div style="background:#ffffff; border:1px solid #cdd1d5; padding:16px">
-            <div style="font-size:18px; font-weight:700; color:#063a74">고교학점제 전후 수강 학생 증가 과목 Top {{ topN }}</div>
-            <div style="font-size:14px; color:#41474d; margin-top:3px">{{ changeNote }} · 막대 = 학생 증가폭(명), 오른쪽 = 학급 수 증감</div>
-            <div style="margin-top:12px; display:flex; flex-direction:column; gap:10px">
-              <sc-for list="{{ upBars }}" as="s" hint-placeholder-count="10">
-                <div style="display:grid; grid-template-columns:minmax(110px, 168px) minmax(0,1fr) minmax(66px, 92px) minmax(58px, 82px); gap:10px; align-items:center">
-                  <div style="display:flex; flex-direction:column">
-                    <div style="font-size:15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">{{ s.name }}</div>
-                    <div style="font-size:13px; color:#5b6167; font-family:'JetBrains Mono',monospace">{{ s.sub }}</div>
-                  </div>
-                  <div style="height:16px; background:#f4f5f6; border:1px solid #e3e6e8"><div style="height:14px; background:{{ s.color }}; width:{{ s.pct }}%"></div></div>
-                  <div style="font-size:15px; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:#063a74">{{ s.value }}</div>
-                  <div style="font-size:14px; text-align:right; font-family:'JetBrains Mono',monospace; color:#41474d">{{ s.per }}</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(480px, 100%), 1fr)); gap:14px">
+          <div style="background:#ffffff; border:1px solid #cdd1d5; padding:12px 14px; display:flex; flex-direction:column; gap:8px; min-width:0">
+            <div style="display:inline-flex; align-items:center; gap:6px; font-size:15px; font-weight:700; color:#063a74">교육과정 적용 현황<span data-info="학년도·학년별 적용 교육과정. 2022~2024 전 학년 2015 개정, 2025 고1, 2026 고1·2, 2027 전 학년 2022 개정.
+출처: 경기도교육청 2022 개정 고등학교 교육과정 Q&amp;A 자료집" style="display:inline-flex; flex:0 0 auto; cursor:pointer; line-height:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1c589c" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16.5" x2="12" y2="11"></line><circle cx="12" cy="7.6" r="0.9" fill="#1c589c" stroke="none"></circle></svg></span></div>
+            <div style="display:flex; flex-direction:column; gap:2px">
+              <div style="display:grid; grid-template-columns:40px repeat(6, minmax(0,1fr)); gap:2px; font-size:12px">
+                <div></div>
+                <sc-for list="{{ curCols }}" as="c" hint-placeholder-count="6"><div style="text-align:center; font-family:'JetBrains Mono',monospace; font-weight:{{ c.fw }}; color:{{ c.color }}; white-space:nowrap">{{ c.label }}</div></sc-for>
+              </div>
+              <sc-for list="{{ curRows }}" as="r" hint-placeholder-count="3">
+                <div style="display:grid; grid-template-columns:40px repeat(6, minmax(0,1fr)); gap:2px">
+                  <div style="font-size:12.5px; font-weight:700; display:flex; align-items:center">{{ r.label }}</div>
+                  <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="6">
+                    <div style="background:{{ c.bg }}; color:{{ c.fg }}; opacity:{{ c.op }}; outline:{{ c.outline }}; outline-offset:-2px; padding:4px 2px; text-align:center; font-size:12px; font-weight:700; font-family:'JetBrains Mono',monospace; white-space:nowrap">{{ c.text }}</div>
+                  </sc-for>
                 </div>
               </sc-for>
             </div>
+            
           </div>
-          <div style="background:#ffffff; border:1px solid #cdd1d5; padding:16px">
-            <div style="font-size:18px; font-weight:700; color:#9e3412">고교학점제 전후 수강 학생 감소 과목 Top {{ topN }}</div>
-            <div style="font-size:14px; color:#41474d; margin-top:3px">{{ changeNote }} · 막대 = 학생 감소폭(명), 오른쪽 = 학급 수 증감</div>
-            <div style="margin-top:12px; display:flex; flex-direction:column; gap:10px">
-              <sc-for list="{{ downBars }}" as="s" hint-placeholder-count="10">
-                <div style="display:grid; grid-template-columns:minmax(110px, 168px) minmax(0,1fr) minmax(66px, 92px) minmax(58px, 82px); gap:10px; align-items:center">
-                  <div style="display:flex; flex-direction:column">
-                    <div style="font-size:15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">{{ s.name }}</div>
-                    <div style="font-size:13px; color:#5b6167; font-family:'JetBrains Mono',monospace">{{ s.sub }}</div>
+          <div style="align-self:start; background:#052b57; color:#ffffff; padding:12px 16px; display:flex; flex-direction:column; gap:10px; min-width:0">
+            <div style="display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 10px">
+              <div style="display:inline-flex; align-items:center; gap:6px; font-size:15px; font-weight:700; color:#ffffff">선택과목 운영 현황 변화<span data-info="{{ b1Tip }}" style="display:inline-flex; flex:0 0 auto; cursor:pointer; line-height:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9fc3e6" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16.5" x2="12" y2="11"></line><circle cx="12" cy="7.6" r="0.9" fill="#9fc3e6" stroke="none"></circle></svg></span></div>
+              <div style="margin-left:auto; font-size:12.5px; color:#9fd2ad; font-weight:700; white-space:nowrap">{{ b1Head }}</div>
+            </div>
+            <div style="font-size:12.5px; color:#c9d7e6">{{ b1Stu }}</div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:10px 16px">
+              <sc-for list="{{ b1 }}" as="b" hint-placeholder-count="3">
+                <div style="display:flex; flex-direction:column; gap:1px; padding-left:10px; border-left:2px solid #3fa654; min-width:0">
+                  <div style="display:flex; align-items:flex-start; gap:5px; font-size:12.5px; line-height:1.4; color:#c9d7e6; min-width:0; min-height:18px">
+                    <span style="display:block; white-space:normal; word-break:keep-all; line-height:1.4">{{ b.label }}</span>
                   </div>
-                  <div style="height:16px; background:#f4f5f6; border:1px solid #e3e6e8"><div style="height:14px; background:{{ s.color }}; width:{{ s.pct }}%"></div></div>
-                  <div style="font-size:15px; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:#de3412">{{ s.value }}</div>
-                  <div style="font-size:14px; text-align:right; font-family:'JetBrains Mono',monospace; color:#41474d">{{ s.per }}</div>
+                  <div style="display:flex; align-items:baseline; gap:4px; white-space:nowrap; line-height:1.15; margin-top:2px"><span style="font-size:24px; font-weight:700; font-family:'JetBrains Mono',monospace">{{ b.b }}</span><span style="font-size:12.5px; color:#c9d7e6">{{ b.unit }}</span></div>
+                  <div style="display:flex; flex-wrap:wrap; gap:0 8px; font-size:12.5px; font-family:'JetBrains Mono',monospace; white-space:nowrap"><span style="color:#a9c2dc">{{ b.fromLabel }} {{ b.a }}</span><span style="color:#9fd2ad; font-weight:700">{{ b.d }}</span></div>
                 </div>
               </sc-for>
             </div>
           </div>
         </div>
 
-        <div style="background:#052b57; color:#ffffff; padding:14px 18px; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap">
-          <div style="font-size:15px; color:#f0b8a8; font-weight:700">② {{ scopeLabel }} · 그래서 교사 부담이 이만큼 커졌다</div>
-          <div style="font-size:20px; font-weight:700">담당 과목 {{ loadFirst }}개 → {{ loadLast }}개 · 다교과 교사 {{ ratioFirst }}% → {{ ratioLast }}%</div>
-          <div style="margin-left:auto; font-size:16px; font-weight:700; color:#f0b8a8; font-family:'JetBrains Mono',monospace">{{ loadDelta }}</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(560px, 100%), 1fr)); gap:14px">
+          <div style="background:#ffffff; border:1px solid #cdd1d5; padding:12px 14px; display:flex; flex-direction:column; gap:6px; min-width:0">
+            <div style="display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px">
+              <div style="display:inline-flex; align-items:center; gap:6px; font-size:15px; font-weight:700; color:#063a74">연도·학기별 선택과목 수 변화<span data-info="학기별 경기도 전체 값. 개설 과목 = 학교별 개설 선택과목 수 평균, 개설 분반 = 학교별 분반 수 평균, 수강학생 = 과목별 수강인원 합계(연인원). 공통과목 제외.
+출처: 학교별학년별학기별개설과목현황(고), 나이스기초시간표" style="display:inline-flex; flex:0 0 auto; cursor:pointer; line-height:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1c589c" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16.5" x2="12" y2="11"></line><circle cx="12" cy="7.6" r="0.9" fill="#1c589c" stroke="none"></circle></svg></span></div>
+              <div style="margin-left:auto; display:flex; gap:4px; flex-wrap:wrap">
+                <sc-for list="{{ m1Opts }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.onClick }}" style="padding:3px 9px; border:1px solid {{ o.bd }}; background:{{ o.bg }}; color:{{ o.fg }}; font-weight:{{ o.fw }}; font-size:12.5px; cursor:pointer; border-radius:2px; white-space:nowrap">{{ o.label }}</button></sc-for>
+              </div>
+            </div>
+            <div style="font-size:12.5px; color:#5b6167">{{ m1Title }} · 점선 = 교육과정 적용 시점</div>
+            <div>{{ lineChart }}</div>
+            <div style="font-size:12.5px; color:#1e2124">{{ lineSummary }}</div>
+          </div>
+          <div style="background:#ffffff; border:1px solid #cdd1d5; padding:12px 14px; display:flex; flex-direction:column; gap:6px; min-width:0">
+            <div style="display:inline-flex; align-items:center; gap:6px; font-size:15px; font-weight:700; color:#063a74">교과(군)별 학교당 개설 선택과목 수<span data-info="교과(군)별 학교당 개설 선택과목 수의 시작·끝 연도 값(학기 평균). 2015 교과는 2022 개정 교과(군)으로 변환.
+출처: 고등학교별교육과정편제현황, 개설과목현황(고)" style="display:inline-flex; flex:0 0 auto; cursor:pointer; line-height:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1c589c" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16.5" x2="12" y2="11"></line><circle cx="12" cy="7.6" r="0.9" fill="#1c589c" stroke="none"></circle></svg></span></div>
+            <div style="font-size:12.5px; color:#5b6167">{{ from }}년 → {{ to }}년 · 2022 개정 교과(군) 기준 · 누르면 교과(군) 필터 적용</div>
+            <div>{{ dumbChart }}</div>
+          </div>
         </div>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(560px, 100%), 1fr)); gap:18px">
-          <div style="background:#ffffff; border:1px solid #cdd1d5; padding:16px">
-            <div style="font-size:18px; font-weight:700; color:#063a74">교사 1인당 담당과목 수 변화 추이</div>
-            <div style="font-size:14px; color:#41474d; margin-top:3px">단위: 과목 · 동일 X축</div>
-            <div>{{ loadChart }}</div>
-            <div style="font-size:14.5px; color:#41474d">{{ loadSummary }}</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(560px, 100%), 1fr)); gap:14px">
+          <div style="background:#ffffff; border:1px solid #cdd1d5; padding:12px 14px; display:flex; flex-direction:column; gap:6px; min-width:0">
+            <div style="display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px">
+              <div style="display:inline-flex; align-items:center; gap:6px; font-size:15px; font-weight:700; color:#063a74">과목별 증가 · 감소 Top 10<span data-info="시작·끝 연도의 학기 평균 수강인원(또는 분반 수) 차이. 2015·2022 개정 목록에 같은 이름으로 있는 과목만 비교.
+출처: 나이스기초시간표, 개설과목현황(고)" style="display:inline-flex; flex:0 0 auto; cursor:pointer; line-height:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1c589c" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16.5" x2="12" y2="11"></line><circle cx="12" cy="7.6" r="0.9" fill="#1c589c" stroke="none"></circle></svg></span></div>
+              <div style="margin-left:auto; display:flex; gap:4px; flex-wrap:wrap">
+                <sc-for list="{{ m4Opts }}" as="o" hint-placeholder-count="2"><button onClick="{{ o.onClick }}" style="padding:3px 9px; border:1px solid {{ o.bd }}; background:{{ o.bg }}; color:{{ o.fg }}; font-weight:{{ o.fw }}; font-size:12.5px; cursor:pointer; border-radius:2px; white-space:nowrap">{{ o.label }}</button></sc-for>
+              </div>
+            </div>
+            <div style="font-size:12.5px; color:#5b6167">{{ divNote }}</div>
+            <div>{{ divChart }}</div>
           </div>
-          <div style="background:#ffffff; border:1px solid #cdd1d5; padding:16px">
-            <div style="font-size:18px; font-weight:700; color:#063a74">다교과 교사 비율 변화</div>
-            <div style="font-size:14px; color:#41474d; margin-top:3px">전공 외 교과를 1과목 이상 담당하는 교사 비율(%)</div>
-            <div>{{ ratioChart }}</div>
-            <div style="font-size:14.5px; color:#41474d">{{ ratioSummary }}</div>
-          </div>
-        </div>
-
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(560px, 100%), 1fr)); gap:18px">
-          <div style="background:#ffffff; border:1px solid #cdd1d5; padding:16px">
-            <div style="font-size:18px; font-weight:700; color:#063a74">교사 1인당 전공 · 비전공 수업 시수</div>
-            <div style="font-size:14px; color:#41474d; margin-top:3px">기간별 주당 시수 구성 · 짙은 네이비 = 전공, 주황 = 비전공</div>
-            <div style="margin-top:14px; display:flex; flex-direction:column; gap:11px">
-              <sc-for list="{{ hourBars }}" as="h" hint-placeholder-count="7">
-                <div style="display:grid; grid-template-columns:minmax(78px, 96px) minmax(0,1fr) minmax(118px, 152px); gap:10px; align-items:center">
-                  <div style="font-size:14.5px; font-family:'JetBrains Mono',monospace; color:{{ h.labelColor }}; font-weight:{{ h.weight }}">{{ h.label }}</div>
-                  <div style="display:flex; height:18px; background:#f4f5f6; border:1px solid #e3e6e8">
-                    <div style="height:16px; background:#063a74; width:{{ h.pctMajor }}%"></div>
-                    <div style="height:16px; background:#9e6a00; width:{{ h.pctNon }}%"></div>
-                  </div>
-                  <div style="font-size:14.5px; text-align:right; font-family:'JetBrains Mono',monospace">{{ h.text }}</div>
+          <div style="background:#ffffff; border:1px solid #cdd1d5; padding:12px 14px; display:flex; flex-direction:column; gap:8px; min-width:0">
+            <div style="display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px">
+              <div style="display:inline-flex; align-items:center; gap:6px; font-size:15px; font-weight:700; color:#063a74">교육과정 개편 과목 (비교 제외)<span data-info="한쪽 교육과정에만 있는 과목(신설·폐지·명칭 변경). 서로 연결하지 않아 증감을 계산하지 않음.
+출처: 자료집 선택과목 비교표, 나이스기초시간표" style="display:inline-flex; flex:0 0 auto; cursor:pointer; line-height:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1c589c" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16.5" x2="12" y2="11"></line><circle cx="12" cy="7.6" r="0.9" fill="#1c589c" stroke="none"></circle></svg></span></div>
+              <input value="{{ q1 }}" onChange="{{ onQ1 }}" placeholder="과목명 검색" style="margin-left:auto; padding:4px 8px; border:1px solid #9aa3ad; border-radius:2px; font-size:13px; width:150px; max-width:100%">
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:4px">
+              <sc-for list="{{ chgOpts }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.onClick }}" style="padding:3px 9px; border:1px solid {{ o.bd }}; background:{{ o.bg }}; color:{{ o.fg }}; font-weight:{{ o.fw }}; font-size:12.5px; cursor:pointer; border-radius:2px; white-space:nowrap">{{ o.label }}</button></sc-for>
+            </div>
+            <div style="display:grid; grid-template-columns:minmax(0,1.6fr) 84px 76px minmax(0,1fr); gap:8px; padding:6px 8px; background:#f4f5f6; border-bottom:1px solid #cdd1d5; font-size:12.5px; font-weight:700; color:#063a74">
+              <span>과목 (유형)</span><span>교육과정</span><span>교과(군)</span><span style="white-space:nowrap">수강학생 {{ from }}→{{ to }}</span>
+            </div>
+            <div style="display:flex; flex-direction:column; max-height:390px; overflow-y:auto">
+              <sc-for list="{{ chgRows }}" as="x" hint-placeholder-count="8">
+                <div style="display:grid; grid-template-columns:minmax(0,1.6fr) 84px 76px minmax(0,1fr); gap:8px; padding:5px 8px; border-bottom:1px solid #e3e6e8; font-size:13px; align-items:center">
+                  <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">{{ x.name }}</span>
+                  <span style="font-weight:700; color:{{ x.tc }}; white-space:nowrap">{{ x.tag }}</span>
+                  <span style="white-space:nowrap; color:#41474d">{{ x.area }}</span>
+                  <span style="font-family:'JetBrains Mono',monospace; color:#41474d; white-space:nowrap">{{ x.stu }}</span>
                 </div>
               </sc-for>
             </div>
-            <div style="margin-top:10px; font-size:13.5px; color:#5b6167">막대 전체 길이 = 전공 + 비전공 합계 시수 (기간 간 동일 축)</div>
-          </div>
-          <div style="background:#ffffff; border:1px solid #cdd1d5; padding:16px">
-            <div style="font-size:18px; font-weight:700; color:#063a74">미이수 학생 보충 지도 시수 변화</div>
-            <div style="font-size:14px; color:#41474d; margin-top:3px">교사 1인당 주당 보충 지도 시수(시간) · 최소 성취수준 미도달 학생 대상</div>
-            <div>{{ makeupChart }}</div>
-            <div style="font-size:14.5px; color:#41474d">{{ makeupSummary }}</div>
+            <div style="font-size:12.5px; color:#5b6167">{{ chgSub }}</div>
           </div>
         </div>
+
+        
       </div>
     </sc-if>
 
     <sc-if value="{{ isTab2 }}" hint-placeholder-val="{{ false }}">
-      <div style="display:flex; flex-direction:column; gap:18px">
-
-        <div style="background:#ffffff; border:1px solid #cdd1d5; padding:14px 16px">
-          <div style="font-size:22px; font-weight:700; color:#1e2124; padding-bottom:7px; border-bottom:2px solid #063a74; display:inline-block">지역 · 학교 특성별 격차 진단</div>
-          <div style="margin-top:10px; color:#41474d; font-size:15px; max-width:960px; text-wrap:pretty">1번 탭에서 확인한 부담 증가가 <b>어느 지역, 어떤 조건의 학교에 집중되어 있는지</b> 찾는 화면입니다. 왼쪽 지도는 행정 단위(교육지원청 25개)로, 오른쪽 히트맵은 학교 조건(규모 × 도시 유형)으로 같은 지표를 갈라 봅니다. 아래 지표 필터로 <b>다교과 비율 · 주당 수업시수</b> 등 다양한 관점을 바꿔가며 볼 수 있으며, 빨강이 취약, 초록이 양호를 의미합니다.</div>
-          <div style="margin-top:10px; font-size:14.5px; color:#41474d">지도의 교육지원청이나 히트맵의 칸, 아래 학교 랭킹을 누르면 그 대상의 선택과목·교사 부담 지표가 경기도 평균과 비교되어 나타납니다.</div>
+      <div style="display:flex; flex-direction:column; gap:14px">
+        <div style="background:#ffffff; border:1px solid #cdd1d5; padding:10px 14px; display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; position:sticky; top:0; z-index:6">
+          <div style="display:flex; align-items:center; gap:6px">
+            <span style="font-size:13px; font-weight:700; color:#063a74; white-space:nowrap">분석시점</span>
+            <select data-v="{{ ys2 }}" value="{{ ys2 }}" onChange="{{ onYs2 }}" style="padding:5px 8px; border:1px solid #9aa3ad; border-radius:2px; font-size:13.5px; background:#ffffff">
+              <sc-for list="{{ ysOpts }}" as="o" hint-placeholder-count="10"><option value="{{ o.key }}">{{ o.label }}</option></sc-for>
+            </select>
+          </div>
+          <div style="display:flex; align-items:center; gap:4px; flex-wrap:wrap">
+            <span style="font-size:13px; font-weight:700; color:#063a74; margin-right:2px">학년</span>
+            <sc-for list="{{ grade2Opts }}" as="o" hint-placeholder-count="4"><button onClick="{{ o.onClick }}" style="padding:4px 11px; border:1px solid {{ o.bd }}; background:{{ o.bg }}; color:{{ o.fg }}; font-weight:{{ o.fw }}; font-size:13px; cursor:pointer; border-radius:2px; white-space:nowrap">{{ o.label }}</button></sc-for>
+          </div>
+          <div style="display:flex; align-items:center; gap:4px; flex-wrap:wrap">
+            <span style="font-size:13px; font-weight:700; color:#063a74; margin-right:2px">지역 단위</span>
+            <sc-for list="{{ unitOpts }}" as="o" hint-placeholder-count="2"><button onClick="{{ o.onClick }}" style="padding:4px 11px; border:1px solid {{ o.bd }}; background:{{ o.bg }}; color:{{ o.fg }}; font-weight:{{ o.fw }}; font-size:13px; cursor:pointer; border-radius:2px; white-space:nowrap">{{ o.label }}</button></sc-for>
+          </div>
+          <sc-for list="{{ carry }}" as="c" hint-placeholder-count="0"><button onClick="{{ c.onClick }}" style="padding:3px 9px; border:1px solid #3fa654; background:#eef7f0; color:#1e2124; font-size:12.5px; font-weight:700; cursor:pointer; border-radius:2px; white-space:nowrap">{{ c.label }} ×</button></sc-for>
+          <button onClick="{{ onReset2 }}" style="flex:0 0 auto; white-space:nowrap; padding:4px 10px; border:1px solid #cdd1d5; background:#ffffff; color:#41474d; font-size:13px; cursor:pointer; border-radius:2px">초기화</button>
+          <span style="flex:1 1 100%; font-size:12.5px; color:#5b6167">적용 중 · <b style="color:#1e2124">{{ f2Summary }}</b> · 학년은 선택과목 지표에만 적용</span>
         </div>
 
-        <div style="background:#ffffff; border:1px solid #cdd1d5; padding:12px 16px; display:flex; flex-wrap:wrap; gap:10px 14px; align-items:center; position:sticky; top:0; z-index:5">
-          <span style="font-size:15px; font-weight:700; color:#063a74; white-space:nowrap">지표 선택</span>
-          <sc-for list="{{ kpiOpts }}" as="k" hint-placeholder-count="5">
-            <button onClick="{{ k.onClick }}" style="padding:6px 14px; border:1px solid {{ k.bd }}; background:{{ k.bg }}; color:{{ k.fg }}; font-weight:{{ k.weight }}; border-radius:2px; font-size:14.5px; cursor:pointer; white-space:nowrap">{{ k.label }}</button>
-          </sc-for>
-          <span style="font-size:14px; color:#5b6167">선택한 지표에 따라 지도 · 히트맵 · 학교 랭킹이 함께 바뀝니다.</span>
-        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:14px; align-items:stretch">
+          <div style="flex:1 1 520px; min-width:0; background:#ffffff; border:1px solid #cdd1d5; padding:12px 14px; display:flex; flex-direction:column; gap:8px">
+            <div style="display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px">
+              <div style="display:inline-flex; align-items:center; gap:6px; font-size:15px; font-weight:700; color:#063a74">지역별 현황<span data-info="선택한 지표의 시·군(또는 교육지원청) 값. 색이 진할수록 값이 큼(양호·취약 판정 아님). 지역을 누르면 KPI·히트맵·학교 목록이 바뀜.
+출처: 학교별학급수학생수현황(소속), 개설과목현황(고), 기초시간표, 교원 주당수업시간(상세과목)" style="display:inline-flex; flex:0 0 auto; cursor:pointer; line-height:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1c589c" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16.5" x2="12" y2="11"></line><circle cx="12" cy="7.6" r="0.9" fill="#1c589c" stroke="none"></circle></svg></span></div>
+              <div style="margin-left:auto; display:flex; gap:4px; flex-wrap:wrap">
+                <sc-for list="{{ m2Opts }}" as="o" hint-placeholder-count="4"><button onClick="{{ o.onClick }}" style="padding:3px 9px; border:1px solid {{ o.bd }}; background:{{ o.bg }}; color:{{ o.fg }}; font-weight:{{ o.fw }}; font-size:12.5px; cursor:pointer; border-radius:2px; white-space:nowrap">{{ o.label }}</button></sc-for>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; flex-wrap:wrap; gap:6px; font-size:12.5px; color:#41474d">
+              <span style="font-weight:700">{{ m2Label }}</span>
+              <span style="color:#5b6167">낮음</span>
+              <sc-for list="{{ legend }}" as="l" hint-placeholder-count="5"><span style="display:flex; flex-direction:column; align-items:center; gap:1px"><span style="width:56px; height:12px; background:{{ l.color }}"></span><span style="font-family:'JetBrains Mono',monospace; font-size:12px; white-space:nowrap">{{ l.label }}</span></span></sc-for>
+              <span style="color:#5b6167">높음</span>
+            </div>
+            <div style="max-width:540px; width:100%; margin:0 auto">
+              <x-import component-from-global-scope="gg-map" from="./gg-map.js" data-values="{{ mapJson }}" data-groups="{{ groupJson }}" data-selected="{{ mapSel }}" hint-size="100%,460px"></x-import>
+            </div>
+            <div style="font-size:12.5px; color:#5b6167">지역을 누르면 선택, 다시 누르면 해제 · 경계: 통계청 시군구(2013)</div>
+          </div>
 
-        <div style="display:flex; flex-wrap:wrap; gap:18px; align-items:flex-start">
-
-          <div style="flex:0 1 430px; min-width:330px; position:sticky; top:18px; background:#ffffff; border:1px solid #cdd1d5; padding:14px 16px">
-            <div style="font-size:18px; font-weight:700; color:#063a74">교육지원청별 {{ kpiLabel }}</div>
-            <div style="font-size:14px; color:#41474d; margin-top:3px">25개 교육지원청 · {{ lastLabel }} 기준</div>
-            <div style="margin-top:8px; display:flex; align-items:center; flex-wrap:wrap; gap:8px">
-              <span style="flex:0 0 auto; white-space:nowrap; font-size:14px; color:#228738; font-weight:700">양호</span>
-              <sc-for list="{{ legend }}" as="l" hint-placeholder-count="7">
-                <div style="flex:0 0 auto; width:24px; height:14px; background:{{ l.color }}"></div>
+          <div style="flex:1 1 440px; min-width:0; display:flex; flex-direction:column; gap:14px">
+            <div style="background:#052b57; color:#ffffff; padding:10px 14px; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap">
+              <div style="font-size:18px; font-weight:700; white-space:nowrap">{{ regTitle }}</div>
+              <div style="font-size:12.5px; color:#c9d7e6; white-space:nowrap">{{ regSub }}</div>
+              <sc-if value="{{ hasRegion }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onClearRegion }}" style="margin-left:auto; padding:3px 10px; border:1px solid #6f93b8; background:transparent; color:#ffffff; font-size:12.5px; font-weight:700; cursor:pointer; border-radius:2px; white-space:nowrap">전체 지역으로</button></sc-if>
+            </div>
+            <div style="background:#ffffff; border:1px solid #cdd1d5; padding:12px 14px; display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px 16px">
+              <sc-for list="{{ kpi2 }}" as="k" hint-placeholder-count="4">
+                <div style="display:flex; flex-direction:column; gap:2px; padding-left:10px; border-left:3px solid #063a74; min-width:0">
+                  <div style="font-size:12.5px; color:#41474d">{{ k.label }}</div>
+                  <div style="display:flex; align-items:baseline; gap:4px"><span style="font-size:24px; font-weight:700; color:#063a74; font-family:'JetBrains Mono',monospace">{{ k.value }}</span><span style="font-size:12.5px; color:#41474d">{{ k.unit }}</span></div>
+                  <div style="font-size:12.5px; color:#1e2124; font-family:'JetBrains Mono',monospace; white-space:nowrap">{{ k.diff }}</div>
+                </div>
               </sc-for>
-              <span style="flex:0 0 auto; white-space:nowrap; font-size:14px; color:#de3412; font-weight:700">취약</span>
-              <span style="flex:0 0 auto; white-space:nowrap; font-size:14px; color:#41474d; font-family:'JetBrains Mono',monospace">· 도 평균 {{ provKpiValue }}</span>
             </div>
-            <div style="margin-top:10px; border:1px solid #cdd1d5">
-              <x-import component-from-global-scope="gg-map" from="./gg-map.js" data-values="{{ mapJson }}" data-groups="{{ groupJson }}" data-selected="{{ selOffice }}" hint-size="100%,540px"></x-import>
-            </div>
-            <div style="margin-top:8px; font-size:13.5px; color:#5b6167">경계 데이터: 통계청 시군구 경계(2013)를 교육지원청 관할로 묶어 표시.</div>
-            <div style="margin-top:14px; padding-top:12px; border-top:1px solid #e3e6e8">
-              <div style="font-size:15px; font-weight:700; color:#063a74; margin-bottom:6px">학교 랭킹 · {{ schoolRankTitle }}</div>
-              <div style="display:flex; flex-direction:column; gap:6px; max-height:280px; overflow-y:auto">
-                <sc-for list="{{ schoolRankRows }}" as="o" hint-placeholder-count="20">
-                  <div onClick="{{ o.onClick }}" style="display:flex; justify-content:space-between; align-items:baseline; gap:8px; padding:5px 8px; border:1px solid {{ o.bd }}; background:{{ o.bg }}; cursor:pointer">
-                    <span style="display:flex; align-items:baseline; gap:8px; min-width:0; overflow:hidden">
-                      <span style="font-size:13px; color:#5b6167; font-family:'JetBrains Mono',monospace; flex:0 0 auto">{{ o.rank }}</span>
-                      <span style="font-size:14.5px; font-weight:{{ o.weight }}; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">{{ o.name }}</span>
-                      <span style="font-size:12.5px; color:#5b6167; flex:0 0 auto; white-space:nowrap">{{ o.office }}</span>
-                    </span>
-                    <span style="font-size:14px; font-family:'JetBrains Mono',monospace; color:#41474d; flex:0 0 auto">{{ o.value }}</span>
+            <div style="background:#ffffff; border:1px solid #cdd1d5; padding:12px 14px; display:flex; flex-direction:column; gap:8px; flex:1 1 auto">
+              <div style="display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 10px">
+                <div style="display:inline-flex; align-items:center; gap:6px; font-size:15px; font-weight:700; color:#063a74">학교규모 × 지역유형<span data-info="학교규모(학년당 학급 수) × 지역유형별 선택 지표 평균. 규모·지역유형 구분 기준은 임시값으로 교육청 확정 필요.
+출처: 학교별학급수학생수현황" style="display:inline-flex; flex:0 0 auto; cursor:pointer; line-height:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1c589c" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16.5" x2="12" y2="11"></line><circle cx="12" cy="7.6" r="0.9" fill="#1c589c" stroke="none"></circle></svg></span></div>
+                <div style="font-size:12.5px; color:#5b6167">{{ hmSub }}</div>
+              </div>
+              <div style="display:flex; flex-wrap:wrap; align-items:center; gap:4px 10px; padding:6px 10px; background:#eef3f9; border-left:3px solid #063a74; font-size:13px; color:#1e2124"><span>칸 안 큰 숫자 = <b style="color:#063a74">{{ hmWhat }}</b></span><span style="color:#5b6167">작은 숫자 = 해당 학교 수</span><span style="color:#5b6167">진할수록 값이 큼</span></div>
+              <div style="display:flex; flex-direction:column; gap:1px; background:#cdd1d5; border:1px solid #cdd1d5">
+                <div style="display:grid; grid-template-columns:80px repeat(3, minmax(0,1fr)); gap:1px">
+                  <div style="background:#f4f5f6; padding:7px 8px"></div>
+                  <sc-for list="{{ hmHeads }}" as="h" hint-placeholder-count="3"><div style="background:#f4f5f6; padding:7px 8px; font-size:12.5px; font-weight:700; color:#063a74; text-align:center; white-space:nowrap">{{ h }}</div></sc-for>
+                </div>
+                <sc-for list="{{ hmRows }}" as="row" hint-placeholder-count="3">
+                  <div style="display:grid; grid-template-columns:80px repeat(3, minmax(0,1fr)); gap:1px">
+                    <div style="background:#f4f5f6; padding:7px 8px; font-size:13px; font-weight:700; display:flex; align-items:center">{{ row.label }}</div>
+                    <sc-for list="{{ row.cells }}" as="c" hint-placeholder-count="3">
+                      <div onClick="{{ c.onClick }}" style="background:{{ c.bg }}; color:{{ c.fg }}; cursor:{{ c.cursor }}; outline:{{ c.outline }}; outline-offset:-3px; padding:7px; min-height:50px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px">
+                        <div style="font-size:15px; font-weight:700; font-family:'JetBrains Mono',monospace; white-space:nowrap">{{ c.value }}</div>
+                        <div style="font-size:12px">{{ c.sub }}</div>
+                      </div>
+                    </sc-for>
                   </div>
                 </sc-for>
               </div>
+              
             </div>
-          </div>
-
-          <div style="flex:1 1 560px; min-width:320px; display:flex; flex-direction:column; gap:18px">
-
-            <div style="background:#ffffff; border:1px solid #cdd1d5; padding:16px">
-              <div style="display:flex; align-items:flex-end; gap:14px; flex-wrap:wrap">
-                <div>
-                  <div style="display:flex; align-items:center; gap:8px">
-                    <div style="font-size:18px; font-weight:700; color:#063a74">학교 규모 × 지역 유형 히트맵</div>
-                    <div onMouseEnter="{{ onTipIn }}" onMouseLeave="{{ onTipOut }}" onClick="{{ onTipToggle }}" style="position:relative; display:inline-flex">
-                      <div style="width:23px; height:23px; border-radius:50%; border:1.5px solid #1c589c; color:#1c589c; background:#ffffff; font-size:14.5px; font-weight:700; display:flex; align-items:center; justify-content:center; cursor:help; user-select:none" style-hover="background:#063a74; color:#ffffff; border-color:#063a74">!</div>
-                      <div style="position:absolute; top:28px; left:-8px; z-index:30; width:352px; padding:12px 14px; background:#052b57; color:#ffffff; border:1px solid #3fa654; box-shadow:0 6px 18px rgba(5,43,87,0.28); font-size:14px; line-height:1.6; pointer-events:none; display:{{ tipDisplay }}">
-                        <div style="font-weight:700; color:#9fd2ad; margin-bottom:6px">히트맵 읽는 법</div>
-                        <div>· <b>가로</b>는 학교 규모(소·중·대), <b>세로</b>는 지역 유형(대도시·중소도시·읍면)입니다.</div>
-                        <div>· 칸의 <b>색</b>은 위에서 선택한 지표({{ kpiLabel }})입니다. <span style="color:#f0b8a8; font-weight:700">빨강 = 취약</span>, <span style="color:#9fd2ad; font-weight:700">초록 = 양호</span>.</div>
-                        <div>· 큰 숫자는 그 조합의 {{ kpiShort }}, 작은 숫자는 대상 학교 수입니다.</div>
-                        <div>· 칸을 <b>클릭</b>하면 아래에 해당 조합의 선택과목·교사 부담 상세가 경기도 평균과 비교되어 표시됩니다.</div>
-                        <div style="margin-top:6px; color:#c9d7e6">해석 예: 읍면 × 소규모가 가장 붉다면, 학생이 적은 농촌 소규모 학교의 교사가 전공 외 과목을 가장 많이 맡고 있다는 뜻입니다.</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div style="font-size:14px; color:#41474d; margin-top:3px">{{ kpiShort }} · 칸 아래 숫자는 대상 학교 수 · {{ lastLabel }} 기준</div>
-                </div>
-                <div style="margin-left:auto; display:flex; align-items:center; flex-wrap:wrap; gap:8px">
-                  <span style="flex:0 0 auto; white-space:nowrap; font-size:14px; color:#228738; font-weight:700">양호</span>
-                  <sc-for list="{{ legend }}" as="l" hint-placeholder-count="7">
-                    <div style="flex:0 0 auto; width:26px; height:14px; background:{{ l.color }}"></div>
-                  </sc-for>
-                  <span style="flex:0 0 auto; white-space:nowrap; font-size:14px; color:#de3412; font-weight:700">취약</span>
-                </div>
-              </div>
-              <div style="overflow-x:auto; margin-top:14px">
-                <div style="min-width:420px; display:grid; grid-template-columns:150px repeat(3, minmax(0,1fr)); gap:1px; background:#cdd1d5; border:1px solid #cdd1d5">
-                  <div style="background:#f4f5f6; padding:9px 11px; font-size:14px; font-weight:700; color:#41474d">지역 \ 규모</div>
-                  <sc-for list="{{ hmHeads }}" as="h" hint-placeholder-count="3">
-                    <div style="background:#f4f5f6; padding:9px 11px; font-size:15px; font-weight:700; color:#063a74; text-align:center">{{ h }}</div>
-                  </sc-for>
-                  <sc-for list="{{ hmCells }}" as="c" hint-placeholder-count="12">
-                    <div onClick="{{ c.onClick }}" style="background:{{ c.bg }}; padding:{{ c.pad }}; cursor:{{ c.cursor }}; outline:{{ c.outline }}; outline-offset:-2px; display:flex; flex-direction:column; align-items:{{ c.align }}; justify-content:center; gap:2px; min-height:60px">
-                      <div style="font-size:{{ c.fs }}px; font-weight:700; color:#1e2124; font-family:{{ c.ff }}">{{ c.value }}</div>
-                      <div style="font-size:13.5px; color:#41474d">{{ c.sub }}</div>
-                    </div>
-                  </sc-for>
-                </div>
-              </div>
-            </div>
-
-            <sc-if value="{{ noSel }}" hint-placeholder-val="{{ true }}">
-              <div style="background:#ffffff; border:1px solid #cdd1d5; padding:64px 24px; display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center">
-                <div style="width:44px; height:44px; border:2px solid #b1b8be"></div>
-                <div style="font-size:19px; font-weight:700; color:#063a74">지도 또는 히트맵을 클릭하면 상세가 표시됩니다</div>
-                <div style="font-size:15px; color:#41474d; max-width:520px">교육지원청을 누르면 해당 지역, 히트맵 칸을 누르면 해당 규모·지역 유형 조합의 선택과목 현황과 교사 부담 현황을 경기도 평균과 비교해 보여줍니다.</div>
-              </div>
-            </sc-if>
-
-            <sc-if value="{{ hasSel }}" hint-placeholder-val="{{ false }}">
-              <div style="display:flex; flex-direction:column; gap:18px">
-                <div style="background:#052b57; color:#ffffff; padding:12px 16px; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap">
-                  <div style="font-size:20px; font-weight:700">{{ selTitle }}</div>
-                  <div style="font-size:15px; color:#c9d7e6">{{ selScope }}</div>
-                  <button onClick="{{ onClearSel }}" style="margin-left:auto; padding:5px 11px; border:1px solid #6f93b8; background:transparent; color:#ffffff; border-radius:2px; font-size:14px; font-weight:700; cursor:pointer; white-space:nowrap">선택 해제</button>
-                </div>
-
-                <div style="background:#ffffff; border:1px solid #cdd1d5; padding:16px">
-                  <div style="font-size:18px; font-weight:700; color:#063a74; padding-bottom:9px; border-bottom:1px solid #cdd1d5">① 선택과목 현황 (경기도 평균 대비)</div>
-                  <div style="margin-top:14px; display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:18px 24px">
-                    <sc-for list="{{ detailSubj }}" as="k" hint-placeholder-count="2">
-                      <div style="display:flex; flex-direction:column; gap:3px; padding-left:12px; border-left:3px solid {{ k.color }}">
-                        <div style="font-size:15px; color:#41474d">{{ k.label }}</div>
-                        <div style="display:flex; align-items:baseline; gap:7px">
-                          <div style="font-size:30px; font-weight:700; font-family:'JetBrains Mono',monospace; color:#063a74">{{ k.value }}</div>
-                          <div style="font-size:14px; color:#41474d">{{ k.unit }}</div>
-                        </div>
-                        <div style="font-size:15px; font-weight:700; color:{{ k.color }}; font-family:'JetBrains Mono',monospace">{{ k.diff }}</div>
-                        <div style="font-size:14px; color:#5b6167; font-family:'JetBrains Mono',monospace">도 평균 {{ k.avg }}</div>
-                      </div>
-                    </sc-for>
-                  </div>
-                </div>
-
-                <div style="background:#ffffff; border:1px solid #cdd1d5; padding:16px">
-                  <div style="font-size:18px; font-weight:700; color:#063a74; padding-bottom:9px; border-bottom:1px solid #cdd1d5">② 교사 부담 현황 (경기도 평균 대비)</div>
-                  <div style="margin-top:14px; display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:18px 24px">
-                    <sc-for list="{{ detailTeacher }}" as="k" hint-placeholder-count="3">
-                      <div style="display:flex; flex-direction:column; gap:3px; padding-left:12px; border-left:3px solid {{ k.color }}">
-                        <div style="font-size:15px; color:#41474d">{{ k.label }}</div>
-                        <div style="display:flex; align-items:baseline; gap:7px">
-                          <div style="font-size:30px; font-weight:700; font-family:'JetBrains Mono',monospace; color:#063a74">{{ k.value }}</div>
-                          <div style="font-size:14px; color:#41474d">{{ k.unit }}</div>
-                        </div>
-                        <div style="font-size:15px; font-weight:700; color:{{ k.color }}; font-family:'JetBrains Mono',monospace">{{ k.diff }}</div>
-                        <div style="font-size:14px; color:#5b6167; font-family:'JetBrains Mono',monospace">도 평균 {{ k.avg }}</div>
-                      </div>
-                    </sc-for>
-                  </div>
-                  <div style="margin-top:14px; font-size:13.5px; color:#5b6167">학교 단위 집계값만 표시하며 교사 개인을 식별할 수 있는 정보는 제공하지 않습니다.</div>
-                </div>
-              </div>
-            </sc-if>
           </div>
         </div>
+
+        
       </div>
     </sc-if>
 
-    <div style="background:#ffffff; border:1px solid #cdd1d5; padding:12px 16px; font-size:14px; color:#41474d">
-      본 화면의 수치는 시연용 합성 데이터입니다. 학교 단위 집계값까지만 제공하며 교사 개인 식별 정보는 표시하지 않습니다.
-    </div>
+    <sc-if value="{{ isTab3 }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; flex-direction:column; gap:14px">
+        <div style="background:#ffffff; border:1px solid #cdd1d5; padding:10px 14px; display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; position:sticky; top:0; z-index:6">
+          <div style="display:flex; align-items:center; gap:6px">
+            <span style="font-size:13px; font-weight:700; color:#063a74">학교</span>
+            <select data-v="{{ schKey }}" value="{{ schKey }}" onChange="{{ onSch3 }}" style="padding:5px 8px; border:1px solid #9aa3ad; border-radius:2px; font-size:13.5px; background:#ffffff; max-width:300px">
+              <option value="">학교를 선택하세요</option>
+              <sc-for list="{{ schGroups }}" as="g" hint-placeholder-count="6"><optgroup label="{{ g.label }}"><sc-for list="{{ g.opts }}" as="o" hint-placeholder-count="4"><option value="{{ o.key }}">{{ o.label }}</option></sc-for></optgroup></sc-for>
+            </select>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px">
+            <span style="font-size:13px; font-weight:700; color:#063a74; white-space:nowrap">분석시점</span>
+            <select data-v="{{ ys3 }}" value="{{ ys3 }}" onChange="{{ onYs3 }}" style="padding:5px 8px; border:1px solid #9aa3ad; border-radius:2px; font-size:13.5px; background:#ffffff">
+              <sc-for list="{{ ysOpts }}" as="o" hint-placeholder-count="10"><option value="{{ o.key }}">{{ o.label }}</option></sc-for>
+            </select>
+          </div>
+          <div style="display:flex; align-items:center; gap:4px; flex-wrap:wrap">
+            <span style="font-size:13px; font-weight:700; color:#063a74; margin-right:2px">학년</span>
+            <sc-for list="{{ grade3Opts }}" as="o" hint-placeholder-count="4"><button onClick="{{ o.onClick }}" style="padding:4px 11px; border:1px solid {{ o.bd }}; background:{{ o.bg }}; color:{{ o.fg }}; font-weight:{{ o.fw }}; font-size:13px; cursor:pointer; border-radius:2px; white-space:nowrap">{{ o.label }}</button></sc-for>
+          </div>
+          <button onClick="{{ onReset3 }}" style="flex:0 0 auto; white-space:nowrap; padding:4px 10px; border:1px solid #cdd1d5; background:#ffffff; color:#41474d; font-size:13px; cursor:pointer; border-radius:2px">초기화</button>
+          <span style="flex:1 1 100%; font-size:12.5px; color:#5b6167">적용 중 · <b style="color:#1e2124">{{ f3Summary }}</b></span>
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; gap:14px; align-items:stretch">
+          <div style="flex:1 1 500px; min-width:0; align-self:stretch; background:#ffffff; border:1px solid #cdd1d5; padding:12px 14px; display:flex; flex-direction:column; gap:8px">
+            <div style="display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px">
+              <div style="font-size:15px; font-weight:700; color:#063a74; white-space:nowrap">학교 목록</div>
+              <div style="font-size:12.5px; color:#5b6167; white-space:nowrap">{{ l3Scope }}</div>
+              <sc-if value="{{ l3Filtered }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onL3Clear }}" style="flex:0 0 auto; padding:1px 8px; border:1px solid #3fa654; background:#eef7f0; color:#1e2124; font-size:12px; font-weight:700; cursor:pointer; border-radius:2px; white-space:nowrap">{{ l3Region }} ×</button></sc-if>
+              <input value="{{ q3 }}" onChange="{{ onQ3 }}" placeholder="학교명 검색" style="margin-left:auto; padding:4px 8px; border:1px solid #9aa3ad; border-radius:2px; font-size:13px; width:140px; max-width:100%">
+            </div>
+            <div style="border:1px solid #cdd1d5; display:flex; flex-direction:column; flex:1 1 auto; min-height:0">
+              <div style="display:flex; flex-direction:column; max-height:540px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#b1b8be #f4f5f6; scrollbar-gutter:stable">
+                <div style="display:grid; grid-template-columns:minmax(118px,1.15fr) minmax(58px,0.7fr) minmax(46px,0.55fr) minmax(46px,0.55fr) minmax(62px,0.7fr) minmax(104px,1fr); background:#eef1f4; border-bottom:1px solid #cdd1d5; position:sticky; top:0; z-index:1">
+                  <sc-for list="{{ l3Heads }}" as="h" hint-placeholder-count="6"><button onClick="{{ h.onClick }}" style="display:block; width:100%; min-width:0; padding:6px {{ h.pr }} 6px 7px; border:0; border-left:{{ h.bl }}; background:transparent; text-align:{{ h.al }}; font-size:12.5px; font-weight:700; color:#063a74; cursor:pointer; white-space:nowrap; line-height:1.3">{{ h.label }}</button></sc-for>
+                </div>
+                <sc-for list="{{ l3Rows }}" as="r" hint-placeholder-count="12">
+                  <div onClick="{{ r.onClick }}" style="display:grid; grid-template-columns:minmax(118px,1.15fr) minmax(58px,0.7fr) minmax(46px,0.55fr) minmax(46px,0.55fr) minmax(62px,0.7fr) minmax(104px,1fr); border-bottom:1px solid #e3e6e8; font-size:13px; background:{{ r.bg }}; box-shadow:{{ r.sh }}; cursor:pointer" style-hover="background:#eef3f9">
+                    <div style="padding:5px 6px; display:flex; flex-direction:column; min-width:0"><span style="font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">{{ r.name }}</span><span style="font-size:12px; color:#5b6167; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ r.meta }}</span></div>
+                    <span style="padding:5px 6px; border-left:1px solid #e3e6e8; display:flex; align-items:center; justify-content:flex-end; font-family:'JetBrains Mono',monospace">{{ r.subj }}</span>
+                    <span style="padding:5px 6px; border-left:1px solid #e3e6e8; display:flex; align-items:center; justify-content:flex-end; font-family:'JetBrains Mono',monospace">{{ r.cls }}</span>
+                    <span style="padding:5px 6px; border-left:1px solid #e3e6e8; display:flex; align-items:center; justify-content:flex-end; font-family:'JetBrains Mono',monospace">{{ r.tch }}</span>
+                    <span style="padding:5px 6px; border-left:1px solid #e3e6e8; display:flex; align-items:center; justify-content:flex-end; font-family:'JetBrains Mono',monospace; color:{{ r.hc }}">{{ r.h }}</span>
+                    <span style="padding:5px 6px; border-left:1px solid #e3e6e8; display:flex; align-items:center; justify-content:flex-end; padding-right:16px; font-family:'JetBrains Mono',monospace; color:{{ r.sc }}; font-weight:{{ r.sw }}">{{ r.solo }}</span>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ l3Empty }}" hint-placeholder-val="{{ false }}"><div style="padding:24px; text-align:center; color:#5b6167">해당 조건의 학교가 없습니다</div></sc-if>
+              </div>
+            </div>
+            <div style="font-size:12px; color:#5b6167; line-height:1.5">개설과목·분반 = 분석시점 학기·학년 기준 · 교원·주당시수·1인 교과 교사 = 연 1회 기준시점 · 1인 교과 교사 = 학교 안에서 그 교과를 혼자 맡는 교사 수 · 주당시수 주황 = 경기도 평균보다 많음 · 학교명순 기본(머리글로 정렬) · ② 지역을 고르면 그 지역 학교만</div>
+          </div>
+          <div style="flex:1.6 1 560px; min-width:0; display:flex; flex-direction:column; gap:10px">
+            <sc-if value="{{ noSch }}" hint-placeholder-val="{{ true }}">
+              <div style="background:#ffffff; border:1px solid #cdd1d5; padding:60px 20px; display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center">
+                <div style="font-size:16px; font-weight:700; color:#063a74">왼쪽 목록에서 학교를 선택하세요</div>
+                <div style="font-size:13px; color:#41474d; max-width:420px; word-break:keep-all">선택한 학교의 선택과목 개설·수강 현황과 교과(군)별 교원, 교사별 담당과목 구성이 표시됩니다.</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ hasSch }}" hint-placeholder-val="{{ false }}"><div style="display:flex; flex-direction:column; gap:10px">
+            <div style="background:#052b57; color:#ffffff; padding:10px 14px; display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 12px">
+          <div style="font-size:19px; font-weight:700">{{ schTitle }}</div>
+          <div style="font-size:12.5px; color:#c9d7e6; display:flex; flex-wrap:wrap; gap:0 8px"><sc-for list="{{ schMeta }}" as="m" hint-placeholder-count="6"><span style="white-space:nowrap">{{ m }}</span></sc-for></div>
+          <div style="margin-left:auto; flex:0 0 auto; white-space:nowrap; font-size:12.5px; color:#9fd2ad; font-weight:700">{{ curLine3 }}</div>
+        </div>
+            <div style="background:#ffffff; border:1px solid #cdd1d5; padding:12px 14px; display:flex; flex-direction:column; gap:6px; min-width:0">
+            <div style="display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 10px">
+              <div style="display:inline-flex; align-items:center; gap:6px; font-size:15px; font-weight:700; color:#063a74">선택과목 개설 · 수강 현황<span data-info="학교의 선택과목별 수강인원·분반·편성학점. 괄호는 2022 개정 편성 가능 범위(자료집 부록2). 전년 대비는 같은 학기·학년 기준.
+출처: 나이스기초시간표, 개설과목현황(고), 교육과정편제현황" style="display:inline-flex; flex:0 0 auto; cursor:pointer; line-height:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1c589c" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16.5" x2="12" y2="11"></line><circle cx="12" cy="7.6" r="0.9" fill="#1c589c" stroke="none"></circle></svg></span></div>
+              <div style="font-size:12.5px; color:#5b6167; white-space:nowrap">{{ s3Sub }}</div>
+            </div>
+            <div style="border:1px solid #cdd1d5">
+            <div style="display:flex; flex-direction:column; max-height:470px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#b1b8be #f4f5f6; scrollbar-gutter:stable">
+            <div style="display:grid; grid-template-columns:minmax(0,1.6fr) 44px minmax(0,0.75fr) minmax(0,1.2fr) 48px 64px 58px 82px; background:#eef1f4; border-bottom:1px solid #cdd1d5; position:sticky; top:0; z-index:1">
+              <sc-for list="{{ s3Heads }}" as="h" hint-placeholder-count="8"><button onClick="{{ h.onClick }}" style="display:block; width:100%; min-width:0; padding:6px 6px; border:0; border-left:{{ h.bl }}; background:transparent; text-align:{{ h.al }}; font-size:12.5px; font-weight:700; color:#063a74; cursor:pointer; white-space:nowrap; overflow:hidden">{{ h.label }}</button></sc-for>
+            </div>
+              <sc-for list="{{ s3Rows }}" as="r" hint-placeholder-count="10">
+                <div style="display:grid; grid-template-columns:minmax(0,1.6fr) 44px minmax(0,0.75fr) minmax(0,1.2fr) 48px 64px 58px 82px; border-bottom:1px solid #e3e6e8; align-items:stretch; font-size:13px; background:{{ r.bg }}; cursor:pointer" onClick="{{ r.onClick }}">
+                  <div style="padding:4px 6px; display:flex; flex-direction:column; min-width:0"><span style="font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">{{ r.name }}</span><span style="font-size:12px; color:#5b6167; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ r.meta }}</span></div>
+                  <span style="padding:4px 6px; border-left:1px solid #e3e6e8; display:flex; align-items:center; justify-content:center">{{ r.gl }}</span>
+                  <span style="padding:4px 6px; border-left:1px solid #e3e6e8; display:flex; align-items:center; white-space:nowrap; overflow:hidden">{{ r.area }}</span>
+                  <div style="padding:4px 6px; border-left:1px solid #e3e6e8; display:flex; align-items:center; gap:6px; min-width:0"><div style="flex:1 1 auto; height:9px; background:#eef1f4"><div style="height:9px; background:#1c589c; width:{{ r.pct }}%"></div></div><span style="font-family:'JetBrains Mono',monospace; flex:0 0 40px; text-align:right">{{ r.stu }}</span></div>
+                  <span style="padding:4px 6px; border-left:1px solid #e3e6e8; display:flex; align-items:center; justify-content:flex-end; font-family:'JetBrains Mono',monospace">{{ r.cls }}</span>
+                  <span style="padding:4px 6px; border-left:1px solid #e3e6e8; display:flex; align-items:center; justify-content:flex-end; font-family:'JetBrains Mono',monospace; white-space:nowrap">{{ r.crv }}</span>
+                  <span style="padding:4px 6px; border-left:1px solid #e3e6e8; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; color:#5b6167; white-space:nowrap">{{ r.rng }}</span>
+                  <span style="padding:4px 6px; border-left:1px solid #e3e6e8; display:flex; align-items:center; justify-content:center; font-family:{{ r.ff }}; font-size:12.5px; color:{{ r.dc }}; white-space:nowrap; overflow:hidden">{{ r.diff }}</span>
+                </div>
+              </sc-for>
+              <sc-if value="{{ s3Empty }}" hint-placeholder-val="{{ false }}"><div style="padding:24px; text-align:center; color:#5b6167">해당 조건의 데이터가 없습니다</div></sc-if>
+            </div>
+            </div>
+            <div style="font-size:12.5px; color:#5b6167">분반 = 과목별 분반 수 · 편성학점 = 실제 운영 학점(2015는 단위) · 범위 = 2022 개정 편성 가능 학점 · 전년 대비 = 같은 학기·학년</div>
+          </div>
+            </div></sc-if>
+          </div>
+        </div>
+        <sc-if value="{{ hasSch }}" hint-placeholder-val="{{ false }}">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap:14px; align-items:start">
+            <div style="background:#ffffff; border:1px solid #cdd1d5; padding:12px 14px; display:flex; flex-direction:column; gap:6px; min-width:0">
+            <div style="display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 10px">
+              <div style="display:inline-flex; align-items:center; gap:6px; font-size:15px; font-weight:700; color:#063a74">교과(군)별 교원 현황<span data-info="학교의 교과(군)별 교원 수와 1인당 주당 시수. 초록 표시는 같은 교과(군) 경기도 평균. 행을 누르면 오른쪽 교사 목록이 그 교과만 표시. 교사 개인이 아닌 학교 × 교과 집계.
+출처: 교원의주당수업시간(상세과목)" style="display:inline-flex; flex:0 0 auto; cursor:pointer; line-height:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1c589c" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16.5" x2="12" y2="11"></line><circle cx="12" cy="7.6" r="0.9" fill="#1c589c" stroke="none"></circle></svg></span></div>
+              <div style="font-size:12.5px; color:#5b6167">{{ y3 }}년 기준시점 · 표시과목 교과(군)</div>
+            </div>
+            <div style="display:grid; grid-template-columns:minmax(0,1fr) 64px minmax(0,1.6fr) 84px; gap:8px; padding:7px 8px; background:#f4f5f6; border-bottom:1px solid #cdd1d5; font-size:12.5px; font-weight:700; color:#063a74">
+              <span>교과(군)</span><span>교원 수</span><span>교원 1인당 주당 시수</span><span style="text-align:right; white-space:nowrap">경기도 평균 대비</span>
+            </div>
+            <div style="display:flex; flex-direction:column">
+              <sc-for list="{{ deptRows }}" as="r" hint-placeholder-count="10">
+                <div style="display:grid; grid-template-columns:minmax(0,1fr) 64px minmax(0,1.6fr) 84px; gap:8px; padding:6px 8px; border-bottom:1px solid #e3e6e8; align-items:center; font-size:13px; background:{{ r.bg }}; outline:{{ r.ol }}; outline-offset:-2px; cursor:pointer" onClick="{{ r.onClick }}" style-hover="background:#eef3f9">
+                  <span style="font-weight:700; white-space:nowrap">{{ r.name }}<span style="margin-left:6px; font-size:12px; color:#b5651d">{{ r.tag }}</span></span>
+                  <span style="font-family:'JetBrains Mono',monospace">{{ r.n }}명</span>
+                  <div style="display:flex; align-items:center; gap:6px; min-width:0"><div style="position:relative; flex:1 1 auto; height:10px; background:#f4f5f6"><div style="height:10px; background:{{ r.color }}; width:{{ r.pct }}%"></div><div style="position:absolute; top:-3px; width:3px; height:16px; background:#3fa654; box-shadow:0 0 0 1px #ffffff; border-radius:1px; transform:translateX(-1px); left:{{ r.refPct }}%"></div></div><span style="font-family:'JetBrains Mono',monospace; flex:0 0 38px; text-align:right">{{ r.h }}</span></div>
+                  <span style="font-family:'JetBrains Mono',monospace; color:{{ r.dc }}; white-space:nowrap; text-align:right">{{ r.diff }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; align-items:center; gap:4px 14px; font-size:12.5px; color:#41474d; padding-top:2px">
+              <span style="display:flex; align-items:center; gap:5px; white-space:nowrap"><span style="width:16px; height:10px; background:#1c589c"></span>이 학교 1인당 주당 시수</span>
+              <span style="display:flex; align-items:center; gap:5px; white-space:nowrap"><span style="width:16px; height:10px; background:#b5651d"></span>1인 교과</span>
+              <span style="display:flex; align-items:center; gap:5px; white-space:nowrap"><span style="width:3px; height:14px; background:#3fa654; border-radius:1px"></span>같은 교과(군) 경기도 평균</span>
+            </div>
+          </div>
+            <div style="background:#ffffff; border:1px solid #cdd1d5; padding:12px 14px; display:flex; flex-direction:column; gap:8px">
+          <div style="display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px">
+            <div style="font-size:15px; font-weight:700; color:#063a74">교사별 담당과목 수 · 성적처리 유형 구성</div>
+            <span style="padding:1px 7px; border:1px solid #e8c58a; background:#fdf6e7; color:#9e6a00; font-size:12px; font-weight:700; white-space:nowrap">카드 미확보 · 시연용</span>
+            <div style="margin-left:auto; display:flex; gap:4px; flex-wrap:wrap"><sc-for list="{{ dimOpts3 }}" as="o" hint-placeholder-count="2"><button onClick="{{ o.onClick }}" style="padding:3px 9px; border:1px solid {{ o.bd }}; background:{{ o.bg }}; color:{{ o.fg }}; font-weight:{{ o.fw }}; font-size:12.5px; cursor:pointer; border-radius:2px; white-space:nowrap">{{ o.label }}</button></sc-for></div>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:4px 12px; font-size:12.5px; color:#41474d"><span>{{ t3Note }}</span><sc-if value="{{ hasDept3 }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onDept3Clear }}" style="flex:0 0 auto; padding:1px 8px; border:1px solid #3fa654; background:#eef7f0; color:#1e2124; font-size:12.5px; font-weight:700; cursor:pointer; border-radius:2px; white-space:nowrap">{{ dept3 }} ×</button></sc-if><sc-for list="{{ dimLegend3 }}" as="l" hint-placeholder-count="3"><span style="display:flex; align-items:center; gap:5px; white-space:nowrap"><span style="width:12px; height:10px; background:{{ l.color }}"></span>{{ l.label }}</span></sc-for></div>
+          <div style="border:1px solid #cdd1d5; max-height:430px; overflow-y:auto; scrollbar-width:thin; scrollbar-gutter:stable">
+            <div style="display:grid; grid-template-columns:96px minmax(0,0.9fr) 76px minmax(0,1.2fr) minmax(0,1.3fr); background:#eef1f4; border-bottom:1px solid #cdd1d5; position:sticky; top:0; z-index:1; font-size:12.5px; font-weight:700; color:#063a74">
+              <span style="padding:6px 8px">교사ID</span><span style="padding:6px 8px; border-left:1px solid #cdd1d5">표시과목</span><span style="padding:6px 8px; border-left:1px solid #cdd1d5; text-align:right">담당과목</span><span style="padding:6px 8px; border-left:1px solid #cdd1d5">성적처리 유형 구성&nbsp;</span><span style="padding:6px 8px; border-left:1px solid #cdd1d5">비고</span>
+            </div>
+            <sc-for list="{{ tRows3 }}" as="t" hint-placeholder-count="10">
+              <div style="border-bottom:1px solid #e3e6e8; background:{{ t.bg }}">
+                <div onClick="{{ t.onClick }}" style="display:grid; grid-template-columns:96px minmax(0,0.9fr) 76px minmax(0,1.2fr) minmax(0,1.3fr); cursor:pointer; font-size:13px; align-items:stretch">
+                  <span style="padding:6px 8px; font-family:'JetBrains Mono',monospace; font-weight:700; white-space:nowrap">{{ t.arrow }} {{ t.id }}</span>
+                  <span style="padding:6px 8px; border-left:1px solid #e3e6e8; display:flex; align-items:center; white-space:nowrap">{{ t.dept }}</span>
+                  <span style="padding:6px 8px; border-left:1px solid #e3e6e8; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; white-space:nowrap">{{ t.n }}</span>
+                  <div style="padding:6px 8px; border-left:1px solid #e3e6e8; display:flex; align-items:center; gap:3px; flex-wrap:wrap"><sc-for list="{{ t.cells }}" as="g" hint-placeholder-count="3"><span style="flex:0 0 auto; width:16px; height:16px; background:{{ g.c }}; border:1px solid {{ g.b }}"></span></sc-for></div>
+                  <span style="padding:6px 8px; border-left:1px solid #e3e6e8; display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:12.5px; color:#41474d"><span style="white-space:nowrap">{{ t.segTxt }}</span><span style="font-size:11.5px; color:#b5651d; font-weight:700; white-space:nowrap">{{ t.solo }}</span></span>
+                </div>
+                <sc-if value="{{ t.open }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin:0 8px 8px 28px; border:1px solid #e3e6e8">
+                    <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,0.8fr) minmax(0,1fr) minmax(0,0.9fr) 50px 56px; background:#f7f8f9; font-size:12px; font-weight:700; color:#5b6167"><span style="padding:4px 8px">과목명</span><span style="padding:4px 8px">교과(군)</span><span style="padding:4px 8px">성취도</span><span style="padding:4px 8px">석차등급</span><span style="padding:4px 8px; text-align:right">분반</span><span style="padding:4px 8px; text-align:right">시수</span></div>
+                    <sc-for list="{{ t.subs }}" as="q" hint-placeholder-count="3"><div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,0.8fr) minmax(0,1fr) minmax(0,0.9fr) 50px 56px; font-size:12.5px; border-top:1px solid #f0f2f4; background:{{ q.bg }}"><span style="padding:4px 8px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">{{ q.name }}</span><span style="padding:4px 8px; white-space:nowrap">{{ q.area }}</span><span style="padding:4px 8px; white-space:nowrap">{{ q.ach }}</span><span style="padding:4px 8px; white-space:nowrap">{{ q.rank }}</span><span style="padding:4px 8px; text-align:right; font-family:'JetBrains Mono',monospace">{{ q.cls }}</span><span style="padding:4px 8px; text-align:right; font-family:'JetBrains Mono',monospace">{{ q.h }}</span></div></sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+          <div style="font-size:12.5px; color:#5b6167">교사 행을 누르면 담당 과목이 펼쳐짐 · 위 과목 표에서 과목을 누르면 담당 교사 강조 · 교사별 담당과목 데이터관리카드 확보 시 실제 데이터로 교체</div>
+        </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    
   </div>
 
-  <div style="margin-top:auto; background:#063a74; border-top:3px solid #3fa654; color:#a9c2dc; font-size:14px; padding:18px 20px; display:flex; gap:16px; flex-wrap:wrap">
-    <span style="color:#ffffff; font-weight:700">경기도교육청 학교교육과정과</span>
-    <span>고교학점제 운영 분석 시스템</span>
-    <span style="margin-left:auto; font-family:'JetBrains Mono',monospace">문의 031-000-0000 · 내부망 전용</span>
+  <div style="margin-top:auto; background:#063a74; border-top:3px solid #3fa654; color:#a9c2dc; font-size:12.5px; padding:14px 18px; display:flex; gap:14px; flex-wrap:wrap">
+    <span style="color:#ffffff; font-weight:700">경기도교육청</span>
+    <span>고등학교 선택과목 변화 및 교원 수업시수 분석</span>
+    <span style="margin-left:auto; font-family:'JetBrains Mono',monospace">내부망 전용</span>
   </div>
 </div>
-
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{
-  &quot;$preview&quot;: {&quot;width&quot;: 1480, &quot;height&quot;: 1040},
-  &quot;topN&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 10, &quot;min&quot;: 5, &quot;max&quot;: 20, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;표시&quot;},
-  &quot;creditYear&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 2025, &quot;min&quot;: 2023, &quot;max&quot;: 2026, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;표시&quot;}
-}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;sizeSmallMax&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 6, &quot;min&quot;: 2, &quot;max&quot;: 12, &quot;unit&quot;: &quot;학급&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;학교 규모 기준(학년당 학급 수)&quot;}, &quot;sizeMidMax&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 9, &quot;min&quot;: 3, &quot;max&quot;: 20, &quot;unit&quot;: &quot;학급&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;학교 규모 기준(학년당 학급 수)&quot;}}">
 class Component extends DCLogic {
-  state = { tab: 1, sel: null, scope: null, tip: false, scope1: null, kpi: 'ratio' };
+  state = { ready: false, tab: 1, area: '', unit: 'sg', region: '', school: '',
+    from: 2022, to: 2026, grade: 0, m1: 'subj', m4: 'stu', chg: 'all', q1: '', dim: 'rank',
+    ys2: '2026-1', grade2: 0, m2: 'subj', cell: null, q2: '', sort2: 'name', dir2: 1,
+    ys3: '2026-1', grade3: 0, sort3: 'area', dir3: 1, sup: 'place', sup2: 'sg', sort4: '', dir4: 1, dept3: '', q3: '', sort5: 'name', dir5: 1 };
+
+  DIM3_COLOR = { A5: '#5b3f8c', A3: '#a58bd1', P: '#ffffff', G9: '#5b3f8c', G5: '#a58bd1', N: '#ffffff' };
+  DIM_COLOR = { A5: '#063a74', A3: '#6f93b8', P: '#d5d9dd', G9: '#063a74', G5: '#1c589c', N: '#d5d9dd' };
 
   componentDidMount() {
+    const wait = () => { if (window.V9D && window.V8C) this.setState({ ready: true }); else this._t = setTimeout(wait, 40); };
+    wait();
     this._onSel = e => {
-      if (e.detail && e.detail.name) {
-        const cur = this.state.scope;
-        if (cur && cur.kind === 'office' && cur.office === e.detail.name) {
-          this.setState({ sel: null, scope: null });
-        } else {
-          const office = { kind: 'office', office: e.detail.name };
-          this.setState({ sel: office, scope: office });
-        }
-      }
+      const n = e.detail && e.detail.name; if (!n) return;
+      const name = n === '여주군' ? '여주시' : n;
+      this.setState(s => s.region === name ? { region: '', cell: null } : { region: name, cell: null });
     };
     document.addEventListener('sigungu-select', this._onSel);
+    const pop = document.createElement('div');
+    pop.style.cssText = 'position:fixed; z-index:9999; width:360px; max-width:calc(100vw - 16px); background:#ffffff; color:#1e2124; border:1px solid #cdd1d5; border-top:3px solid #063a74; box-shadow:0 8px 24px rgba(5,43,87,0.16); font:13.5px/1.6 "Pretendard Variable",Pretendard,system-ui,sans-serif; max-height:calc(100vh - 16px); overflow-y:auto; display:none';
+    document.body.appendChild(pop);
+    this._pop = pop;
+    const hide = () => { pop.style.display = 'none'; this._cur = null; };
+    this._hide = hide;
+    this._onInfo = e => {
+      const el = e.target.closest && e.target.closest('[data-info]');
+      if (!el) { if (!pop.contains(e.target)) hide(); return; }
+      if (this._cur === el) { hide(); return; }
+      this._cur = el; this.renderInfo(pop, el); pop.style.display = 'block';
+      const r = el.getBoundingClientRect(), w = pop.offsetWidth, h = pop.offsetHeight;
+      pop.style.left = Math.min(window.innerWidth - w - 8, Math.max(8, r.left - 10)) + 'px';
+      pop.style.top = (r.bottom + 6 + h > window.innerHeight - 8 ? Math.max(8, r.top - h - 6) : r.bottom + 6) + 'px';
+    };
+    document.addEventListener('click', this._onInfo);
+    window.addEventListener('scroll', hide, true);
   }
-  componentWillUnmount() { document.removeEventListener('sigungu-select', this._onSel); }
-
-  SG = ['수원시','성남시','고양시','용인시','부천시','안산시','안양시','남양주시','화성시','평택시','의정부시','시흥시','파주시','광명시','김포시','군포시','광주시','이천시','양주시','오산시','구리시','안성시','포천시','의왕시','하남시','여주시','양평군','동두천시','과천시','가평군','연천군'];
-  TYPES = ['일반고','자율고','특목고','특성화고'];
-  SIZES = ['소규모','중규모','대규모'];
-  URBANS = ['대도시', '중소도시', '읍면'];
-  KPIS = [
-    { key: 'ratio', label: '다교과 교사 비율', short: '다교과 비율', unit: '%', d: 1, good: 'low', pick: a => a.ratio * 100 },
-    { key: 'totalH', label: '교사 1인당 주당 수업시수', short: '주당 수업시수', unit: '시간', d: 1, good: 'low', pick: a => a.majorH + a.nonMajorH },
-    { key: 'makeupH', label: '보충 지도 시수', short: '보충지도 시수', unit: '시간', d: 2, good: 'low', pick: a => a.makeupH }
-  ];
-  SUBJECTS = ['미적분','확률과 통계','기하','물리학Ⅰ','화학Ⅰ','생명과학Ⅰ','지구과학Ⅰ','정치와 법','경제','사회·문화','생활과 윤리','한국지리','세계사','언어와 매체','화법과 작문','정보','인공지능 기초','심화 국어','영어권 문화','제2외국어(중국어Ⅰ)','고급 수학','생활과 과학','사회문제 탐구','논술','심리학','보건','환경','음악 감상과 비평','미술 감상과 비평','스포츠 생활','체육 탐구','일본어Ⅰ','프랑스어Ⅰ'];
-  NAMEBITS = ['제일','중앙','동','서','남','북','신','한빛','미래','예성','학현','솔빛','청람','다산'];
-
-  OFFICE_OF = {
-    '수원시': '수원교육지원청', '성남시': '성남교육지원청', '고양시': '고양교육지원청', '용인시': '용인교육지원청',
-    '부천시': '부천교육지원청', '안산시': '안산교육지원청', '안양시': '안양과천교육지원청', '과천시': '안양과천교육지원청',
-    '남양주시': '구리남양주교육지원청', '구리시': '구리남양주교육지원청', '화성시': '화성오산교육지원청', '오산시': '화성오산교육지원청',
-    '평택시': '평택교육지원청', '의정부시': '의정부교육지원청', '시흥시': '시흥교육지원청', '파주시': '파주교육지원청',
-    '광명시': '광명교육지원청', '김포시': '김포교육지원청', '군포시': '군포의왕교육지원청', '의왕시': '군포의왕교육지원청',
-    '광주시': '광주하남교육지원청', '하남시': '광주하남교육지원청', '이천시': '이천교육지원청', '안성시': '안성교육지원청',
-    '양주시': '동두천양주교육지원청', '동두천시': '동두천양주교육지원청', '포천시': '포천교육지원청',
-    '여주시': '여주교육지원청', '양평군': '양평교육지원청', '가평군': '가평교육지원청', '연천군': '연천교육지원청'
-  };
-
-  // 시군구 → 지역 유형
-  URBAN_OF = {
-    '수원시': '대도시', '성남시': '대도시', '고양시': '대도시', '용인시': '대도시', '부천시': '대도시',
-    '안산시': '대도시', '안양시': '대도시', '남양주시': '대도시', '화성시': '대도시', '평택시': '대도시',
-    '시흥시': '대도시', '파주시': '대도시', '김포시': '대도시', '의정부시': '대도시',
-    '광명시': '중소도시', '군포시': '중소도시', '광주시': '중소도시', '양주시': '중소도시', '오산시': '중소도시',
-    '구리시': '중소도시', '의왕시': '중소도시', '하남시': '중소도시', '과천시': '중소도시', '동두천시': '중소도시', '이천시': '중소도시',
-    '안성시': '읍면', '포천시': '읍면', '여주시': '읍면', '양평군': '읍면', '가평군': '읍면', '연천군': '읍면'
-  };
-
-  GRADE_OF = {
-    '고급 수학': '성취도(진로선택)', '생활과 과학': '성취도(진로선택)', '사회문제 탐구': '성취도(진로선택)',
-    '심화 국어': '성취도(진로선택)', '인공지능 기초': '성취도(진로선택)', '제2외국어(중국어Ⅰ)': '성취도(진로선택)',
-    '논술': '이수(교양)', '심리학': '이수(교양)', '보건': '이수(교양)', '환경': '이수(교양)',
-    '음악 감상과 비평': '성취도(진로선택)', '미술 감상과 비평': '성취도(진로선택)',
-    '스포츠 생활': '성취도(진로선택)', '체육 탐구': '성취도(진로선택)',
-    '일본어Ⅰ': '성취도(진로선택)', '프랑스어Ⅰ': '성취도(진로선택)'
-  };
-
-  SUBJECT_SUPPLY = {
-    '미적분': 0.96, '확률과 통계': 0.95, '기하': 0.9,
-    '언어와 매체': 0.94, '화법과 작문': 0.93, '심화 국어': 0.71, '영어권 문화': 0.86,
-    '물리학Ⅰ': 0.68, '화학Ⅰ': 0.83, '생명과학Ⅰ': 0.88, '지구과학Ⅰ': 0.57,
-    '정치와 법': 0.78, '경제': 0.62, '사회·문화': 0.87, '생활과 윤리': 0.84, '한국지리': 0.72, '세계사': 0.66,
-    '정보': 0.52, '인공지능 기초': 0.41, '제2외국어(중국어Ⅰ)': 0.46,
-    '고급 수학': 0.74, '생활과 과학': 0.55, '사회문제 탐구': 0.6,
-    '논술': 0.38, '심리학': 0.34, '보건': 0.3, '환경': 0.32,
-    '음악 감상과 비평': 0.88, '미술 감상과 비평': 0.86, '스포츠 생활': 0.92, '체육 탐구': 0.9,
-    '일본어Ⅰ': 0.54, '프랑스어Ⅰ': 0.28
-  };
-
-  AREAS = ['국어', '수학', '영어', '사회', '과학', '예술·체육', '제2외국어', '정보·교양'];
-  // 과목 인기도 보정 (지정하지 않으면 SUBJECTS 순서로 감쇠)
-  SUBJECT_POP = {
-    '음악 감상과 비평': 0.78, '미술 감상과 비평': 0.76, '스포츠 생활': 0.86, '체육 탐구': 0.6,
-    '일본어Ⅰ': 0.66, '프랑스어Ⅰ': 0.42, '제2외국어(중국어Ⅰ)': 0.58
-  };
-  AREA_OF = {
-    '미적분': '수학', '확률과 통계': '수학', '기하': '수학', '고급 수학': '수학',
-    '물리학Ⅰ': '과학', '화학Ⅰ': '과학', '생명과학Ⅰ': '과학', '지구과학Ⅰ': '과학', '생활과 과학': '과학',
-    '정치와 법': '사회', '경제': '사회', '사회·문화': '사회', '생활과 윤리': '사회', '한국지리': '사회',
-    '세계사': '사회', '사회문제 탐구': '사회', '심리학': '사회',
-    '언어와 매체': '국어', '화법과 작문': '국어', '심화 국어': '국어', '논술': '국어',
-    '영어권 문화': '영어',
-    '정보': '정보·교양', '인공지능 기초': '정보·교양', '보건': '정보·교양', '환경': '정보·교양',
-    '음악 감상과 비평': '예술·체육', '미술 감상과 비평': '예술·체육', '스포츠 생활': '예술·체육', '체육 탐구': '예술·체육',
-    '제2외국어(중국어Ⅰ)': '제2외국어', '일본어Ⅰ': '제2외국어', '프랑스어Ⅰ': '제2외국어'
-  };
-
-  // 학점제 도입 이후 과목별 수요 재편 계수 (1 = 변화 없음)
-  SUBJECT_SHIFT = {
-    '미적분': 1.02, '확률과 통계': 1.28, '기하': 0.55,
-    '물리학Ⅰ': 0.56, '화학Ⅰ': 0.78, '생명과학Ⅰ': 1.22, '지구과학Ⅰ': 1.18,
-    '정치와 법': 0.7, '경제': 0.66, '사회·문화': 1.24, '생활과 윤리': 1.26, '한국지리': 0.72, '세계사': 0.58,
-    '언어와 매체': 1.06, '화법과 작문': 0.64, '심화 국어': 0.6,
-    '영어권 문화': 1.08, '제2외국어(중국어Ⅰ)': 0.5,
-    '정보': 1.42, '인공지능 기초': 1.55,
-    '고급 수학': 0.58, '생활과 과학': 1.26, '사회문제 탐구': 1.32,
-    '논술': 1.3, '심리학': 1.36, '보건': 1.24, '환경': 1.2,
-    '음악 감상과 비평': 1.16, '미술 감상과 비평': 1.18, '스포츠 생활': 1.3, '체육 탐구': 0.88,
-    '일본어Ⅰ': 0.58, '프랑스어Ⅰ': 0.46
-  };
-
-  h(s) { let x = 2166136261; for (let i = 0; i < s.length; i++) { x ^= s.charCodeAt(i); x = Math.imul(x, 16777619); } return (x >>> 0) / 4294967296; }
-  r(...p) { return this.h(p.join('|')); }
-  fmt(v, d) { return Number(v).toFixed(d == null ? 1 : d); }
-  num(v) { return Math.round(v).toLocaleString('ko-KR'); }
-  creditYear() { return this.props.creditYear ?? 2025; }
-
-  mix(c1, c2, t) {
-    const p = c => [parseInt(c.slice(1, 3), 16), parseInt(c.slice(3, 5), 16), parseInt(c.slice(5, 7), 16)];
-    const a = p(c1), b = p(c2);
-    return '#' + a.map((v, i) => Math.round(v + (b[i] - v) * t).toString(16).padStart(2, '0')).join('');
-  }
-  // t=0 양호(초록) → t=1 취약(빨강)
-  scale(t) {
-    const base = t < 0.5 ? this.mix('#228738', '#9e6a00', t / 0.5) : this.mix('#9e6a00', '#de3412', (t - 0.5) / 0.5);
-    return this.mix(base, '#ffffff', 0.6);
-  }
-
-  schools() {
-    if (this._sc) return this._sc;
-    const out = [];
-    this.SG.forEach((sg, si) => {
-      const of = this.OFFICE_OF[sg];
-      const n = 5 + Math.floor(this.r(sg, 'n') * 7);
-      for (let i = 0; i < n; i++) {
-        const seed = sg + i;
-        const tr = this.r(seed, 'type');
-        const type = tr > 0.9 ? '특목고' : tr > 0.78 ? '특성화고' : tr > 0.62 ? '자율고' : '일반고';
-        const urban = this.URBAN_OF[sg];
-        const sr = this.r(seed, 'size') * (urban === '대도시' ? 1.12 : urban === '읍면' ? 0.7 : 1);
-        const size = sr > 0.66 ? '대규모' : sr > 0.3 ? '중규모' : '소규모';
-        const students = size === '대규모' ? 950 + Math.round(this.r(seed, 'st') * 620)
-          : size === '중규모' ? 520 + Math.round(this.r(seed, 'st') * 380)
-          : 130 + Math.round(this.r(seed, 'st') * 360);
-        out.push({
-          name: sg.replace(/[시군]$/, '') + this.NAMEBITS[Math.floor(this.r(seed, 'nm') * this.NAMEBITS.length)] + (type === '특성화고' ? '정보고등학교' : '고등학교'),
-          code: 'S' + String(si * 100 + i).padStart(4, '0'),
-          sigungu: sg, office: of, urban, type, size, students
-        });
-      }
+  renderInfo(pop, el) {
+    const mk = (tag, css, txt) => { const d = document.createElement(tag); d.style.cssText = css; if (txt != null) d.textContent = txt; return d; };
+    pop.innerHTML = '';
+    const title = (el.parentElement ? el.parentElement.textContent : '').trim();
+    pop.appendChild(mk('div', 'padding:11px 14px 9px; font-size:15px; font-weight:700; color:#063a74; border-bottom:1px solid #e3e6e8', title));
+    const body = mk('div', 'padding:9px 14px 12px; display:flex; flex-direction:column; gap:7px');
+    const row = (label, text) => { const r = mk('div', 'display:grid; grid-template-columns:' + (label.length > 3 ? '86px' : '44px') + ' minmax(0,1fr); gap:10px; align-items:baseline'); r.appendChild(mk('div', 'font-weight:700; color:#5b6167; white-space:nowrap', label)); r.appendChild(mk('div', 'color:#1e2124', text)); body.appendChild(r); };
+    const LBL = { '산출': '산식', '증감률 = (': '산식' };
+    let first = true;
+    (el.getAttribute('data-info') || '').split('\n').map(s => s.trim()).filter(Boolean).forEach(line => {
+      const m = line.match(/^([^:=·]{1,8}):\s*(.+)$/);
+      if (m) { row(m[1] === '산출' ? '산식' : m[1], m[2]); return; }
+      if (/^증감률 =/.test(line)) { row('증감률', line.replace(/^증감률 =\s*/, '')); return; }
+      if (/^학기 평균 =/.test(line)) { row('기준', line); return; }
+      if (line.length <= 20 && !/[.=]/.test(line)) { body.appendChild(mk('div', 'margin-top:' + (first ? '0' : '6px') + '; font-weight:700; color:#063a74; font-size:13.5px', line)); first = false; return; }
+      line.split(/\.\s+/).map(s => s.replace(/\.$/, '').trim()).filter(Boolean).forEach((s, i) => row(i === 0 && first ? '내용' : '참고', s));
+      first = false;
     });
-    this._sc = out;
-    return out;
+    pop.appendChild(body);
+  }
+  componentWillUnmount() {
+    clearTimeout(this._t); document.removeEventListener('sigungu-select', this._onSel);
+    document.removeEventListener('click', this._onInfo); window.removeEventListener('scroll', this._hide, true);
+    if (this._pop) this._pop.remove();
+  }
+  componentDidUpdate() { this.syncSel(); }
+  syncSel() {
+    const f = () => document.querySelectorAll('select[data-v]').forEach(el => { const v = el.getAttribute('data-v'); if (v != null && el.value !== v) el.value = v; });
+    f(); requestAnimationFrame(f); setTimeout(f, 80);
   }
 
-  offices() {
-    if (!this._offices) this._offices = [...new Set(this.SG.map(sg => this.OFFICE_OF[sg]))];
-    return this._offices;
-  }
+  f(v, d) { d = d == null ? 1 : d; return v == null || !isFinite(v) ? '—' : Number(v).toLocaleString('ko-KR', { minimumFractionDigits: d, maximumFractionDigits: d }); }
+  sg(v, d, u) { d = d == null ? 1 : d; return v == null || !isFinite(v) ? '—' : (v >= 0 ? '+' : '−') + Math.abs(v).toLocaleString('ko-KR', { minimumFractionDigits: d, maximumFractionDigits: d }) + (u || ''); }
+  b(on) { return { bg: on ? '#063a74' : '#ffffff', fg: on ? '#ffffff' : '#41474d', bd: on ? '#063a74' : '#b1b8be', fw: on ? 700 : 400 }; }
+  seg(list, cur, key, extra) { return list.map(([v, label]) => Object.assign({ label, onClick: () => this.setState(Object.assign({ [key]: v }, extra || {})) }, this.b(cur === v))); }
+  mix(c1, c2, t) { const p = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16)), a = p(c1), b = p(c2); return '#' + a.map((v, i) => Math.round(v + (b[i] - v) * Math.max(0, Math.min(1, t))).toString(16).padStart(2, '0')).join(''); }
+  ramp(t) { return t < 0.5 ? this.mix('#eef3f9', '#6f93b8', t / 0.5) : this.mix('#6f93b8', '#063a74', (t - 0.5) / 0.5); }
+  cuts() { const a = this.props.sizeSmallMax ?? 6; return [a, Math.max(a + 1, this.props.sizeMidMax ?? 9)]; }
+  sizeOf(s) { const [a, b] = this.cuts(); return s.cpg <= a ? '소규모' : s.cpg <= b ? '중규모' : '대규모'; }
+  mean(a) { return a.length ? a.reduce((x, y) => x + y, 0) / a.length : NaN; }
 
-  metrics(s, year, sem) {
-    const rr = k => this.r(s.code, k, year, sem);
-    const credit = year >= this.creditYear();
-    // 개설 선택과목 수는 실제 개설 목록에서 산출 (교과영역별 합계와 일치)
-    const subjects = this.schoolSubjects(s, year, sem).length;
-    const teachers = s.size === '대규모' ? 46 + Math.round(rr('t') * 18) : s.size === '중규모' ? 30 + Math.round(rr('t') * 12) : 16 + Math.round(rr('t') * 9);
-    const majorH = 13.4 + rr('mh') * 4.4 - (s.size === '소규모' ? 1.6 : 0) - (credit ? 0.9 : 0);
-    const nonMajorH = (s.size === '소규모' ? 3.3 : s.size === '중규모' ? 1.9 : 1.1)
-      + (s.urban === '읍면' ? 0.9 : s.urban === '중소도시' ? 0.3 : 0)
-      + rr('nm') * 2.7 + (credit ? 1.15 : 0);
-    const ratio = Math.min(0.9, (s.size === '소규모' ? 0.34 : s.size === '중규모' ? 0.2 : 0.12)
-      + (s.urban === '읍면' ? 0.1 : s.urban === '중소도시' ? 0.04 : 0)
-      + rr('mr') * 0.24 + (credit ? 0.06 : 0) + (s.type === '특성화고' ? 0.06 : 0));
-    const perSubj = (s.size === '소규모' ? 2.5 : s.size === '중규모' ? 2.0 : 1.7)
-      + (s.urban === '읍면' ? 0.2 : 0) + (credit ? 0.45 : 0) + (rr('ps') - 0.5) * 0.5;
-    // 미이수(최소 성취수준 미도달) 학생 보충 지도 시수 — 학점제 도입 후 본격화
-    const makeupH = Math.max(0, (credit ? 1.85 : 0.35)
-      + (s.size === '소규모' ? 0.45 : 0) + (s.urban === '읍면' ? 0.3 : 0)
-      + (credit ? (year - this.creditYear()) * 0.28 + (sem === 2 ? 0.35 : 0) : 0)
-      + (rr('mk') - 0.5) * 0.6);
-    return { subjects, teachers, majorH, nonMajorH, ratio, perSubj, makeupH, students: s.students };
+  // 교원: 학교 × 표시과목 교과(군) 연간 집계 (교육통계 상세과목 카드 단위)
+  dstat(s, y) {
+    const D = window.V9D, k = s.code + y; this._ds = this._ds || {};
+    if (this._ds[k]) return this._ds[k];
+    const o = {}; D.ss(s, y, 1).teachers.forEach(t => { const r = o[t.dept] || (o[t.dept] = { n: 0, h: 0 }); r.n++; r.h += t.hours; });
+    return (this._ds[k] = o);
   }
-
-  agg(list, year, sem) {
-    const ck = 'AG|' + list.length + '|' + (list[0] ? list[0].code : '') + '|' + year + '|' + sem;
-    this._agCache = this._agCache || {};
-    if (this._agCache[ck]) return this._agCache[ck];
-    const a = { schools: list.length, students: 0, teachers: 0, subjects: 0, majorH: 0, nonMajorH: 0, ratio: 0, perSubj: 0, makeupH: 0 };
-    list.forEach(s => {
-      const m = this.metrics(s, year, sem);
-      a.students += m.students; a.teachers += m.teachers;
-      ['subjects', 'majorH', 'nonMajorH', 'ratio', 'perSubj', 'makeupH'].forEach(k => a[k] += m[k]);
-    });
-    const n = Math.max(1, list.length);
-    ['subjects', 'majorH', 'nonMajorH', 'ratio', 'perSubj', 'makeupH'].forEach(k => a[k] = a[k] / n);
-    this._agCache[ck] = a;
-    return a;
+  tAgg(list, y, area) {
+    const k = list.length + ':' + (list[0] ? list[0].code : '') + ':' + (list.length ? list[list.length - 1].code : '') + '|' + y + '|' + area;
+    this._ta = this._ta || {}; if (this._ta[k]) return this._ta[k];
+    let n = 0, h = 0, units = 0, solo = 0;
+    list.forEach(s => { const o = this.dstat(s, y); Object.keys(o).forEach(d => { if (area && d !== area) return; n += o[d].n; h += o[d].h; units++; if (o[d].n === 1) solo++; }); });
+    return (this._ta[k] = { n, h, avg: n ? h / n : NaN, units, solo, soloPct: units ? solo / units * 100 : NaN, perSchool: list.length ? solo / list.length : NaN });
   }
-
-  schoolSubjects(s, year, sem) {
-    const ck = s.code + '|' + year + '|' + sem;
-    this._sbCache = this._sbCache || {};
-    if (this._sbCache[ck]) return this._sbCache[ck];
-    const credit = year >= this.creditYear();
-    const out = [];
-    this.SUBJECTS.forEach((name, si) => {
-      const so = this.r(name, 'semOnly');
-      if (so < 0.16 && sem === 2) return;
-      if (so >= 0.16 && so < 0.3 && sem === 1) return;
-      const pop = this.SUBJECT_POP[name] != null ? this.SUBJECT_POP[name] : 1 - si * 0.03;
-      const rr = k => this.r(s.code, name, k, year, sem);
-      const sh = this.SUBJECT_SHIFT[name] != null ? this.SUBJECT_SHIFT[name] : 1;
-      const shiftOpen = credit ? Math.min(1.3, 0.6 + 0.52 * sh) : 1;
-      const openP = pop * (s.size === '대규모' ? 0.95 : s.size === '중규모' ? 0.78 : 0.52)
-        * (s.type === '특목고' ? 1.12 : s.type === '특성화고' ? 0.62 : 1)
-        * (s.urban === '읍면' ? 0.82 : s.urban === '중소도시' ? 0.94 : 1)
-        * (credit ? 1.12 : 0.9) * shiftOpen * (sem === 2 ? 0.9 : 1);
-      if (rr('open') > Math.min(0.97, openP)) return;
-      const grade = s.students / 3;
-      const share = (0.33 - si * 0.008) * (0.65 + rr('share') * 0.8) * (credit ? sh : 1) * (sem === 2 ? 0.94 : 1);
-      const students = Math.max(8, Math.round(grade * share));
-      const classSize = (credit ? 22 : 26) + (sem === 2 ? 2.5 : 0);
-      const classes = Math.max(1, Math.round(students / classSize));
-      const supply = this.SUBJECT_SUPPLY[name] != null ? this.SUBJECT_SUPPLY[name] : 0.8;
-      const sizeAdj = s.size === '소규모' ? -0.14 : s.size === '중규모' ? -0.04 : 0.03;
-      out.push({
-        name, grade: this.GRADE_OF[name] || '석차등급 산출',
-        students, classes, hours: classes * (sem === 2 ? 3.6 : 4),
-        majorShare: Math.min(1, Math.max(0.15, supply + sizeAdj + (rr('mj') - 0.5) * 0.12 - (credit ? 0.03 : 0)))
-      });
-    });
-    this._sbCache[ck] = out;
-    return out;
-  }
-
-  subjectStats(scope, year, sem) {
-    const ck = 'SS|' + scope.length + '|' + (scope[0] ? scope[0].code : '') + '|' + year + '|' + sem;
-    this._ssCache = this._ssCache || {};
-    if (this._ssCache[ck]) return this._ssCache[ck];
-    const index = {};
-    const out = this.SUBJECTS.map(name => {
-      const row = { name, grade: this.GRADE_OF[name] || '석차등급 산출', schools: 0, students: 0, classes: 0, hours: 0 };
-      index[name] = row;
-      return row;
-    });
-    scope.forEach(s => {
-      this.schoolSubjects(s, year, sem).forEach(r => {
-        const row = index[r.name];
-        row.schools += 1; row.students += r.students; row.classes += r.classes; row.hours += r.hours;
-      });
-    });
-    this._ssCache[ck] = out;
-    return out;
-  }
-
-  // 2022 → 2023 → 2024 → 25.1 → 25.2 → 26.1 → 26.2
-  periods() {
-    if (this._pd) return this._pd;
-    const cy = this.creditYear();
-    const out = [
-      { label: '2023', year: 2023, sem: null },
-      { label: '2024', year: 2024, sem: null },
-      { label: '25.1학기', year: 2025, sem: 1 },
-      { label: '25.2학기', year: 2025, sem: 2 },
-      { label: '26.1학기', year: 2026, sem: 1 },
-      { label: '26.2학기', year: 2026, sem: 2 }
-    ];
-    out.forEach(p => { p.post = p.year >= cy; });
-    this._pd = out;
-    return out;
-  }
-
-  periodSeries(list, pick) {
-    return this.periods().map(p => p.sem
-      ? pick(this.agg(list, p.year, p.sem))
-      : (pick(this.agg(list, p.year, 1)) + pick(this.agg(list, p.year, 2))) / 2);
-  }
-
-  lineChart(vals, opts) {
-    const E = React.createElement, MONO = "'JetBrains Mono', monospace";
-    const o = opts || {};
-    const d = o.d == null ? 1 : o.d;
-    const periods = this.periods();
-    const labels = periods.map(p => p.label);
-    const post = periods.map(p => p.post);
-    const span = Math.max(...vals) - Math.min(...vals);
-    const pad = Math.max(span * 0.25, o.minPad == null ? 0.5 : o.minPad);
-    const lo = Math.max(0, Math.min(...vals) - pad), hi = Math.max(...vals) + pad;
-    const W = 800, H = 250, BASE = 190, TOP = 30, L = 68, R = 748;
-    const X = i => L + 26 + i * ((R - L - 26) / (labels.length - 1));
-    const Y = val => BASE - ((val - lo) / (hi - lo || 1)) * (BASE - TOP);
-    const fi = post.indexOf(true);
-    const cx = fi <= 0 ? X(0) - 14 : (X(fi - 1) + X(fi)) / 2;
-    // 값 라벨이 꺾은선 위로 겹치지 않도록 국소 기울기에 따라 위/아래 배치
-    const labelPos = vals.map((val, i) => {
-      const prev = i > 0 ? vals[i - 1] : val;
-      const next = i < vals.length - 1 ? vals[i + 1] : val;
-      const isTrough = val <= prev && val <= next;
-      const y = Y(val);
-      return isTrough && y < BASE - 22 ? y + 17 : y - 11;
-    });
-    return E('svg', { viewBox: '0 0 ' + W + ' ' + H, style: { width: '100%', height: 'auto', display: 'block', background: '#ffffff', marginTop: 8 } },
-      [0, 0.25, 0.5, 0.75, 1].map((t, i) => {
-        const y = BASE - t * (BASE - TOP);
-        return E('g', { key: 'g' + i },
-          E('line', { x1: L, y1: y, x2: R, y2: y, stroke: '#cdd1d5', strokeWidth: 1 }),
-          E('text', { x: L - 8, y: y + 5, textAnchor: 'end', fontSize: 14, fill: '#41474d', fontFamily: MONO }, (lo + (hi - lo) * t).toFixed(d))
-        );
-      }),
-      E('line', { key: 'cl', x1: cx, y1: TOP, x2: cx, y2: BASE, stroke: '#3fa654', strokeWidth: 1.6, strokeDasharray: '5 3' }),
-      E('text', { key: 'ct', x: cx - 6, y: TOP + 1, textAnchor: 'end', fontSize: 13.5, fill: '#228738', fontWeight: 700 }, '고교학점제 도입 ▸'),
-      E('path', {
-        key: 'ln', fill: 'none', stroke: o.color || '#063a74', strokeWidth: 2.8,
-        d: vals.map((val, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(val).toFixed(1)).join(' ')
-      }),
-      vals.map((val, i) => E('g', { key: 'p' + i },
-        E('circle', { cx: X(i), cy: Y(val), r: 4.2, fill: post[i] ? '#3fa654' : '#ffffff', stroke: o.color || '#063a74', strokeWidth: 1.8 }),
-        E('text', { x: X(i), y: labelPos[i], textAnchor: 'middle', fontSize: 14, fill: '#063a74', fontWeight: 700, fontFamily: MONO, stroke: '#ffffff', strokeWidth: 4, paintOrder: 'stroke' }, val.toFixed(d)),
-        E('text', { x: X(i), y: BASE + 26, textAnchor: 'middle', fontSize: 13.5, fill: '#41474d', fontFamily: MONO }, labels[i])
-      )),
-      E('line', { key: 'base', x1: L, y1: BASE, x2: R, y2: BASE, stroke: '#b1b8be', strokeWidth: 1 })
-    );
-  }
-
-  deltaText(vals, unit, d, diffUnit) {
-    const post = this.periods().map(p => p.post);
-    const mp = a => a.reduce((t, x) => t + x, 0) / Math.max(1, a.length);
-    const pre = mp(vals.filter((x, i) => !post[i])), aft = mp(vals.filter((x, i) => post[i]));
-    const diff = aft - pre;
-    return '도입 전(2023–2024 평균) ' + pre.toFixed(d) + unit + ' → 도입 후(25·26 학기 평균) ' + aft.toFixed(d) + unit
-      + ' (' + (diff >= 0 ? '+' : '−') + Math.abs(diff).toFixed(d) + (diffUnit || unit) + ')';
+  dAvg(y) {
+    const k = 'DA' + y; this._ta = this._ta || {}; if (this._ta[k]) return this._ta[k];
+    const sum = {}, n = {}; window.V9D.schools().forEach(s => { const o = this.dstat(s, y); Object.keys(o).forEach(d => { sum[d] = (sum[d] || 0) + o[d].h; n[d] = (n[d] || 0) + o[d].n; }); });
+    const out = {}; Object.keys(sum).forEach(d => { out[d] = sum[d] / n[d]; });
+    return (this._ta[k] = out);
   }
 
   renderVals() {
-    const S = this.state, P = this.props;
-    const topN = P.topN ?? 10;
-    const all = this.schools();
-    const periods = this.periods();
-    const last = periods[periods.length - 1];
-    const v = {
-      asOf: '2026-09-01', topN, creditYear: this.creditYear(),
-      isTab1: S.tab === 1, isTab2: S.tab === 2,
-      lastLabel: last.label,
-      tabs: [[1, '① 경기도 전체 변화 흐름'], [2, '② 지역 · 학교 특성별 격차 진단']].map(([n, label]) => ({
-        label, bg: S.tab === n ? '#ffffff' : '#f4f5f6', fg: S.tab === n ? '#063a74' : '#41474d',
-        bd: S.tab === n ? '#3fa654' : 'transparent', onClick: () => this.setState({ tab: n })
-      })),
-      legend: [0, 1 / 6, 2 / 6, 0.5, 4 / 6, 5 / 6, 1].map(t => ({ color: this.scale(t) }))
-    };
-
-    // ---------- TAB 1 : 경기도 전체 변화 흐름 ----------
-    const officeList = this.offices();
-    const t1List = S.scope1 && officeList.indexOf(S.scope1) >= 0 ? all.filter(x => x.office === S.scope1) : all;
-    v.scope1 = S.scope1 || '';
-    v.scopeLabel = S.scope1 || '경기도 전체';
-    v.isProvince = !S.scope1;
-    v.scopeOpts = [{ key: '', label: '경기도 전체' }].concat(
-      [...officeList].sort((a, b) => a.localeCompare(b, 'ko')).map(o => ({ key: o, label: o }))
-    );
-    v.onScope1 = e => this.setState({ scope1: e.target.value || null });
-    v.schools = this.num(t1List.length);
-    v.students = this.num(t1List.reduce((t, s) => t + s.students, 0));
-
-    const subjSeries = this.periodSeries(t1List, a => a.subjects);
-    v.subjChart = this.lineChart(subjSeries, { d: 1, minPad: 0.6 });
-    v.subjSummary = this.deltaText(subjSeries, '개', 1);
-    const mpv = arr => arr.reduce((t, x) => t + x, 0) / Math.max(1, arr.length);
-    const subjPre = mpv(subjSeries.filter((x, i) => !periods[i].post));
-    const subjPost = mpv(subjSeries.filter((x, i) => periods[i].post));
-    v.subjFirst = this.fmt(subjPre);
-    v.subjLast = this.fmt(subjPost);
-    v.subjDelta = '+' + this.fmt(subjPost - subjPre) + '개 (' + this.fmt((subjPost / subjPre - 1) * 100, 0) + '%)';
-
-    // 학점제 도입 전(2022–2024 평균) → 도입 후(25·26 학기 평균) 과목별 변화
-    const preP = periods.filter(p => !p.post), postP = periods.filter(p => p.post);
-    const avgBy = (ps, key) => {
-      const acc = {};
-      ps.forEach(p => {
-        const one = p.sem
-          ? this.subjectStats(t1List, p.year, p.sem)
-          : null;
-        const rows = one || this.subjectStats(t1List, p.year, 1).map((r, i) => {
-          const r2 = this.subjectStats(t1List, p.year, 2)[i];
-          return { name: r.name, students: (r.students + r2.students) / 2, classes: (r.classes + r2.classes) / 2, schools: Math.max(r.schools, r2.schools) };
-        });
-        rows.forEach(r => { acc[r.name] = (acc[r.name] || 0) + r[key] / ps.length; });
-      });
-      return acc;
-    };
-    const preStu = avgBy(preP, 'students'), postStu = avgBy(postP, 'students');
-    const preCls = avgBy(preP, 'classes'), postCls = avgBy(postP, 'classes');
-    const changes = this.SUBJECTS.map(name => ({
-      name,
-      stuBefore: preStu[name] || 0, stuAfter: postStu[name] || 0,
-      clsBefore: preCls[name] || 0, clsAfter: postCls[name] || 0,
-      dStu: (postStu[name] || 0) - (preStu[name] || 0),
-      dCls: (postCls[name] || 0) - (preCls[name] || 0)
-    })).filter(r => r.stuBefore > 0 || r.stuAfter > 0);
-
-    const mkChange = (rows, dir) => {
-      const mx = Math.max(1, ...rows.map(r => Math.abs(r.dStu)));
-      return rows.map((r, i) => ({
-        name: r.name,
-        value: (r.dStu >= 0 ? '+' : '−') + this.num(Math.abs(r.dStu)),
-        per: (r.dCls >= 0 ? '+' : '−') + this.fmt(Math.abs(r.dCls), 0) + '학급',
-        sub: this.num(r.stuBefore) + ' → ' + this.num(r.stuAfter) + '명',
-        pct: Math.max(2, (Math.abs(r.dStu) / mx) * 100),
-        color: dir === 'up'
-          ? (r.dStu <= 0 ? '#b1b8be' : i < 3 ? '#063a74' : '#1c589c')
-          : (r.dStu >= 0 ? '#b1b8be' : i < 3 ? '#de3412' : '#c4693f')
-      }));
-    };
-    // 교과영역별 학교당 개설 과목 수 (도입 전 → 후)
-    const areaAvg = ps => {
-      const acc = {};
-      this.AREAS.forEach(a => acc[a] = 0);
-      ps.forEach(p => {
-        const sems = p.sem ? [p.sem] : [1, 2];
-        sems.forEach(sm => {
-          this.subjectStats(t1List, p.year, sm).forEach(r => {
-            const ar = this.AREA_OF[r.name] || '정보·교양';
-            acc[ar] += r.schools / t1List.length / ps.length / sems.length;
-          });
-        });
-      });
-      return acc;
-    };
-    const aPre = areaAvg(preP), aPost = areaAvg(postP);
-    const aMax = Math.max(...this.AREAS.map(a => Math.max(aPre[a], aPost[a]))) * 1.06 || 1;
-    v.areaRows = this.AREAS.map(a => {
-      const diff = aPost[a] - aPre[a];
-      return {
-        name: a, before: this.fmt(aPre[a], 1), after: this.fmt(aPost[a], 1),
-        pctBefore: (aPre[a] / aMax) * 100, pctAfter: (aPost[a] / aMax) * 100,
-        diff: (diff >= 0 ? '+' : '−') + this.fmt(Math.abs(diff), 1),
-        diffColor: Math.abs(diff) < 0.05 ? '#5b6167' : diff > 0 ? '#228738' : '#de3412'
-      };
-    });
-
-    v.upBars = mkChange([...changes].sort((a, b) => b.dStu - a.dStu).slice(0, topN), 'up');
-    v.downBars = mkChange([...changes].sort((a, b) => a.dStu - b.dStu).slice(0, topN), 'down');
-    v.changeNote = '도입 전 = 2023–2024 평균, 도입 후 = 25·26 학기 평균 · ' + (S.scope1 || '경기도 전체') + ' 합계 기준';
-
-
-    const loadSeries = this.periodSeries(t1List, a => a.perSubj);
-    const ratioSeries = this.periodSeries(t1List, a => a.ratio * 100);
-    const makeupSeries = this.periodSeries(t1List, a => a.makeupH);
-    v.loadChart = this.lineChart(loadSeries, { d: 2, minPad: 0.1 });
-    v.loadSummary = this.deltaText(loadSeries, '개', 2);
-    v.ratioChart = this.lineChart(ratioSeries, { d: 1, minPad: 1.2, color: '#9e6a00' });
-    v.ratioSummary = this.deltaText(ratioSeries, '%', 1, '%p');
-    v.makeupChart = this.lineChart(makeupSeries, { d: 2, minPad: 0.15, color: '#de3412' });
-    v.makeupSummary = this.deltaText(makeupSeries, '시간', 2);
-    v.loadFirst = this.fmt(loadSeries[0], 2);
-    v.loadLast = this.fmt(loadSeries[loadSeries.length - 1], 2);
-    v.ratioFirst = this.fmt(ratioSeries[0]);
-    v.ratioLast = this.fmt(ratioSeries[ratioSeries.length - 1]);
-    v.loadDelta = '보충지도 ' + this.fmt(makeupSeries[0], 2) + ' → ' + this.fmt(makeupSeries[makeupSeries.length - 1], 2) + '시간';
-
-    // 필터 적용 시 경기도 평균과 비교 (도입 후 기간 평균 기준)
-    if (S.scope1) {
-      const postMean = arr => mpv(arr.filter((x, i) => periods[i].post));
-      const pv = pick => postMean(this.periodSeries(all, pick));
-      const one = (label, mine, prov, d, unit, good) => {
-        const diff = mine - prov;
-        const better = good === 'high' ? diff >= 0 : diff <= 0;
-        return label + ' ' + mine.toFixed(d) + unit + ' (도 평균 ' + prov.toFixed(d) + unit + ', ' + (diff >= 0 ? '+' : '−') + Math.abs(diff).toFixed(d) + (unit === '%' ? '%p' : unit) + ' ' + (better ? '양호' : '취약') + ')';
-      };
-      v.scopeCompare = [
-        one('개설 선택과목', subjPost, pv(x => x.subjects), 1, '개', 'high'),
-        one('담당과목 수', postMean(loadSeries), pv(x => x.perSubj), 2, '개', 'low'),
-        one('다교과 비율', postMean(ratioSeries), pv(x => x.ratio * 100), 1, '%', 'low'),
-        one('보충 지도 시수', postMean(makeupSeries), pv(x => x.makeupH), 2, '시간', 'low')
-      ].join('  ·  ');
-    } else {
-      v.scopeCompare = '';
+    const S = this.state, v = { notReady: !S.ready };
+    v.tabs = [[1, '① 경기도 전체 변화'], [2, '② 지역 · 규모 격차'], [3, '③ 학교별 분석\n']].map(([n, label]) => ({
+      label, onClick: () => this.setState({ tab: n }), bd: S.tab === n ? '#3fa654' : 'transparent', fg: S.tab === n ? '#063a74' : '#41474d', bg: S.tab === n ? '#ffffff' : '#f4f5f6' }));
+    v.isTab1 = S.ready && S.tab === 1; v.isTab2 = S.ready && S.tab === 2; v.isTab3 = S.ready && S.tab === 3;
+    v.crumbs = [];
+    if (!S.ready) return v;
+    const D = window.V9D, CH = window.V8C, E = React.createElement, all = D.schools();
+    const crumbs = [{ label: '경기도 전체', onClick: () => this.setState({ region: '', cell: null, tab: 1 }) }];
+    if (S.tab === 2 && S.region) crumbs.push({ label: S.region, onClick: () => this.setState({ tab: 2 }) });
+    const sObj = S.school ? all.find(q => q.code === S.school) : null;
+    if (S.tab === 3 && sObj) {
+      crumbs.push({ label: sObj.name, onClick: () => this.setState({ tab: 3 }) });
+      crumbs.push({ label: S.grade3 ? '고' + S.grade3 : '전체 학년', onClick: () => this.setState({ tab: 3 }) });
     }
-    v.showCompare = !!S.scope1;
+    v.crumbs = crumbs.map((c, i) => Object.assign(c, { sep: i ? '›' : '' }));
+    v.area = S.area;
+    v.areaOpts = [{ key: '', label: '전체 교과(군)' }].concat(D.AREAS.map(a => ({ key: a, label: a })));
+    v.onArea = e => this.setState({ area: e.target.value });
+    v.ysOpts = []; for (let y = 2022; y <= 2026; y++) for (let s = 1; s <= 2; s++) v.ysOpts.push({ key: y + '-' + s, label: y + '년 ' + s + '학기' });
+    if (S.tab === 1) Object.assign(v, this.tab1(D, CH, E, all));
+    if (S.tab === 2) Object.assign(v, this.tab2(D, CH, E, all));
+    if (S.tab === 3) Object.assign(v, this.tab3(D, CH, E, all));
+    return v;
+  }
 
-    const majorSeries = this.periodSeries(t1List, a => a.majorH);
-    const nonSeries = this.periodSeries(t1List, a => a.nonMajorH);
-    const hmax = Math.max(...majorSeries.map((x, i) => x + nonSeries[i])) * 1.04;
-    v.hourBars = periods.map((p, i) => ({
-      label: p.label, labelColor: p.post ? '#063a74' : '#41474d', weight: p.post ? 700 : 400,
-      pctMajor: (majorSeries[i] / hmax) * 100, pctNon: (nonSeries[i] / hmax) * 100,
-      text: '전공 ' + this.fmt(majorSeries[i]) + ' · 비전공 ' + this.fmt(nonSeries[i])
-    }));
+  tab1(D, CH, E, all) {
+    const S = this.state, v = {}, area = S.area, from = S.from, to = S.to;
+    const P = y => [{ y, sem: 1 }, { y, sem: 2 }];
+    const series = []; for (let y = from; y <= to; y++) [1, 2].forEach(sem => series.push({ y, sem }));
+    const years = []; for (let y = from; y <= to; y++) years.push(y);
+    const f1 = { grade: S.grade, area };
+    v.fromOpts = [2022, 2023, 2024, 2025].map(y => ({ key: String(y), label: y + '년' }));
+    v.toOpts = [2023, 2024, 2025, 2026].map(y => ({ key: String(y), label: y + '년' }));
+    v.from = String(from); v.to = String(to);
+    v.onFrom = e => { const y = +e.target.value; this.setState({ from: y, to: Math.max(S.to, y + 1) }); };
+    v.onTo = e => { const y = +e.target.value; this.setState({ to: y, from: Math.min(S.from, y - 1) }); };
+    v.gradeOpts = this.seg([[0, '전체'], [1, '고1'], [2, '고2'], [3, '고3']], S.grade, 'grade');
+    v.onReset1 = () => this.setState({ from: 2022, to: 2026, grade: 0, area: '', m1: 'subj', m4: 'stu', chg: 'all', q1: '', dim: 'rank' });
+    v.curNote = S.grade ? to + '년 고' + S.grade + ' = ' + D.cur(to, S.grade) + ' 개정' : to >= 2025 ? to + '년 = 2015·2022 개정 혼재' : '전 학년 2015 개정';
+    v.f1Summary = [from + '년 → ' + to + '년', S.grade ? '고' + S.grade : '전체 학년', area || '전체 교과(군)'].join(' · ');
+    v.rangeOpts = [[2022, 2026, '2022→2026 전체'], [2022, 2024, '2022→2024 학점제 효과'], [2025, 2026, '2025→2026 개정 내 변화']].map(([a, b, label]) => Object.assign({ label, onClick: () => this.setState({ from: a, to: b }) }, this.b(from === a && to === b)));
+    v.hasWarn = from <= 2024 && to >= 2025;
+    v.rangeWarn = '2022 개정에서 융합선택 신설·과목 분리로 과목 목록 자체가 늘었기 때문에, 개설 과목 수 증가에는 교육과정 구조 변화가 섞여 있습니다. 고교학점제 효과는 2022→2024, 새 교육과정 안의 변화는 2025→2026으로 나눠 보세요.';
 
-    // ---------- TAB 2 : 지역 · 학교 특성별 격차 진단 ----------
-    const provA = this.agg(all, last.year, last.sem);
-    const provStats = this.subjectStats(all, last.year, last.sem).filter(r => r.schools > 0);
-    const provClassesPerSchool = provStats.reduce((t, r) => t + r.classes, 0) / all.length;
-    v.groupJson = JSON.stringify(this.OFFICE_OF);
+    v.curCols = [2022, 2023, 2024, 2025, 2026, 2027].map(y => ({ label: y === 2027 ? '2027*' : String(y), fw: y >= from && y <= to ? 700 : 400, color: y >= from && y <= to ? '#063a74' : '#9aa3ad' }));
+    v.curRows = [1, 2, 3].map(g => ({ label: '고' + g, cells: [2022, 2023, 2024, 2025, 2026, 2027].map(y => {
+      const c = D.cur(y, g), inR = y >= from && y <= to;
+      return { text: c, bg: c === '2022' ? '#063a74' : '#e3e6e8', fg: c === '2022' ? '#ffffff' : '#41474d', op: inR ? 1 : 0.45, outline: S.grade === g && inR ? '2px solid #3fa654' : 'none' };
+    }) }));
 
-    const kpiDef = this.KPIS.find(k => k.key === S.kpi) || this.KPIS[0];
-    const kpiNorm = (val, mn, mx) => {
-      const t = mx === mn ? 0.5 : (val - mn) / (mx - mn);
-      return kpiDef.good === 'high' ? 1 - t : t;
-    };
-    v.kpiOpts = this.KPIS.map(k => ({
-      key: k.key, label: k.short,
-      bg: k.key === kpiDef.key ? '#063a74' : '#ffffff',
-      fg: k.key === kpiDef.key ? '#ffffff' : '#41474d',
-      bd: k.key === kpiDef.key ? '#063a74' : '#b1b8be',
-      weight: k.key === kpiDef.key ? 700 : 400,
-      onClick: () => this.setState({ kpi: k.key })
-    }));
-    v.kpiLabel = kpiDef.label;
-    v.kpiShort = kpiDef.short;
-    v.provKpiValue = this.fmt(kpiDef.pick(provA), kpiDef.d) + kpiDef.unit;
-
-    const offices = this.offices();
-    const oList = {}, oValue = {};
-    offices.forEach(o => {
-      oList[o] = all.filter(s => s.office === o);
-      oValue[o] = kpiDef.pick(this.agg(oList[o], last.year, last.sem));
+    const aF = D.agg(all, P(from), f1), aT = D.agg(all, P(to), f1);
+    v.b1Head = from + '년 → ' + to + '년 · 학기 평균' + (S.grade ? ' · 고' + S.grade : '') + (area ? ' · ' + area : '');
+    const stuY = (s, y, g) => s.students * (1 - 0.012 * (y - 2022)) / (g ? 3 : 1);
+    const stF = all.reduce((t, s) => t + stuY(s, from, S.grade), 0), stT = all.reduce((t, s) => t + stuY(s, to, S.grade), 0);
+    v.b1Stu = '참고 · 재학생 수' + (S.grade ? '(고' + S.grade + ')' : '') + ' ' + from + '년 ' + this.f(stF, 0) + '명 → ' + to + '년 ' + this.f(stT, 0) + '명 (' + this.sg((stT / stF - 1) * 100, 1, '%') + ') · 출처: 학교별학급수학생수현황';
+    const scope = (S.grade ? '고' + S.grade : '전 학년') + ', ' + (area || '전체 교과(군)') + ', 공통과목 제외';
+    const avgNote = '학기 평균 = (1학기 값 + 2학기 값) ÷ 2 · 대상: ' + scope;
+    v.b1 = [
+      ['학교당 개설 선택과목', 1, a => a.subj, '개', '학교별 개설 선택과목 수(같은 과목명은 1개)의 경기도 평균'],
+      ['학교당 개설 분반', 1, a => a.cls, '분반', '학교별 선택과목 분반(강좌) 수 합계의 경기도 평균. 한 과목을 3개 반으로 나눠 열면 3분반']
+    ].map(([label, d, pk, u, def]) => {
+      const a = pk(aF), b = pk(aT);
+      return { label, unit: u, fromLabel: from + '년', a: this.f(a, d), b: this.f(b, d), d: this.sg(b - a, d) + (a > 0 ? ' (' + this.sg((b / a - 1) * 100, 1, '%') + ')' : ''), tip: label + '\n산출: ' + def + '\n' + avgNote + '\n증감률 = (' + to + '년 − ' + from + '년) ÷ ' + from + '년 × 100' };
     });
-    const rmin = Math.min(...offices.map(o => oValue[o])), rmax = Math.max(...offices.map(o => oValue[o]));
-    const mapVals = {};
-    offices.forEach(o => { mapVals[o] = { color: this.scale(kpiNorm(oValue[o], rmin, rmax)), label: kpiDef.short + ' ' + this.fmt(oValue[o], kpiDef.d) + kpiDef.unit }; });
+
+    const M1 = { subj: ['학교당 평균 개설 선택과목 수(개)', 1, a => a.subj], cls: ['학교당 평균 개설 학급 수(학급)', 1, a => a.cls], stu: ['수강학생 연인원 합계(명)', 0, a => a.stuTot] };
+    const m1 = M1[S.m1];
+    v.m1Opts = [];
+    v.m1Title = m1[0];
+    const pts = series.map(p => ({ label: String(p.y).slice(2) + '.' + p.sem, p, v: m1[2](D.agg(all, [p], f1)) }));
+    const marks = [];
+    const ix = (y) => pts.findIndex(x => x.p.y === y && x.p.sem === 1);
+    if ((!S.grade || S.grade === 1) && ix(2025) >= 0) marks.push({ i: ix(2025), text: '고1 2022 개정' });
+    if ((!S.grade || S.grade === 2) && ix(2026) >= 0) marks.push({ i: ix(2026), text: '고2 2022 개정' });
+    if (pts.length) pts[pts.length - 1].hl = true;
+    v.lineChart = CH.line(E, { pts, marks, d: m1[1] });
+    const last = pts[pts.length - 1], pv = m1[2](D.agg(all, [{ y: last.p.y - 1, sem: last.p.sem }], f1));
+    v.lineSummary = last.p.y + '년 ' + last.p.sem + '학기 ' + this.f(last.v, m1[1]) + ' · 전년 같은 학기 대비 ' + this.sg(last.v - pv, m1[1]) + (!S.grade && to >= 2025 ? ' · 2025년부터 학년별로 교육과정이 섞여 집계됩니다' : '');
+
+    const drows = D.AREAS.map(ar => {
+      const ff = { grade: S.grade, area: ar };
+      return { label: ar, a: D.agg(all, P(from), ff).subj, b: D.agg(all, P(to), ff).subj, hl: ar === area, onClick: () => this.setState({ area: area === ar ? '' : ar }) };
+    }).filter(r => r.a || r.b);
+    v.dumbChart = CH.dumbbell(E, { rows: drows, aName: from + '년', bName: to + '년', d: 1 });
+
+    v.b1Tip = ['개설 선택과목: 학교별 개설 선택과목 수 평균 (같은 과목명은 1개)', '개설 분반: 학교별 선택과목 분반 수 평균', '기준: 학기 평균 = (1학기 + 2학기) ÷ 2 · ' + scope, '증감률: (' + to + '년 − ' + from + '년) ÷ ' + from + '년 × 100'].join('\n');
+    const sF = D.subjAgg(all, P(from), f1), sT = D.subjAgg(all, P(to), f1);
+    const key = S.m4 === 'cls' ? 'cls' : 'stu', unit = key === 'cls' ? '학급' : '명';
+    v.m4Opts = this.seg([['stu', '수강률'], ['cls', '개설 분반']], S.m4, 'm4');
+    const ch = D.CAT.filter(e => e.cmp && !e.common && (!area || e.area === area)).map(e => {
+      const a = sF[e.id] || { stu: 0, cls: 0 }, b = sT[e.id] || { stu: 0, cls: 0 }; const ra = key === 'stu' ? a.stu / stF * 100 : a.cls, rb = key === 'stu' ? b.stu / stT * 100 : b.cls; return { e, a, b, ra, rb, d: rb - ra };
+    }).filter(r => r.a[key] > 0 && r.b[key] > 0);
+    const mk = r => ({ label: r.e.short, full: r.e.short, v: r.d, txt: key === 'stu' ? r.ra.toFixed(1) + '% → ' + r.rb.toFixed(1) + '% (' + this.sg(r.d, 1, '%p') + ')' : this.sg(r.d, 0, unit) + ' (' + this.sg(r.d / r.a[key] * 100, 1, '%') + ')' });
+    v.divChart = CH.diverging(E, { up: ch.filter(r => r.d > 0).sort((a, b) => b.d - a.d).slice(0, 10).map(mk), down: ch.filter(r => r.d < 0).sort((a, b) => a.d - b.d).slice(0, 10).map(mk), upTitle: '증가', downTitle: '감소' });
+    v.divNote = from + '년 → ' + to + '년 · 학기 평균 ' + (key === 'cls' ? '개설 분반 수' : '수강률 = 수강인원 ÷ 재학생 수') + ' · 2015·2022 개정 목록에 같은 이름으로 있는 과목만 비교';
+
+    const chg = S.chg;
+    v.chgOpts = this.seg([['all', '전체'], ['only22', '2022 개정에만'], ['only15', '2015 개정에만']], chg, 'chg');
+    v.q1 = S.q1; v.onQ1 = e => this.setState({ q1: e.target.value });
+    const cl = D.CAT.filter(e => !e.common && !e.cmp && (!area || e.area === area) && (chg === 'all' || e.map === chg) && (!S.q1 || e.short.indexOf(S.q1) >= 0) && ((sF[e.id] && sF[e.id].stu) || (sT[e.id] && sT[e.id].stu)));
+    v.chgRows = cl.map(e => ({ name: e.short + ' (' + (e.n22 ? e.t22 : e.t15) + ')', tag: e.map === 'only22' ? '2022 개정' : '2015 개정', tc: e.map === 'only22' ? '#228738' : '#5b6167', area: e.area,
+      stu: this.f(sF[e.id] ? sF[e.id].stu : 0, 0) + ' → ' + this.f(sT[e.id] ? sT[e.id].stu : 0, 0) }));
+    v.chgSub = cl.length + '개 과목 · 한쪽 교육과정에만 있는 과목이라 증감을 계산하지 않습니다';
+
+    const tF = this.tAgg(all, from, area), tT = this.tAgg(all, to, area);
+    v.b2Head = from + '년 → ' + to + '년 · 연 1회 기준시점' + (area ? ' · ' + area : '');
+    const soloSch = y => all.filter(s => { const o = this.dstat(s, y); return Object.keys(o).some(d => o[d].n === 1 && (!area || d === area)); }).length;
+    const sF0 = soloSch(from), sT0 = soloSch(to);
+    v.b2 = [['수업 교원 수', 0, tF.n, tT.n, '명', '명'], ['교원 1인당 주당 수업시수', 1, tF.avg, tT.avg, '시간', 'h'], ['1인 교과 운영 학교', 0, sF0, sT0, '교 (' + this.f(sT0 / all.length * 100, 0) + '%)', '교']].map(([label, d, a, b, unit, su]) => (
+      { label, unit, fromLabel: from + '년', a: this.f(a, d) + su, b: this.f(b, d), d: this.sg(b - a, d, su), dc: b - a > 0 ? '#b5651d' : '#063a74' }));
+
+    const hrows = [''].concat(D.AREAS).map(ar => {
+      const a = this.tAgg(all, to, ar), b = this.tAgg(all, from, ar);
+      if (!a.n) return null;
+      return { label: ar || '전체', bold: !ar, hl: ar && ar === area, parts: [a.avg], marker: b.avg, txt: this.f(a.avg) + 'h (' + this.sg(a.avg - b.avg, 1) + ')' };
+    }).filter(Boolean);
+    const dsr = D.AREAS.map(ar => {
+      const cF = D.agg(all, P(from), { area: ar }).cls, cT = D.agg(all, P(to), { area: ar }).cls, a = this.tAgg(all, from, ar), b = this.tAgg(all, to, ar);
+      if (!cF || !a.n || !b.n) return null;
+      const cr = (cT / cF - 1) * 100, tr = (b.n / a.n - 1) * 100, gap = cr - tr;
+      return { ar, cr, tr, gap, hrs: b.avg, dh: b.avg - a.avg };
+    }).filter(Boolean).sort((p, q) => q.gap - p.gap);
+    const gmax = Math.max(1, ...dsr.map(r => Math.abs(r.gap)));
+    v.dsRows = dsr.map(r => { const warn = r.cr > 0 && r.tr <= 0;
+      return { name: r.ar, cr: this.sg(r.cr, 1, '%'), tr: this.sg(r.tr, 1, '%'), crc: r.cr >= 0 ? '#063a74' : '#5b6167', trc: r.tr >= 0 ? '#063a74' : '#b5651d',
+        gap: this.sg(r.gap, 1, '%p'), gw: Math.abs(r.gap) / gmax * 50, gl: r.gap >= 0 ? 50 : 50 - Math.abs(r.gap) / gmax * 50, gc: r.gap > 0 ? '#b5651d' : '#6f93b8',
+        hrs: this.f(r.hrs) + 'h', dh: this.sg(r.dh, 1), bg: warn ? '#fdf3e6' : (r.ar === area ? '#eef3f9' : '#ffffff'), tag: warn ? '분반↑ 교원↔' : '', fw: r.ar === area ? 700 : 600,
+        onClick: () => this.setState({ area: area === r.ar ? '' : r.ar }) }; });
+
+    const ref = this.dAvg(to), grp = {};
+    all.forEach(s => { const o = this.dstat(s, to); Object.keys(o).forEach(d => { if (o[d].n !== 1 || (area && d !== area)) return; (grp[d] = grp[d] || []).push(o[d].h); }); });
+    const groups = Object.keys(grp).map(d => { const p = grp[d], m = this.mean(p); return { label: d, pts: p, ref: ref[d], n: p.length, sub: p.length + '교 · 평균 ' + this.f(m) + 'h (' + this.sg(m - ref[d], 1) + ')' }; }).sort((a, b) => b.n - a.n);
+    v.hasSolo = groups.length > 0; v.noSolo = !v.hasSolo;
+    v.soloChart = v.hasSolo ? CH.dots(E, { groups }) : null;
+    const FOCUS = ['제2외국어', '정보', '기술·가정', '교양', '한문'];
+    const sg2 = [...groups].sort((a, b) => (FOCUS.indexOf(b.label) >= 0) - (FOCUS.indexOf(a.label) >= 0) || b.n - a.n);
+    v.soloRows = sg2.map(g => { const over = g.pts.filter(h => h > g.ref).length, on = S.soloSel === g.label;
+      return { name: g.label, focus: FOCUS.indexOf(g.label) >= 0 ? '인터뷰 주요 교과' : '', n: g.n + '교', avg: this.f(this.mean(g.pts)) + 'h', ref: this.f(g.ref) + 'h', over: over + '교 (' + this.f(over / g.n * 100, 0) + '%)',
+        oc: over / g.n > 0.5 ? '#b5651d' : '#1e2124', bg: on ? '#eef3f9' : '#ffffff', arrow: on ? '▾' : '▸', onClick: () => this.setState({ soloSel: on ? '' : g.label }) }; });
+    const selG = groups.find(g => g.label === S.soloSel);
+    v.hasSoloSel = !!selG; v.soloSelName = selG ? selG.label : '';
+    v.soloSelChart = selG ? CH.dots(E, { groups: [selG] }) : null;
+
+    const dim = S.dim, DL = dim === 'ach' ? D.ACH : D.RANK, DN = dim === 'ach' ? D.ACH_NAMES : D.RANK_NAMES;
+    v.dimOpts = this.seg([['rank', '석차등급'], ['ach', '성취도 단계']], dim, 'dim');
+    v.codeLegend = DL.map(c => ({ label: DN[c], color: this.DIM_COLOR[c] }));
+    const cy = years.filter(y => y >= 2025);
+    const cols = cy.map(y => {
+      const cnt = {}; DL.forEach(c => { cnt[c] = 0; });
+      let n = 0;
+      all.forEach(s => P(y).forEach(p => { n++; const seen = {}; D.ss(s, p.y, p.sem).offers.forEach(o => { if (!o.selective || o.cu !== '2022' || (S.grade && o.g !== S.grade) || (area && o.area !== area) || seen[o.name]) return; seen[o.name] = 1; cnt[o[dim]]++; }); }));
+      return { label: y + '년', parts: DL.map(c => cnt[c] / n) };
+    });
+    v.hasCode = cols.length > 0 && cols.some(c => c.parts.some(x => x > 0)); v.noCode = !v.hasCode;
+    v.codeChart = v.hasCode ? CH.stackCols(E, { cols, colors: DL.map(c => this.DIM_COLOR[c]), textColors: ['#ffffff', '#ffffff', '#1e2124'], d: 1, H: 220 }) : null;
+    return v;
+  }
+
+  tab2(D, CH, E, all) {
+    const S = this.state, v = {}, area = S.area;
+    const [y2, s2] = S.ys2.split('-').map(Number), p2 = [{ y: y2, sem: s2 }], g2 = S.grade2;
+    v.ys2 = S.ys2; v.onYs2 = e => this.setState({ ys2: e.target.value });
+    v.grade2Opts = this.seg([[0, '전체'], [1, '고1'], [2, '고2'], [3, '고3']], g2, 'grade2');
+    v.unitOpts = this.seg([['sg', '시·군 31'], ['office', '교육지원청 25']], S.unit, 'unit', { region: '', cell: null });
+    v.onReset2 = () => this.setState({ ys2: '2026-1', grade2: 0, unit: 'sg', region: '', cell: null, m2: 'subj', q2: '', sort2: 'name', dir2: 1 });
+    v.carry = area ? [{ label: '교과(군): ' + area, onClick: () => this.setState({ area: '' }) }] : [];
+    const regionOf = s => S.unit === 'sg' ? s.sigungu : s.office;
+    const regions = S.unit === 'sg' ? D.SG : D.OFFICES;
+    const region = regions.indexOf(S.region) >= 0 ? S.region : '';
+    const f2 = { grade: g2, area };
+    const M = { subj: ['학교당 개설 선택과목', '개', 1, l => D.agg(l, p2, f2).subj], cls: ['학교당 개설 분반', '분반', 1, l => D.agg(l, p2, f2).cls], hrs: ['교원 1인당 주당 시수', '시간', 1, l => this.tAgg(l, y2, area).avg], solo: ['1인 교과 비율', '%', 1, l => this.tAgg(l, y2, area).soloPct] };
+    const m = M[S.m2];
+    v.m2Opts = Object.keys(M).map(k => Object.assign({ label: M[k][0], onClick: () => this.setState({ m2: k }) }, this.b(S.m2 === k)));
+    v.m2Label = m[0] + '(' + m[1] + ')';
+    const val = l => { if (!l.length) return null; const x = m[3](l); return isFinite(x) ? x : null; };
+    const rv = {}; regions.forEach(r => { rv[r] = val(all.filter(s => regionOf(s) === r)); });
+    const nums = regions.map(r => rv[r]).filter(x => x != null), mn = Math.min(...nums), mx = Math.max(...nums);
+    const PAL = ['#dbe6f1', '#a9c2dc', '#6f93b8', '#1c589c', '#052b57'];
+    const niceStep = r => { const raw = Math.max(1, r / 4), p = Math.pow(10, Math.floor(Math.log10(raw))); for (const k of [1, 2, 2.5, 5, 10]) { const s = k * p; if (s >= raw && Number.isInteger(s)) return s; } return 10 * p; };
+    let step, start;
+    if (S.m2 === 'subj') { step = 5; start = 30; } else { step = niceStep(mx - mn); start = Math.floor(mn / step) * step; if (start + 4 * step < mx - step) start = Math.ceil((mx - 4 * step) / step) * step; }
+    const brk = [0, 1, 2, 3, 4].map(i => start + i * step);
+    const bin = x => { let i = 0; for (let k = 1; k < 5; k++) if (x >= brk[k]) i = k; return i; };
+    const tOf = x => bin(x) / 4;
+    const mapVals = {}; regions.forEach(r => { mapVals[r] = rv[r] == null ? { color: '#f4f5f6', label: '데이터 없음' } : { color: PAL[bin(rv[r])], label: m[0] + ' ' + this.f(rv[r], m[2]) + m[1] }; });
     v.mapJson = JSON.stringify(mapVals);
+    v.groupJson = S.unit === 'office' ? JSON.stringify(D.OFFICE_OF) : '{}';
+    v.mapSel = region;
+    v.legend = brk.map((b, i) => ({ color: PAL[i], label: i < 4 ? b + '–' + brk[i + 1] : b + ' 이상' }));
+    v.f2Summary = [y2 + '년 ' + s2 + '학기', g2 ? '고' + g2 + '(' + D.cur(y2, g2) + ' 개정)' : '전체 학년', S.unit === 'sg' ? '시·군' : '교육지원청', region || '전체 지역', area || '전체 교과(군)'].join(' · ');
 
-    const sel = S.sel, scope = S.scope;
-    const cellList = (urban, size) => all.filter(s => s.urban === urban && s.size === size);
-    v.selOffice = scope && scope.kind === 'office' ? scope.office : '';
-    v.selSchoolCode = sel && sel.kind === 'school' ? sel.code : '';
-    v.hasSel = !!sel; v.noSel = !sel;
-    v.onClearSel = () => this.setState({ sel: null, scope: null });
+    const regList = region ? all.filter(s => regionOf(s) === region) : all;
+    v.regTitle = region || '경기도 전체'; v.hasRegion = !!region;
+    const stuY2 = (s, y) => s.students * (1 - 0.012 * (y - 2022)) / (g2 ? 3 : 1);
+    const rs = regList.reduce((t, s) => t + stuY2(s, y2), 0), rsp = y2 > 2022 ? regList.reduce((t, s) => t + stuY2(s, y2 - 1), 0) : null;
+    v.regSub = regList.length + '교 · 재학생' + (g2 ? '(고' + g2 + ')' : '') + ' ' + this.f(rs, 0) + '명' + (rsp ? ' (전년 ' + this.sg((rs / rsp - 1) * 100, 1, '%') + ')' : '') + ' · ' + y2 + '년 ' + s2 + '학기';
+    v.onClearRegion = () => this.setState({ region: '', cell: null });
+    v.kpi2 = Object.keys(M).map(k => { const a = val(regList), b = val(all); const mm = M[k]; const x = (() => { const q = mm[3](regList); return isFinite(q) ? q : null; })(), y = mm[3](all);
+      return { label: mm[0], value: this.f(x, mm[2]), unit: mm[1], diff: region ? '경기도 평균 ' + this.f(y, mm[2]) + ' (' + this.sg(x - y, mm[2], mm[1] === '%' ? '%p' : '') + ')' : '경기도 평균' }; });
 
-    const rankSchools = scope && scope.kind === 'office' ? (oList[scope.office] || [])
-      : scope && scope.kind === 'cell' ? cellList(scope.urban, scope.size)
-      : all;
-    const rankCap = scope ? rankSchools.length : 20;
-    const schoolVals = rankSchools.map(s => ({ s, val: kpiDef.pick(this.metrics(s, last.year, last.sem)) }));
-    const smn = Math.min(...schoolVals.map(x => x.val)), smx = Math.max(...schoolVals.map(x => x.val));
-    const ranked = [...schoolVals].sort((a, b) => kpiNorm(b.val, smn, smx) - kpiNorm(a.val, smn, smx)).slice(0, rankCap);
-    v.schoolRankRows = ranked.map((r, i) => ({
-      rank: i + 1, name: r.s.name, office: r.s.office.replace(/교육지원청$/, ''),
-      value: this.fmt(r.val, kpiDef.d) + kpiDef.unit,
-      bg: v.selSchoolCode === r.s.code ? '#eef3f9' : '#ffffff', bd: v.selSchoolCode === r.s.code ? '#063a74' : '#e3e6e8',
-      weight: v.selSchoolCode === r.s.code ? 700 : 400,
-      onClick: () => this.setState({ sel: { kind: 'school', code: r.s.code } })
-    }));
-    v.schoolRankTitle = scope && scope.kind === 'office' ? (scope.office + ' · ' + kpiDef.short + ' 취약 순')
-      : scope && scope.kind === 'cell' ? (scope.urban + ' × ' + scope.size + ' · ' + kpiDef.short + ' 취약 순')
-      : (kpiDef.short + ' 취약 상위 20교 · 경기도 전체');
+    const SZ = ['소규모', '중규모', '대규모'], UR = ['대도시', '중소도시', '읍면'], [c1, c2] = this.cuts();
+    v.hmHeads = ['소규모 ≤' + c1, '중규모 ' + (c1 + 1) + '–' + c2, '대규모 ≥' + (c2 + 1)];
+    v.hmSub = (region || '경기도 전체') + ' · 위 지도 지표 버튼과 연동';
+    v.hmWhat = m[0] + '(' + m[1] + ', 학교 평균)';
+    const cells = {}; UR.forEach(u => SZ.forEach(z => { const l = regList.filter(s => s.urban === u && this.sizeOf(s) === z); cells[u + z] = { l, x: val(l) }; }));
+    const cn = Object.values(cells).map(c => c.x).filter(x => x != null), cmn = Math.min(...cn), cmx = Math.max(...cn);
+    v.hmRows = UR.map(u => ({ label: u, cells: SZ.map(z => {
+      const c = cells[u + z], on = S.cell && S.cell.u === u && S.cell.z === z;
+      if (c.x == null) return { value: '—', sub: c.l.length + '교', bg: '#f4f5f6', fg: '#5b6167', outline: 'none', cursor: 'default', onClick: () => {} };
+      const bi = bin(c.x);
+      return { value: this.f(c.x, m[2]) + m[1], sub: c.l.length + '교', bg: PAL[bi], fg: bi >= 3 ? '#ffffff' : '#1e2124', outline: on ? '3px solid #3fa654' : 'none', cursor: 'pointer', onClick: () => this.setState({ cell: on ? null : { u, z } }) };
+    }) }));
 
-    v.tipDisplay = S.tip ? 'block' : 'none';
-    v.onTipIn = () => this.setState({ tip: true });
-    v.onTipOut = () => this.setState({ tip: false });
-    v.onTipToggle = () => this.setState({ tip: !S.tip });
+    let tl = regList;
+    if (S.cell) tl = tl.filter(s => s.urban === S.cell.u && this.sizeOf(s) === S.cell.z);
+    if (S.q2) tl = tl.filter(s => s.name.indexOf(S.q2) >= 0);
+    const tr = tl.map(s => { const a = D.agg([s], p2, f2), t = this.tAgg([s], y2, area); return { s, name: s.name, sg: s.sigungu, size: this.sizeOf(s), subj: a.subj, cls: a.cls, hrs: t.avg, solo: t.solo }; });
+    const K = S.sort2, dr = S.dir2;
+    tr.sort((a, b) => ['name', 'sg', 'size'].indexOf(K) >= 0 ? dr * String(a[K]).localeCompare(String(b[K]), 'ko') || a.name.localeCompare(b.name, 'ko') : dr * ((isFinite(a[K]) ? a[K] : -1) - (isFinite(b[K]) ? b[K] : -1)));
+    v.tHeads = [['name', '학교명'], ['sg', '시·군'], ['size', '규모'], ['subj', '개설 선택과목'], ['cls', '개설 학급'], ['hrs', '교원 1인당 시수'], ['solo', '1인 교과']].map(([k, label]) => ({ label: label + (S.sort2 === k ? (S.dir2 > 0 ? ' ▲' : ' ▼') : ''), onClick: () => this.setState({ sort2: k, dir2: S.sort2 === k ? -S.dir2 : 1 }) }));
+    v.tRows = tr.map(r => ({ name: r.name, sg: r.sg, size: r.size, subj: this.f(r.subj, 0), cls: this.f(r.cls, 0), hrs: this.f(r.hrs, 1), solo: r.solo ? r.solo + '개 교과' : '없음',
+      onClick: () => this.setState({ tab: 3, school: r.s.code, ys3: S.ys2, grade3: g2 }) }));
+    v.tEmpty = !tr.length;
+    v.tScope = (region || '경기도 전체') + (S.cell ? ' · ' + S.cell.u + ' × ' + S.cell.z : '') + ' · ' + tr.length + '교';
+    v.q2 = S.q2; v.onQ2 = e => this.setState({ q2: e.target.value });
+    return v;
+  }
 
-    v.hmHeads = this.SIZES;
-    const cellVals = [];
-    this.URBANS.forEach(u => this.SIZES.forEach(sz => {
-      const list = cellList(u, sz);
-      if (list.length) cellVals.push(kpiDef.pick(this.agg(list, last.year, last.sem)));
-    }));
-    const cmn = Math.min(...cellVals), cmx = Math.max(...cellVals);
-    v.hmCells = [];
-    this.URBANS.forEach(u => {
-      v.hmCells.push({
-        value: u, sub: '', bg: '#f4f5f6', fs: 15, ff: 'inherit', pad: '9px 11px',
-        align: 'flex-start', cursor: 'default', outline: 'none', onClick: () => {}
-      });
-      this.SIZES.forEach(sz => {
-        const list = cellList(u, sz);
-        const isSel = scope && scope.kind === 'cell' && scope.urban === u && scope.size === sz;
-        if (!list.length) {
-          v.hmCells.push({ value: '—', sub: '해당 없음', bg: '#ffffff', fs: 18, ff: "'JetBrains Mono',monospace", pad: '10px 11px', align: 'center', cursor: 'default', outline: 'none', onClick: () => {} });
-          return;
-        }
-        const val = kpiDef.pick(this.agg(list, last.year, last.sem));
-        v.hmCells.push({
-          value: this.fmt(val, kpiDef.d) + kpiDef.unit, sub: list.length + '교',
-          bg: this.scale(kpiNorm(val, cmn, cmx)), fs: 18, ff: "'JetBrains Mono',monospace",
-          pad: '10px 11px', align: 'center', cursor: 'pointer',
-          outline: isSel ? '2px solid #063a74' : 'none',
-          onClick: () => {
-            if (isSel) { this.setState({ sel: null, scope: null }); return; }
-            const c = { kind: 'cell', urban: u, size: sz };
-            this.setState({ sel: c, scope: c });
-          }
-        });
-      });
+  tab3(D, CH, E, all) {
+    const S = this.state, v = {};
+    const list = [...all].sort((a, b) => a.sigungu.localeCompare(b.sigungu, 'ko') || a.name.localeCompare(b.name, 'ko'));
+    const inR = s => !S.region || (S.unit === 'sg' ? s.sigungu === S.region : s.office === S.region);
+    const sch = list.find(s => s.code === S.school) || null;
+    const grp = {}; list.forEach(s => { (grp[s.sigungu] = grp[s.sigungu] || []).push({ key: s.code, label: s.name }); });
+    v.schGroups = Object.keys(grp).map(g => ({ label: g, opts: grp[g] }));
+    v.schKey = sch ? sch.code : '';
+    v.onSch3 = e => this.setState({ school: e.target.value, dept3: '', subj3: null, t3open: '' });
+    v.ys3 = S.ys3; v.onYs3 = e => this.setState({ ys3: e.target.value });
+    v.grade3Opts = this.seg([[0, '전체'], [1, '고1'], [2, '고2'], [3, '고3']], S.grade3, 'grade3');
+    v.onReset3 = () => this.setState({ school: '', ys3: '2026-1', grade3: 0, sort3: 'area', dir3: 1, dept3: '', q3: '', sort5: 'name', dir5: 1, subj3: null, t3open: '' });
+    v.onGoTab2 = () => this.setState({ tab: 2 });
+    {
+      const [ly, lsm] = S.ys3.split('-').map(Number), lp = { y: ly, sem: lsm }, lf = { grade: S.grade3 }, ck = S.ys3 + '|' + S.grade3;
+      this._l3 = this._l3 || {};
+      if (!this._l3[ck]) { const m = {}; all.forEach(q => { const a0 = D.agg([q], [lp], lf), t0 = this.tAgg([q], ly, ''); m[q.code] = { subj: a0.subj, cls: a0.cls, n: t0.n, h: t0.avg, solo: t0.solo }; });
+        const pa0 = D.agg(all, [lp], lf), tp0 = this.tAgg(all, ly, ''); this._l3[ck] = { m, avg: [pa0.subj, pa0.cls, tp0.n / all.length, tp0.avg, tp0.perSchool] }; }
+      const LC = this._l3[ck];
+      let l3 = all.filter(inR); if (S.cell) l3 = l3.filter(q => q.urban === S.cell.u && this.sizeOf(q) === S.cell.z); if (S.q3) l3 = l3.filter(q => q.name.indexOf(S.q3) >= 0);
+      const K5 = S.sort5, d5 = S.dir5;
+      l3.sort((p, q) => (K5 === 'name' ? d5 * p.name.localeCompare(q.name, 'ko') : d5 * ((LC.m[q.code][K5] || 0) - (LC.m[p.code][K5] || 0))) || p.name.localeCompare(q.name, 'ko'));
+      v.l3Heads = [['name', '학교명', 'left'], ['subj', '개설과목', 'right'], ['cls', '분반', 'right'], ['n', '교원', 'right'], ['h', '주당시수', 'right'], ['solo', '1인 교과 교사', 'right']].map(([k, label, al], i) => ({ al, bl: i ? '1px solid #cdd1d5' : '0', pr: i === 5 ? '16px' : '7px', label: label + (S.sort5 === k ? (S.dir5 > 0 ? ' ▾' : ' ▴') : ''), onClick: () => this.setState({ sort5: k, dir5: S.sort5 === k ? -S.dir5 : 1 }) }));
+      const av = LC.avg; v.l3Avg = [this.f(av[0], 1), this.f(av[1], 1), this.f(av[2], 0), this.f(av[3], 1), this.f(av[4], 1)];
+      v.l3Rows = l3.map(q => { const r = LC.m[q.code], on = S.school === q.code;
+        return { name: q.name, meta: q.sigungu + ' · ' + this.sizeOf(q) + ' · ' + q.found, subj: this.f(r.subj, 0), cls: this.f(r.cls, 0), tch: r.n, h: this.f(r.h, 1), hc: r.h > av[3] ? '#b5651d' : '#1e2124', solo: r.solo, sc: r.solo ? '#b5651d' : '#9aa3ad', sw: r.solo ? 700 : 400,
+          bg: on ? '#eef3f9' : '#ffffff', sh: on ? 'inset 3px 0 0 #063a74' : 'none', onClick: () => this.setState({ school: q.code, dept3: '', subj3: null, t3open: '' }) }; });
+      v.l3Empty = !l3.length; v.l3Scope = l3.length + '교 · ' + ly + '년 ' + lsm + '학기';
+      v.l3Filtered = !!(S.region || S.cell); v.l3Region = [S.region, S.cell ? S.cell.u + ' × ' + S.cell.z : ''].filter(Boolean).join(' · ');
+      v.onL3Clear = () => this.setState({ region: '', cell: null }); v.q3 = S.q3; v.onQ3 = e => this.setState({ q3: e.target.value });
+    }
+    v.hasSch = !!sch; v.noSch = !sch;
+    if (!sch) { v.f3Summary = '학교 미선택'; return v; }
+    const [y3, s3] = S.ys3.split('-').map(Number), p3 = { y: y3, sem: s3 }, pp = y3 > 2022 ? { y: y3 - 1, sem: s3 } : null;
+    v.y3 = y3;
+    const x = D.ss(sch, y3, s3), xp = pp ? D.ss(sch, pp.y, pp.sem) : null;
+    v.schTitle = sch.name;
+    v.schMeta = [sch.sigungu, sch.office, this.sizeOf(sch) + '(학년당 ' + sch.cpg + '학급)', sch.found, sch.type, '학생 ' + Math.round(sch.students * (1 - 0.012 * (y3 - 2022))).toLocaleString('ko-KR') + '명' + (y3 > 2022 ? '(전년 ' + this.sg(-1.2 / (1 - 0.012 * (y3 - 2023)), 1, '%') + ')' : '')];
+    v.curLine3 = y3 + '년 · ' + [1, 2, 3].map(g => '고' + g + ' ' + D.cur(y3, g)).join(' · ');
+    v.f3Summary = [sch.name, y3 + '년 ' + s3 + '학기', S.grade3 ? '고' + S.grade3 + '(' + D.cur(y3, S.grade3) + ' 개정)' : '전체 학년'].join(' · ');
+    const f3 = { grade: S.grade3 }, a = D.agg([sch], [p3], f3), pa = D.agg(all, [p3], f3), ta = this.tAgg([sch], y3, ''), tp = this.tAgg(all, y3, '');
+
+    const offs = x.offers.filter(o => o.selective && (!S.grade3 || o.g === S.grade3));
+    const mxS = Math.max(1, ...offs.map(o => o.students));
+    const rows = offs.map(o => {
+      const pr = xp ? xp.offers.find(q => q.eid === o.eid && q.g === o.g) : null;
+      let diff = '—', dc = '#5b6167';
+      if (xp) { if (pr) { const d = o.students - pr.students; diff = this.sg(d, 0, '명'); dc = d >= 0 ? '#063a74' : '#b5651d'; } else if (D.cur(pp.y, o.g) !== o.cu) { diff = '개편'; dc = '#9e6a00'; } else diff = '신규 개설'; }
+      return { o, diff, dc };
     });
+    const AI = ar => D.AREAS.indexOf(ar), k3 = S.sort3, d3 = S.dir3;
+    rows.sort((p, q) => k3 === 'stu' ? d3 * (q.o.students - p.o.students) : k3 === 'cls' ? d3 * (q.o.classes - p.o.classes) : k3 === 'name' ? d3 * p.o.name.localeCompare(q.o.name, 'ko') : d3 * (AI(p.o.area) - AI(q.o.area) || p.o.g - q.o.g || p.o.name.localeCompare(q.o.name, 'ko')));
+    v.s3Heads = [['name', '과목명', 'left'], ['', '학년', 'center'], ['area', '교과(군)', 'left'], ['stu', '수강학생', 'right'], ['cls', '분반', 'right'], ['', '편성학점', 'right'], ['', '범위', 'center'], ['', '전년 대비', 'center']].map(([k, label, al], i) => ({ al, bl: i ? '1px solid #cdd1d5' : '0', label: label + (k && S.sort3 === k ? ' ▾' : ''), onClick: () => k ? this.setState({ sort3: k, dir3: S.sort3 === k ? -S.dir3 : 1 }) : null }));
+    v.s3Rows = rows.map((r, i) => ({ name: r.o.name, meta: r.o.cu + ' 개정 · ' + r.o.type + '선택', gl: '고' + r.o.g, area: r.o.area, bg: S.subj3 === r.o.eid ? '#eef3f9' : (i % 2 ? '#fafbfc' : '#ffffff'), onClick: () => this.setState({ subj3: S.subj3 === r.o.eid ? null : r.o.eid }),
+      stu: r.o.students.toLocaleString('ko-KR'), pct: r.o.students / mxS * 100, cls: r.o.classes, crv: r.o.credits + (r.o.cu === '2022' ? '학점' : '단위'), rng: r.o.cu === '2022' ? r.o.e.r22 : '—', diff: r.diff, dc: r.dc, ff: /^[+−—]/.test(r.diff) ? "'JetBrains Mono',monospace" : 'inherit' }));
+    v.s3Empty = !rows.length;
+    v.s3Sub = y3 + '년 ' + s3 + '학기 · ' + (S.grade3 ? '고' + S.grade3 : '전체 학년') + ' · ' + rows.length + '개 편성';
 
-    let selList = [], selTitle = '', selKind = '';
-    if (sel && sel.kind === 'office') { selList = oList[sel.office] || []; selTitle = sel.office; selKind = '교육지원청'; }
-    else if (sel && sel.kind === 'cell') { selList = cellList(sel.urban, sel.size); selTitle = sel.urban + ' × ' + sel.size; selKind = '지역유형 × 학교규모'; }
-    else if (sel && sel.kind === 'school') {
-      const sc = all.find(x => x.code === sel.code);
-      selList = sc ? [sc] : []; selTitle = sc ? sc.name + ' (' + sc.office + ')' : ''; selKind = '학교';
-    }
-    v.selTitle = selTitle;
-    if (selList.length) {
-      const a = this.agg(selList, last.year, last.sem);
-      const st = this.subjectStats(selList, last.year, last.sem).filter(r => r.schools > 0);
-      const clsPerSchool = st.reduce((t, r) => t + r.classes, 0) / selList.length;
-      v.selScope = (selKind === '학교' ? selKind : selKind + ' · ' + selList.length + '교') + ' · 학생 ' + this.num(a.students) + '명 · ' + last.label + ' 기준';
-      const mk = (label, mine, avg, d, unit, good, diffUnit) => {
-        const diff = mine - avg;
-        const better = good === 'high' ? diff >= 0 : diff <= 0;
-        const flat = Math.abs(diff) < (d === 2 ? 0.02 : 0.05);
-        return {
-          label, value: mine.toFixed(d), unit, avg: avg.toFixed(d) + unit,
-          diff: (diff >= 0 ? '+' : '−') + Math.abs(diff).toFixed(d) + (diffUnit || unit) + (flat ? ' 평균 수준' : better ? ' 양호' : ' 취약'),
-          color: flat ? '#5b6167' : better ? '#228738' : '#de3412'
-        };
-      };
-      v.detailSubj = [
-        mk('평균 개설 선택과목 수 (학교당)', a.subjects, provA.subjects, 1, '개', 'high'),
-        mk('학교당 개설 수업 학급 수', clsPerSchool, provClassesPerSchool, 1, '학급', 'high')
-      ];
-      v.detailTeacher = [
-        mk('다교과 교사 비율', a.ratio * 100, provA.ratio * 100, 1, '%', 'low', '%p'),
-        mk('교사 1인당 담당과목 수', a.perSubj, provA.perSubj, 2, '개', 'low'),
-        mk('미이수 학생 보충 지도 시수', a.makeupH, provA.makeupH, 2, '시간', 'low')
-      ];
-    } else {
-      v.selScope = '';
-      v.detailSubj = []; v.detailTeacher = [];
-    }
+    const ds = this.dstat(sch, y3), ref = this.dAvg(y3);
+    const dk = D.AREAS.filter(d => ds[d]);
+    const hmax = Math.max(1, ...dk.map(d => Math.max(ds[d].h / ds[d].n, ref[d] || 0))) * 1.1;
+    v.deptRows = dk.map(d => { const h = ds[d].h / ds[d].n, solo = ds[d].n === 1, df = h - (ref[d] || 0);
+      return { name: d, tag: solo ? '1인 교과' : '', n: ds[d].n, h: this.f(h), pct: h / hmax * 100, refPct: (ref[d] || 0) / hmax * 100, color: solo ? '#b5651d' : '#1c589c', diff: this.sg(df, 1, 'h'), dc: df > 0 ? '#b5651d' : '#063a74', bg: S.dept3 === d ? '#eef3f9' : (solo ? '#fdf6ee' : '#ffffff'), ol: S.dept3 === d ? '2px solid #063a74' : 'none', onClick: () => this.setState({ dept3: S.dept3 === d ? '' : d, t3open: '' }) }; });
+    v.hasDept3 = !!S.dept3; v.dept3 = S.dept3; v.onDept3Clear = () => this.setState({ dept3: '', t3open: '' });
 
+    const dim3 = S.dim === 'ach' ? 'ach' : 'rank', DL3 = dim3 === 'ach' ? D.ACH : D.RANK, DN3 = dim3 === 'ach' ? D.ACH_NAMES : D.RANK_NAMES;
+    v.dimOpts3 = this.seg([['rank', '석차등급 기준'], ['ach', '성취도 단계 기준']], dim3, 'dim');
+    v.dimLegend3 = DL3.map(c => ({ label: DN3[c], color: this.DIM3_COLOR[c] }));
+    const SHORT = { G9: '9등급', G5: '5등급', N: '미산출', A5: 'A~E', A3: 'ABC', P: '이수(P)' };
+    const tsx = x.teachers.filter(t => !S.dept3 || t.dept === S.dept3).sort((p, q) => q.nSubj - p.nSubj || q.hours - p.hours), maxN = Math.max(1, ...tsx.map(t => t.nSubj));
+    v.tRows3 = tsx.map(t => {
+      const sj = Object.values(t.subj), open = S.t3open === t.id, hl = S.subj3 != null && sj.some(q => q.eid === S.subj3), cnt = DL3.map(c => sj.filter(q => q[dim3] === c).length);
+      return { id: t.id, dept: t.dept, solo: t.solo ? '1인 교과' : '', n: t.nSubj + '개', h: this.f(t.hours, 0) + 'h', open, arrow: open ? '▾' : '▸', bg: hl ? '#eef3f9' : '#ffffff',
+        cells: DL3.flatMap((c, i) => Array.from({ length: cnt[i] }, () => ({ c: this.DIM3_COLOR[c], b: c === 'P' || c === 'N' ? '#8a7aa8' : this.DIM3_COLOR[c] }))), segTxt: DL3.map((c, i) => cnt[i] ? SHORT[c] + ' ' + cnt[i] : null).filter(Boolean).join(' · '),
+        subs: sj.sort((a, b) => b.hours - a.hours).map(q => ({ name: q.name, area: q.area, ach: D.ACH_NAMES[q.ach], rank: D.RANK_NAMES[q.rank], cls: q.classes, h: this.f(q.hours, 0) + 'h', bg: S.subj3 === q.eid ? '#eef3f9' : '#ffffff' })),
+        onClick: () => this.setState({ t3open: open ? '' : t.id }) };
+    });
+    v.t3Note = (S.dept3 ? S.dept3 + ' 교사 ' : '') + (S.subj3 != null ? '선택 과목 담당 교사 ' + v.tRows3.filter(r => r.bg === '#eef3f9').length + '명 강조 · ' : '') + tsx.length + '명 · 같은 과목 여러 분반은 1과목';
     return v;
   }
 }

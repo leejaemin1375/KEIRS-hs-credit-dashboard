@@ -58,7 +58,7 @@
       return this._groups;
     }
     groupOf(f) {
-      const p = f.properties.parent;
+      const p = f.properties.parent === '여주군' ? '여주시' : f.properties.parent;
       return this.groups()[p] || p;
     }
 
